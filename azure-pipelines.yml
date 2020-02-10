@@ -16,5 +16,5 @@ steps:
     gradleWrapperFile: 'gradlew'
     gradleOptions: '-Xmx3072m'
     publishJUnitResults: false
-    testResultsFiles: '**/TEST-*.xml'
+    testResultsFiles: '**/*test*.xml'
     tasks: 'assembleDebug'
