@@ -17,4 +17,12 @@ steps:
     gradleOptions: '-Xmx3072m'
     publishJUnitResults: false
     testResultsFiles: '**/*test*.xml'
-    tasks: 'assembleDebug'
+    tasks: 'build'
+    javaHomeOption: 'JDKVersion' # Options: jDKVersion, path
+    jdkVersionOption: 'default' # Optional. Options: default, 1.11, 1.10, 1.9, 1.8, 1.7, 1.6
+    #jdkDirectory: # Required when javaHomeOption == Path
+    jdkArchitectureOption: 'x64' # Optional. Options: x86, x64
+    #sonarQubeRunAnalysis: false 
+    #sqGradlePluginVersionChoice: 'specify' # Required when sonarQubeRunAnalysis == True# Options: specify, build
+    #sonarQubeGradlePluginVersion: '2.6.1' # Required when sonarQubeRunAnalysis == True && SqGradlePluginVersionChoice == Specify
+    checkStyleRunAnalysis: true
