@@ -1,4 +1,4 @@
-package com.example.ecocyam;
+package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.ecocyam.Activities.ApplicationEcoCyam;
+import com.example.ecocyam.R;
 import com.example.ecocyam.localDatabase.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
