@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ecocyam.Activities.ApplicationEcoCyam;
 import com.example.ecocyam.localDatabase.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,11 +48,10 @@ public class MainActivity extends AppCompatActivity {
                 .setNeutralButton("Create user",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                if (createUserName.getText().toString().isEmpty() || createPassword.getText().toString().isEmpty()){
+                                if (createUserName.getText().toString().isEmpty() || createPassword.getText().toString().isEmpty()) {
                                     Toast.makeText(MainActivity.this, "No Empty fields", Toast.LENGTH_LONG).show();
 
-                                }
-                                else {
+                                } else {
                                     boolean testCreate = myDB.isUserExist(createUserName.getText().toString());
                                     if (testCreate) {
                                         boolean testInsert = myDB.createUser(createUserName.getText().toString(), createPassword.getText().toString());
@@ -75,12 +76,14 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 boolean testCo = myDB.testConnectionInfo(createUserName.getText().toString(), createPassword.getText().toString());
-                                if (testCo){
+                                if (testCo) {
                                     //open new activity
                                     Toast.makeText(MainActivity.this, "Connection ready", Toast.LENGTH_LONG).show();
-
-                                }
-                                else
+                                    Intent intent = new Intent(MainActivity.this, ApplicationEcoCyam.class);
+                                    // intent.putExtra("id",id);
+                                    MainActivity.this.startActivity(intent);
+                                    finish();
+                                } else
                                     Toast.makeText(MainActivity.this, "Wrong Username or Password", Toast.LENGTH_LONG).show();
 
                             }
@@ -91,30 +94,30 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void selectUser(){
+    public void selectUser() {
         selectB.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Cursor res = myDB.get_data();
-                        if (res.getCount()==0){
+                        if (res.getCount() == 0) {
                             Toast.makeText(MainActivity.this, "insert successfull", Toast.LENGTH_LONG).show();
-                            trace("error","nothing found");
+                            trace("error", "nothing found");
                             return;
                         }
                         StringBuffer buffer = new StringBuffer();
-                        while(res.moveToNext()){
+                        while (res.moveToNext()) {
                             buffer.append("Id : ").append(res.getString(0)).append("\n");
                             buffer.append("Username : ").append(res.getString(1)).append("\n");
                             buffer.append("Password : ").append(res.getString(2)).append("\n\n");
                         }
-                        trace("Data",buffer.toString());
+                        trace("Data", buffer.toString());
                     }
                 }
         );
     }
 
-    public void trace(String title, String message){
+    public void trace(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(title);
