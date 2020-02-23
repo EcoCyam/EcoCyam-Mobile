@@ -15,7 +15,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_NAME = "user_table";
     public static final String COL_ID = "ID";
-    public static final String COL_NAME = "NAME";
+    public static final String COL_EMAIL = "EMAIL";
+    public static final String COL_FISTNAME = "FIRSTNAME";
+    public static final String COL_LASTNAME = "LASTNAME";
     public static final String COL_PASSWORD = "PASSWORD";
 
     public DatabaseHelper(@Nullable Context context) {
@@ -37,11 +39,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean createUser(String user, String password){
+    public boolean createUser(String email, String firstName, String lastName, String password){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         
-        contentValues.put(COL_NAME,user);
+        contentValues.put(COL_EMAIL,email);
+        contentValues.put(COL_FISTNAME,firstName);
+        contentValues.put(COL_LASTNAME,lastName);
         contentValues.put(COL_PASSWORD,password);
 
         long result = db.insert(TABLE_NAME,null,contentValues);
@@ -59,12 +63,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public boolean updateUser(String id,String user, String password){
+    public boolean updateUser(String id,String email, String firstName, String lastName, String password){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_ID,id);
-        contentValues.put(COL_NAME,user);
+        contentValues.put(COL_EMAIL,email);
+        contentValues.put(COL_FISTNAME,firstName);
+        contentValues.put(COL_LASTNAME,lastName);
         contentValues.put(COL_PASSWORD,password);
 
         db.update(TABLE_NAME,contentValues,"ID = ?",new String[] {id});
@@ -77,10 +82,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean isUserExist(String userName) {
+    public boolean isUserUnique(String email) {
         SQLiteDatabase db=this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME + " WHERE NAME=?",new String[] {userName});
+        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME + " WHERE EMAIL=?",new String[] {email});
         if (cursor.getCount()==0){
             return true;
         }
@@ -88,14 +93,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean testConnectionInfo(String userName, String password) {
+    public boolean testConnectionInfo(String email, String password) {
         SQLiteDatabase db=this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME + " WHERE NAME=? AND PASSWORD=?",new String[] {userName,password});
+        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME + " WHERE EMAIL=? AND PASSWORD=?",new String[] {email,password});
         if (cursor.getCount()==0){
             return false;
         }
-        //user is existed
+        //user exist
         return true;
     }
 }

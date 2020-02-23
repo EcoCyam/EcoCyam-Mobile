@@ -14,7 +14,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ecocyam.R;
+import com.example.ecocyam.generatorAlterDialog.AlertDialogGenerator;
 import com.example.ecocyam.localDatabase.DatabaseHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper myDB;
@@ -29,32 +33,89 @@ public class MainActivity extends AppCompatActivity {
 
         myDB = new DatabaseHelper(this);
 
-        openAlertDialogCreation();
+        //   openAlertDialogMoche();
+        openAlertDialogLoogin();
         selectUser();
 
     }
 
-    public void openAlertDialogCreation() {
+    private void openAlertDialogLoogin() {
+        LayoutInflater li = LayoutInflater.from(this);
+        View createUser = li.inflate(R.layout.createuser, null);
+
+        final EditText email = createUser.findViewById(R.id.EditEmail);
+        final EditText firstName = createUser.findViewById(R.id.EditFirstName);
+        final EditText lastName = createUser.findViewById(R.id.EditLastName);
+        final EditText password = createUser.findViewById(R.id.createPassword);
+
+        android.app.AlertDialog.Builder alertDialog = AlertDialogGenerator.createAlertDialog("test", "test", "Cancel", this);
+
+        alertDialog.setView(createUser);
+        alertDialog.setPositiveButton("Sign up", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                List<String> requiredFields = new ArrayList<>();
+                requiredFields.add(email.getText().toString());
+                requiredFields.add(firstName.getText().toString());
+                requiredFields.add(lastName.getText().toString());
+                requiredFields.add(password.getText().toString());
+
+                boolean verifyEmptyRequiredFields = verifyEmptyRequiredFields(requiredFields);
+                boolean verifyUniqueEmail = myDB.isUserUnique(email.getText().toString());
+
+                if (verifyEmptyRequiredFields) {
+                    Toast.makeText(MainActivity.this, "No Empty fields", Toast.LENGTH_LONG).show();
+                    //ne pas fermer l'alert dialog
+
+                } else if (!verifyUniqueEmail) {
+                    Toast.makeText(MainActivity.this, "Email must be unique", Toast.LENGTH_LONG).show();
+                    //ne pas fermer l'alert dialog
+
+                } else {
+                    boolean testInsert = myDB.createUser(email.getText().toString(), firstName.getText().toString(),
+                            lastName.getText().toString(), password.getText().toString());
+
+                    if (testInsert)
+                        Toast.makeText(MainActivity.this, "Creation successfull", Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(MainActivity.this, "Error creation", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        android.app.AlertDialog alert = alertDialog.create();
+        alert.show();
+    }
+
+    private boolean verifyEmptyRequiredFields(List<String> requiredFields) {
+        return (requiredFields.contains(null) || requiredFields.contains(""));
+    }
+
+    
+/*
+    public void openAlertDialogMoche() {
         LayoutInflater li = LayoutInflater.from(this);
         View createUser = li.inflate(R.layout.createuser, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(createUser);
 
-        final EditText createUserName = (EditText) createUser.findViewById(R.id.createUserName);
+        final EditText firstName = (EditText) createUser.findViewById(R.id.EditFirstName);
+        final EditText lastName = (EditText) createUser.findViewById(R.id.EditLastName);
         final EditText createPassword = (EditText) createUser.findViewById(R.id.createPassword);
+
 // créer alertDialog avec un builder et/ou avec une méthode
         alertDialogBuilder
                 .setCancelable(false)
                 .setNeutralButton("Create user",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                if (createUserName.getText().toString().isEmpty() || createPassword.getText().toString().isEmpty()) {
+                                if (firstName.getText().toString().isEmpty() || createPassword.getText().toString().isEmpty()) {
                                     Toast.makeText(MainActivity.this, "No Empty fields", Toast.LENGTH_LONG).show();
 
                                 } else {
-                                    boolean testCreate = myDB.isUserExist(createUserName.getText().toString());
+                                    boolean testCreate = myDB.isUserExist(firstName.getText().toString());
                                     if (testCreate) {
-                                        boolean testInsert = myDB.createUser(createUserName.getText().toString(), createPassword.getText().toString());
+                                        boolean testInsert = myDB.createUser(firstName.getText().toString(), createPassword.getText().toString());
                                         if (testInsert)
                                             Toast.makeText(MainActivity.this, "Creation successfull", Toast.LENGTH_LONG).show();
                                         else
@@ -75,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                boolean testCo = myDB.testConnectionInfo(createUserName.getText().toString(), createPassword.getText().toString());
+                                boolean testCo = myDB.testConnectionInfo(firstName.getText().toString(), createPassword.getText().toString());
                                 if (testCo) {
                                     //open new activity
                                     Toast.makeText(MainActivity.this, "Connection ready", Toast.LENGTH_LONG).show();
@@ -92,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }
+    }*/
 
     public void selectUser() {
         selectB.setOnClickListener(
