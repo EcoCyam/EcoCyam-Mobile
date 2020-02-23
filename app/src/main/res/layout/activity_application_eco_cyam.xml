@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:text="New activity !"
+    android:background="#F9FBFF"
     tools:context=".activities.ApplicationEcoCyam">
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

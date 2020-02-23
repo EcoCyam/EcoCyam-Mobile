@@ -4,8 +4,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -20,13 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
     DatabaseHelper myDB;
-    Button selectB;
+    private Button selectB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         selectB = (Button) findViewById(R.id.select);
 
@@ -68,21 +72,21 @@ public class MainActivity extends AppCompatActivity {
                         requiredFields.add(lastName.getText().toString());
                         requiredFields.add(password.getText().toString());
 
-                        closeLoginAlert=createUserAlertDialog(requiredFields);
+                        closeLoginAlert = createUserAlertDialog(requiredFields);
 
-                        if (closeLoginAlert){
+                        if (closeLoginAlert) {
                             dialog.dismiss();
                         }
                     }
                 });
-                    }
-                });
+            }
+        });
 
         alert.show();
     }
 
 
-    public boolean createUserAlertDialog(List<String> fields){
+    public boolean createUserAlertDialog(List<String> fields) {
 
         boolean verifyEmptyRequiredFields = verifyEmptyRequiredFields(fields);
         boolean verifyUniqueEmail = myDB.isUserUnique(fields.get(0));
