@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean closeLoginAlert = false;
+                        boolean closeLoginAlert;
 
                         List<String> requiredFields = new ArrayList<>();
                         requiredFields.add(email.getText().toString());
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         requiredFields.add(lastName.getText().toString());
                         requiredFields.add(password.getText().toString());
 
-                        closeLoginAlert=createUser(requiredFields);
+                        closeLoginAlert=createUserAlertDialog(requiredFields);
 
                         if (closeLoginAlert){
                             dialog.dismiss();
@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public boolean createUser(List<String> fields){
+
+    public boolean createUserAlertDialog(List<String> fields){
 
         boolean verifyEmptyRequiredFields = verifyEmptyRequiredFields(fields);
         boolean verifyUniqueEmail = myDB.isUserUnique(fields.get(0));
