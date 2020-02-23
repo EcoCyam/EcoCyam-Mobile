@@ -1,13 +1,11 @@
-package com.example.ecocyam.generatorAlterDialog;
+package com.example.ecocyam.generator;
 
 
-import android.app.AlertDialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
-import android.view.LayoutInflater;
-import android.view.View;
 
-import com.example.ecocyam.R;
+import androidx.appcompat.app.AlertDialog;
 
 public class AlertDialogGenerator {
 

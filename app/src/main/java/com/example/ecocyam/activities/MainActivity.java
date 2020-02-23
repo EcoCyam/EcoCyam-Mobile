@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ecocyam.R;
-import com.example.ecocyam.generatorAlterDialog.AlertDialogGenerator;
+import com.example.ecocyam.generator.AlertDialogGenerator;
 import com.example.ecocyam.localDatabase.DatabaseHelper;
 
 import java.util.ArrayList;
@@ -39,59 +38,79 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void openAlertDialogLoogin() {
+    public void openAlertDialogLoogin() {
         LayoutInflater li = LayoutInflater.from(this);
-        View createUser = li.inflate(R.layout.createuser, null);
+        final View createUser = li.inflate(R.layout.createuser, null);
 
         final EditText email = createUser.findViewById(R.id.EditEmail);
         final EditText firstName = createUser.findViewById(R.id.EditFirstName);
         final EditText lastName = createUser.findViewById(R.id.EditLastName);
         final EditText password = createUser.findViewById(R.id.createPassword);
 
-        android.app.AlertDialog.Builder alertDialog = AlertDialogGenerator.createAlertDialog("test", "test", "Cancel", this);
+        AlertDialog.Builder alertDialog = AlertDialogGenerator.createAlertDialog("test", "test", "Cancel", this);
 
         alertDialog.setView(createUser);
-        alertDialog.setPositiveButton("Sign up", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("Sign up", null);
+        AlertDialog alert = alertDialog.create();
+
+        alert.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onShow(final DialogInterface dialog) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean closeLoginAlert = false;
 
-                List<String> requiredFields = new ArrayList<>();
-                requiredFields.add(email.getText().toString());
-                requiredFields.add(firstName.getText().toString());
-                requiredFields.add(lastName.getText().toString());
-                requiredFields.add(password.getText().toString());
+                        List<String> requiredFields = new ArrayList<>();
+                        requiredFields.add(email.getText().toString());
+                        requiredFields.add(firstName.getText().toString());
+                        requiredFields.add(lastName.getText().toString());
+                        requiredFields.add(password.getText().toString());
 
-                boolean verifyEmptyRequiredFields = verifyEmptyRequiredFields(requiredFields);
-                boolean verifyUniqueEmail = myDB.isUserUnique(email.getText().toString());
+                        closeLoginAlert=createUser(requiredFields);
 
-                if (verifyEmptyRequiredFields) {
-                    Toast.makeText(MainActivity.this, "No Empty fields", Toast.LENGTH_LONG).show();
-                    //ne pas fermer l'alert dialog
+                        if (closeLoginAlert){
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                    }
+                });
 
-                } else if (!verifyUniqueEmail) {
-                    Toast.makeText(MainActivity.this, "Email must be unique", Toast.LENGTH_LONG).show();
-                    //ne pas fermer l'alert dialog
-
-                } else {
-                    boolean testInsert = myDB.createUser(email.getText().toString(), firstName.getText().toString(),
-                            lastName.getText().toString(), password.getText().toString());
-
-                    if (testInsert)
-                        Toast.makeText(MainActivity.this, "Creation successfull", Toast.LENGTH_LONG).show();
-                    else
-                        Toast.makeText(MainActivity.this, "Error creation", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        android.app.AlertDialog alert = alertDialog.create();
         alert.show();
     }
 
-    private boolean verifyEmptyRequiredFields(List<String> requiredFields) {
+    public boolean createUser(List<String> fields){
+
+        boolean verifyEmptyRequiredFields = verifyEmptyRequiredFields(fields);
+        boolean verifyUniqueEmail = myDB.isUserUnique(fields.get(0));
+
+        if (verifyEmptyRequiredFields) {
+            Toast.makeText(MainActivity.this, "No Empty fields", Toast.LENGTH_LONG).show();
+            return false;
+
+        } else if (!verifyUniqueEmail) {
+            Toast.makeText(MainActivity.this, "Email must be unique", Toast.LENGTH_LONG).show();
+            return false;
+
+        } else {
+            boolean testInsert = myDB.createUser(fields.get(0), fields.get(1),
+                    fields.get(2), fields.get(3));
+
+            if (testInsert)
+                Toast.makeText(MainActivity.this, "Creation successfull", Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(MainActivity.this, "Error creation", Toast.LENGTH_LONG).show();
+            return true;
+        }
+    }
+
+    public boolean verifyEmptyRequiredFields(List<String> requiredFields) {
         return (requiredFields.contains(null) || requiredFields.contains(""));
     }
 
-    
+
 /*
     public void openAlertDialogMoche() {
         LayoutInflater li = LayoutInflater.from(this);
@@ -169,8 +188,10 @@ public class MainActivity extends AppCompatActivity {
                         StringBuffer buffer = new StringBuffer();
                         while (res.moveToNext()) {
                             buffer.append("Id : ").append(res.getString(0)).append("\n");
-                            buffer.append("Username : ").append(res.getString(1)).append("\n");
-                            buffer.append("Password : ").append(res.getString(2)).append("\n\n");
+                            buffer.append("EMAIL : ").append(res.getString(1)).append("\n");
+                            buffer.append("FIRSTNAME : ").append(res.getString(2)).append("\n");
+                            buffer.append("LASTNAME : ").append(res.getString(3)).append("\n");
+                            buffer.append("Password : ").append(res.getString(4)).append("\n\n");
                         }
                         trace("Data", buffer.toString());
                     }
