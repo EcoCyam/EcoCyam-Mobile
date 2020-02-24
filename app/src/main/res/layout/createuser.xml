@@ -10,7 +10,7 @@
         android:id="@+id/TextEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="@string/email"
         android:layout_marginTop="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -23,7 +23,7 @@
         android:id="@+id/TextFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="First Name"
+        android:text="@string/first_name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
@@ -35,7 +35,7 @@
         android:id="@+id/TextLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Last Name"
+        android:text="@string/last_name"
         android:layout_marginTop="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -48,7 +48,7 @@
         android:id="@+id/TextcreatePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Password"
+        android:text="@string/password"
         android:layout_marginTop="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
