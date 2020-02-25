@@ -4,10 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Configuration;
-import android.database.Cursor;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,9 +19,8 @@ import com.example.ecocyam.localDatabase.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     DatabaseHelper myDB;
     private Button selectB;
@@ -32,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login_activity);
 
         ConstraintLayout constraintLayout = findViewById(R.id.gradient_id);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
@@ -102,11 +98,11 @@ public class MainActivity extends AppCompatActivity {
         boolean verifyUniqueEmail = myDB.isUserUnique(fields.get(0));
 
         if (verifyEmptyRequiredFields) {
-            Toast.makeText(MainActivity.this, "No Empty fields", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "No Empty fields", Toast.LENGTH_LONG).show();
             return false;
 
         } else if (!verifyUniqueEmail) {
-            Toast.makeText(MainActivity.this, "Email must be unique", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "Email must be unique", Toast.LENGTH_LONG).show();
             return false;
 
         } else {
@@ -114,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
                     fields.get(2), fields.get(3));
 
             if (testInsert)
-                Toast.makeText(MainActivity.this, "Creation successfull", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Creation successfull", Toast.LENGTH_LONG).show();
             else
-                Toast.makeText(MainActivity.this, "Error creation", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Error creation", Toast.LENGTH_LONG).show();
             return true;
         }
     }
@@ -144,18 +140,18 @@ public class MainActivity extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 if (firstName.getText().toString().isEmpty() || createPassword.getText().toString().isEmpty()) {
-                                    Toast.makeText(MainActivity.this, "No Empty fields", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, "No Empty fields", Toast.LENGTH_LONG).show();
 
                                 } else {
                                     boolean testCreate = myDB.isUserExist(firstName.getText().toString());
                                     if (testCreate) {
                                         boolean testInsert = myDB.createUser(firstName.getText().toString(), createPassword.getText().toString());
                                         if (testInsert)
-                                            Toast.makeText(MainActivity.this, "Creation successfull", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(LoginActivity.this, "Creation successfull", Toast.LENGTH_LONG).show();
                                         else
-                                            Toast.makeText(MainActivity.this, "Error creation", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(LoginActivity.this, "Error creation", Toast.LENGTH_LONG).show();
                                     } else
-                                        Toast.makeText(MainActivity.this, "User name already exists", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(LoginActivity.this, "User name already exists", Toast.LENGTH_LONG).show();
                                 }
 
                             }
@@ -173,13 +169,13 @@ public class MainActivity extends AppCompatActivity {
                                 boolean testCo = myDB.testConnectionInfo(firstName.getText().toString(), createPassword.getText().toString());
                                 if (testCo) {
                                     //open new activity
-                                    Toast.makeText(MainActivity.this, "Connection ready", Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(MainActivity.this, ApplicationEcoCyam.class);
+                                    Toast.makeText(LoginActivity.this, "Connection ready", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(LoginActivity.this, ApplicationEcoCyam.class);
                                     // intent.putExtra("id",id);
-                                    MainActivity.this.startActivity(intent);
+                                    LoginActivity.this.startActivity(intent);
                                     finish();
                                 } else
-                                    Toast.makeText(MainActivity.this, "Wrong Username or Password", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, "Wrong Username or Password", Toast.LENGTH_LONG).show();
 
                             }
                         })
@@ -196,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Cursor res = myDB.get_data();
                         if (res.getCount() == 0) {
-                            Toast.makeText(MainActivity.this, "insert successfull", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "insert successfull", Toast.LENGTH_LONG).show();
                             trace("error", "nothing found");
                             return;
                         }

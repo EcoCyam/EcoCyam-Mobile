@@ -10,15 +10,15 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "ecocyam.db";
-    public static final int VERSION = 2;
+    private static final String DATABASE_NAME = "ecocyam.db";
+    private static final int VERSION = 2;
 
-    public static final String TABLE_NAME = "user_table";
-    public static final String COL_ID = "ID";
-    public static final String COL_EMAIL = "EMAIL";
-    public static final String COL_FISTNAME = "FIRSTNAME";
-    public static final String COL_LASTNAME = "LASTNAME";
-    public static final String COL_PASSWORD = "PASSWORD";
+    private static final String TABLE_NAME = "user_table";
+    private static final String COL_ID = "ID";
+    private static final String COL_EMAIL = "EMAIL";
+    private static final String COL_FISTNAME = "FIRSTNAME";
+    private static final String COL_LASTNAME = "LASTNAME";
+    private static final String COL_PASSWORD = "PASSWORD";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -50,17 +50,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(TABLE_NAME,null,contentValues);
 
-        if (result==-1)
-            return false;
-        else
-            return true;
+        return result != -1;
 
     }
 
     public Cursor get_data(){
         SQLiteDatabase db=this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME,null);
-        return cursor;
+        return db.rawQuery("SELECT * FROM "+TABLE_NAME,null);
     }
 
     public boolean updateUser(String id,String email, String firstName, String lastName, String password){
@@ -86,21 +82,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db=this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME + " WHERE EMAIL=?",new String[] {email});
-        if (cursor.getCount()==0){
-            return true;
-        }
+        return cursor.getCount() == 0;
         //user already exists
-        return false;
     }
 
     public boolean testConnectionInfo(String email, String password) {
         SQLiteDatabase db=this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME + " WHERE EMAIL=? AND PASSWORD=?",new String[] {email,password});
-        if (cursor.getCount()==0){
-            return false;
-        }
+        return cursor.getCount() != 0;
         //user exist
-        return true;
     }
 }
