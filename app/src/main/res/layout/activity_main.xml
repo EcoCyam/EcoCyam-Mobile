@@ -41,14 +41,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewLogo">
+        app:layout_constraintTop_toBottomOf="@id/imageViewLogo"
+        android:gravity="center_horizontal">
 
 
         <TextView
             android:id="@+id/textviewMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Menu"
             android:textSize="16sp" />
@@ -147,10 +147,10 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewScan"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="36dp"
         android:src="@drawable/barcodelaticon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -158,24 +158,24 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Scannez votre produit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewScan" />
 
     <View
         android:id="@+id/viewbottom"
         android:layout_width="188dp"
         android:layout_height="72dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/bottommain"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
