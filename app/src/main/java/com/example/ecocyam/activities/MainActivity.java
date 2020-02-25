@@ -34,19 +34,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ConstraintLayout constraintLayout = findViewById(R.id.gradient_id);
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
 
-        selectB = (Button) findViewById(R.id.select);
+
+      //  selectB = (Button) findViewById(R.id.select);
 
         myDB = new DatabaseHelper(this);
 
         //   openAlertDialogMoche();
-        openAlertDialogLoogin();
-        selectUser();
+      //  openAlertDialogLogin();
+      //  selectUser();
 
     }
 
 
-    public void openAlertDialogLoogin() {
+    public void openAlertDialogLogin() {
         LayoutInflater li = LayoutInflater.from(this);
         final View createUser = li.inflate(R.layout.createuser, null);
 
@@ -181,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-    }*/
+    }
 
     public void selectUser() {
         selectB.setOnClickListener(
@@ -207,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
-
+*/
     public void trace(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
