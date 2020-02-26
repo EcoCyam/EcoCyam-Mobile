@@ -6,4 +6,7 @@
     <string name="last_name">Nom</string>
     <string name="password">Mot de passe</string>
     <string name="register_here">Register here</string>
+    <string name="login">Connexion</string>
+    <string name="createAccount">Créer Compte</string>
+    <string name="msgNewAccount">Bienvenue sur EcoCyam</string>
 </resources>

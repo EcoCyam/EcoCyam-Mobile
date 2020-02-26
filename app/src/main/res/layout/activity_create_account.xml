@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_front_list"
-    tools:context=".activities.LoginActivity">
+    tools:context=".activities.CreateAccountActivity">
     <!--
     <Button
         android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
         android:layout_height="35dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="116dp"
+        android:layout_marginStart="96dp"
         android:background="@drawable/roundedittext"
         android:drawableStart="@drawable/ic_account_user"
         android:ems="10"
@@ -49,7 +49,41 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewSaveWorld"
-        app:layout_constraintVertical_bias="0.234" />
+        app:layout_constraintVertical_bias="0.201" />
+
+    <EditText
+        android:id="@+id/editTextFirstName"
+        android:layout_width="197dp"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="96dp"
+        android:background="@drawable/roundedittext"
+        android:drawableStart="@drawable/ic_perm_identity"
+        android:ems="10"
+        android:hint="@string/first_name"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSaveWorld"
+        app:layout_constraintVertical_bias="0.33" />
+
+    <EditText
+        android:id="@+id/editTextLastName"
+        android:layout_width="197dp"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="96dp"
+        android:background="@drawable/roundedittext"
+        android:drawableStart="@drawable/ic_perm_identity"
+        android:ems="10"
+        android:hint="@string/last_name"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSaveWorld"
+        app:layout_constraintVertical_bias="0.44" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -58,14 +92,14 @@
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="404dp"
+        android:layout_marginTop="508dp"
         android:background="@drawable/roundedittext"
         android:drawableStart="@drawable/ic_lock"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,11 +108,12 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="496dp"
+        android:layout_marginTop="560dp"
         android:layout_marginEnd="1dp"
         app:cardBackgroundColor="@color/colorPrimaryDark"
         app:cardCornerRadius="25dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -92,13 +127,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="83dp"
+                android:layout_marginStart="47dp"
                 android:layout_marginBottom="16dp"
-                android:text="@string/login"
+                android:text="@string/createAccount"
                 android:textColor="#fff"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -116,36 +152,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewNotRegisterYet"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
         android:layout_marginTop="28dp"
-        app:cardBackgroundColor="@color/colorPrimary"
-        app:cardCornerRadius="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        android:textSize="16sp"
+        android:textColor="#fff"
+        android:text="@string/msgNewAccount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewLogin">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="56dp"
-                android:layout_marginBottom="12dp"
-                android:text="@string/register_here"
-                android:textColor="#fff"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@+id/imageViewSaveWorld" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

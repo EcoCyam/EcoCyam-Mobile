@@ -5,4 +5,7 @@
     <string name="last_name">Last Name</string>
     <string name="password">Password</string>
     <string name="register_here">Register here</string>
+    <string name="login">Login</string>
+    <string name="createAccount">Create Account</string>
+    <string name="msgNewAccount">Welcome in EcoCyam</string>
 </resources>

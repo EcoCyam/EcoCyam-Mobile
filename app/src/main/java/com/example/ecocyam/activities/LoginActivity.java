@@ -2,9 +2,11 @@ package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,6 +37,17 @@ public class LoginActivity extends AppCompatActivity {
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
+
+        CardView cardViewNotRegister = findViewById(R.id.cardViewNotRegisterYet);
+        cardViewNotRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+                // intent.putExtra("id",id);
+                LoginActivity.this.startActivity(intent);
+                finish();
+            }
+        });
 
 
       //  selectB = (Button) findViewById(R.id.select);
