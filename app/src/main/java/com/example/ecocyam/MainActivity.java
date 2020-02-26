@@ -10,22 +10,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.sql.Connection;
-
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class MainActivity extends AppCompatActivity {
-    ImageView imageViewScan;
-    public static TextView textViewScan; //a modifier plus tard tkt
-    Animation atg, atgtwo;
+    /* default */ImageView imageViewScan;
+    /* default */ public static TextView textViewScan; //a modifier plus tard tkt
+    /* default */ Animation atg, atgtwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_main);
 
         //-------Animation à l'ouverture de la page--------
         imageViewScan = findViewById(R.id.imageViewScan);

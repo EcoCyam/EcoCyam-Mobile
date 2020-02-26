@@ -16,16 +16,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ecocyam.R;
+import com.example.ecocyam.entities.User;
 import com.example.ecocyam.generator.AlertDialogGenerator;
-import com.example.ecocyam.localDatabase.DatabaseHelper;
+import com.example.ecocyam.localdatabase.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    DatabaseHelper myDB;
-    private Button selectB;
+    /* default */ DatabaseHelper myDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-      //  selectB = (Button) findViewById(R.id.select);
-
-        myDB = new DatabaseHelper(this);
+        /* default */ myDB = new DatabaseHelper(this);
 
         //   openAlertDialogMoche();
       //  openAlertDialogLogin();
@@ -111,21 +109,22 @@ public class LoginActivity extends AppCompatActivity {
         boolean verifyUniqueEmail = myDB.isUserUnique(fields.get(0));
 
         if (verifyEmptyRequiredFields) {
-            Toast.makeText(LoginActivity.this, "No Empty fields", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No Empty fields", Toast.LENGTH_LONG).show();
             return false;
 
         } else if (!verifyUniqueEmail) {
-            Toast.makeText(LoginActivity.this, "Email must be unique", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Email must be unique", Toast.LENGTH_LONG).show();
             return false;
 
         } else {
-            boolean testInsert = myDB.createUser(fields.get(0), fields.get(1),
+            User user = new User(fields.get(0), fields.get(1),
                     fields.get(2), fields.get(3));
+            boolean testInsert = myDB.createUser(user);
 
             if (testInsert)
-                Toast.makeText(LoginActivity.this, "Creation successfull", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Creation successfull", Toast.LENGTH_LONG).show();
             else
-                Toast.makeText(LoginActivity.this, "Error creation", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Error creation", Toast.LENGTH_LONG).show();
             return true;
         }
     }

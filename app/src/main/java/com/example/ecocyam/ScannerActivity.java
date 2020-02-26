@@ -16,7 +16,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
-    ZXingScannerView ScannerView;
+    /* default */ ZXingScannerView ScannerView;
     private static final int CAMERA_PERMISSION_CODE = 100;
 
     @Override
@@ -50,15 +50,15 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
 
     public void checkPermission(String permission, int requestCode) {
-        if (ContextCompat.checkSelfPermission(ScannerActivity.this, permission)
+        if (ContextCompat.checkSelfPermission(this, permission)
                 == PackageManager.PERMISSION_DENIED) {
 
             // Requesting the permission
-            ActivityCompat.requestPermissions(ScannerActivity.this,
+            ActivityCompat.requestPermissions(this,
                     new String[]{permission},
                     requestCode);
         } else {
-            Toast.makeText(ScannerActivity.this,
+            Toast.makeText(this,
                     "Permission already granted",
                     Toast.LENGTH_SHORT)
                     .show();
@@ -77,12 +77,12 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(ScannerActivity.this,
+                Toast.makeText(this,
                         "Camera Permission Granted",
                         Toast.LENGTH_SHORT)
                         .show();
             } else {
-                Toast.makeText(ScannerActivity.this,
+                Toast.makeText(this,
                         "Camera Permission Denied",
                         Toast.LENGTH_SHORT)
                         .show();

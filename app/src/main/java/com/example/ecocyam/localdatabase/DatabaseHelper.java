@@ -1,4 +1,4 @@
-package com.example.ecocyam.localDatabase;
+package com.example.ecocyam.localdatabase;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,13 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.ecocyam.entities.User;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "ecocyam.db";
     private static final int VERSION = 2;
 
     private static final String TABLE_NAME = "user_table";
-    private static final String COL_ID = "ID";
     private static final String COL_EMAIL = "EMAIL";
     private static final String COL_FISTNAME = "FIRSTNAME";
     private static final String COL_LASTNAME = "LASTNAME";
@@ -39,14 +40,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean createUser(String email, String firstName, String lastName, String password){
+    public boolean createUser(User user){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        
-        contentValues.put(COL_EMAIL,email);
-        contentValues.put(COL_FISTNAME,firstName);
-        contentValues.put(COL_LASTNAME,lastName);
-        contentValues.put(COL_PASSWORD,password);
+
+        contentValues.put(COL_EMAIL,user.getEmail());
+        contentValues.put(COL_FISTNAME,user.getFirstName());
+        contentValues.put(COL_LASTNAME,user.getLastName());
+        contentValues.put(COL_PASSWORD,user.getPassword());
 
         long result = db.insert(TABLE_NAME,null,contentValues);
 
@@ -54,21 +55,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor get_data(){
+    public Cursor getData(){
         SQLiteDatabase db=this.getWritableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_NAME,null);
     }
 
-    public boolean updateUser(String id,String email, String firstName, String lastName, String password){
+    public boolean updateUser(User user){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_EMAIL,email);
-        contentValues.put(COL_FISTNAME,firstName);
-        contentValues.put(COL_LASTNAME,lastName);
-        contentValues.put(COL_PASSWORD,password);
+        contentValues.put(COL_EMAIL,user.getEmail());
+        contentValues.put(COL_FISTNAME,user.getFirstName());
+        contentValues.put(COL_LASTNAME,user.getLastName());
+        contentValues.put(COL_PASSWORD,user.getPassword());
 
-        db.update(TABLE_NAME,contentValues,"ID = ?",new String[] {id});
+        db.update(TABLE_NAME,contentValues,"ID = ?",new String[] {String.valueOf(user.getId())});
         return true;
     }
 
@@ -86,7 +87,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //user already exists
     }
 
-    public boolean testConnectionInfo(String email, String password) {
+
+    public boolean verifyConnectionInfo(String email, String password) {
         SQLiteDatabase db=this.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME + " WHERE EMAIL=? AND PASSWORD=?",new String[] {email,password});

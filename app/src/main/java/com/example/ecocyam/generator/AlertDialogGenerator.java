@@ -7,7 +7,11 @@ import android.content.DialogInterface;
 
 import androidx.appcompat.app.AlertDialog;
 
-public class AlertDialogGenerator {
+public final class AlertDialogGenerator {
+
+    private AlertDialogGenerator(){
+
+    }
 
     public static AlertDialog.Builder createAlertDialog(String title, String message, String negativeButton,
                                                         Context context) {
