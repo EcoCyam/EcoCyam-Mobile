@@ -12,6 +12,7 @@
         <activity android:name=".activities.CreateAccountActivity"></activity>
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".ScannerActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

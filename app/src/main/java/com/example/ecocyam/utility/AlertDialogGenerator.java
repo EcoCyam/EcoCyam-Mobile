@@ -1,4 +1,4 @@
-package com.example.ecocyam.generator;
+package com.example.ecocyam.utility;
 
 
 

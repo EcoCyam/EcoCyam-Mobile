@@ -15,10 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ecocyam.MainActivity;
 import com.example.ecocyam.R;
 import com.example.ecocyam.entities.User;
-import com.example.ecocyam.generator.AlertDialogGenerator;
+import com.example.ecocyam.utility.AlertDialogGenerator;
 import com.example.ecocyam.localdatabase.DatabaseHelper;
+import com.example.ecocyam.utility.ConnectionTo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +40,20 @@ public class LoginActivity extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
 
+        CardView cardViewConnect = findViewById(R.id.cardViewLogin);
+        cardViewConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectionTo.switchActivity(getApplicationContext(), MainActivity.class);
+            }
+        });
+
+
         CardView cardViewNotRegister = findViewById(R.id.cardViewNotRegisterYet);
         cardViewNotRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
-                // intent.putExtra("id",id);
-                LoginActivity.this.startActivity(intent);
+                ConnectionTo.switchActivity(getApplicationContext(),CreateAccountActivity.class);
                 finish();
             }
         });
