@@ -6,7 +6,6 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -54,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ConnectionTo.switchActivity(getApplicationContext(),CreateAccountActivity.class);
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
                 finish();
             }
         });

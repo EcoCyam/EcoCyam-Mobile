@@ -1,12 +1,16 @@
 package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.view.View;
 
+import com.example.ecocyam.MainActivity;
 import com.example.ecocyam.R;
+import com.example.ecocyam.utility.ConnectionTo;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -20,5 +24,15 @@ public class CreateAccountActivity extends AppCompatActivity {
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
+
+        CardView cardViewCreate = findViewById(R.id.cardViewLogin);
+        cardViewCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectionTo.switchActivity(getApplicationContext(), MainActivity.class);
+                finish();
+            }
+        });
     }
+
 }
