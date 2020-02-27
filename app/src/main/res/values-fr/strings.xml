@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EcoCyam</string>
+    <string name="email">Email</string>
+    <string name="first_name">Prénom</string>
+    <string name="last_name">Nom</string>
+    <string name="password">Mot de passe</string>
+    <string name="register_here">Register here</string>
+    <string name="login">Connexion</string>
+    <string name="createAccount">Créer Compte</string>
+    <string name="msgNewAccount">Bienvenue sur EcoCyam</string>
+</resources>
