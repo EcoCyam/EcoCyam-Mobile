@@ -1,4 +1,4 @@
-package com.example.ecocyam;
+package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.ecocyam.R;
 
 
 public class MainActivity extends AppCompatActivity {

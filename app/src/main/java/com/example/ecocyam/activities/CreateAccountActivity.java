@@ -8,7 +8,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.ecocyam.MainActivity;
 import com.example.ecocyam.R;
 import com.example.ecocyam.utility.ConnectionTo;
 

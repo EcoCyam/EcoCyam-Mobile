@@ -9,7 +9,7 @@ public final class ConnectionTo {
 
     private ConnectionTo(){}
 
-    public static void switchActivity(Context context,Class to){
+    public static void switchActivity(Context context,Class to){ //rajouter une map de put extra ?
         Intent intent = new Intent(context, to);
         // intent.putExtra("id",id);
         context.startActivity(intent);

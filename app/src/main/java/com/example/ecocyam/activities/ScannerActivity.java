@@ -1,4 +1,4 @@
-package com.example.ecocyam;
+package com.example.ecocyam.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
