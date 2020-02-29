@@ -1,6 +1,7 @@
 package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ecocyam.R;
+import com.example.ecocyam.fragment.AboutUsFragment;
+import com.example.ecocyam.fragment.ExploreFragment;
+import com.example.ecocyam.fragment.StoreFragment;
+import com.example.ecocyam.fragment.ViewPagerAdapter;
+import com.example.ecocyam.utility.ConnectionTo;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabLayout;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,7 +47,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ImageView logo = findViewById(R.id.imageViewLogo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectionTo.switchActivity(getApplicationContext(),AboutUsActivity.class);
+            }
+        });
+
     }
+
 
 
 }

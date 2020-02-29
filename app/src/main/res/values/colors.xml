@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#44E6C6</color>
     <color name="colorAccent">#D81B60</color>
     <color name="greenSaveAWorld">#074747</color>
+    <color name="tabTextColorAboutUs">#fff</color>
+    <color name="tabIndicatorColorAbousUs">#2d2d2d</color>
 </resources>
