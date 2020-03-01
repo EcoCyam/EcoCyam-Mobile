@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class ProductHistory {
 
-    private int id;
-    private String title;
-    private String marque;
-    private double rating;
-    private String dateScan;
-    private int image;
+    /* default */ private int id;
+    /* default */ private String title;
+    /* default */ private String marque;
+    /* default */ private double rating;
+    /* default */ private String dateScan;
+    /* default */ private int image;
 
     public ProductHistory(int id, String title, String marque, double rating, String dateScan, int image) {
         this.id = id;
