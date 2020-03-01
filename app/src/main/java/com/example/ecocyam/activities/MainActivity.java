@@ -1,4 +1,4 @@
-﻿package com.example.ecocyam.activities;
+package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.ecocyam.HistoryActivity;
 import com.example.ecocyam.R;
 import com.example.ecocyam.utility.ConnectionTo;
 
