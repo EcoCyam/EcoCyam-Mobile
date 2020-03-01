@@ -32,12 +32,12 @@
     <!-- search item-->
     <LinearLayout
         android:id="@+id/linearLayoutSearch"
-        android:layout_width="370dp"
-        android:layout_height="95dp"
+        android:layout_width="372dp"
+        android:layout_height="77dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/photoshoprectangleblanc"
+        android:background="@drawable/photoshoprectangleblancresearch"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,11 +46,11 @@
         app:layout_constraintTop_toTopOf="@+id/linearLayout">
 
 
-        <TextView
-            android:id="@+id/textviewSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+        <SearchView
+            android:id="@+id/searchViewMain"
+            android:layout_width="323dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="5dp"
             android:text="Recherche"
             android:textSize="16sp" />
     </LinearLayout>
@@ -161,7 +161,7 @@
         android:id="@+id/imageViewScan"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:src="@drawable/barcodelaticon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
