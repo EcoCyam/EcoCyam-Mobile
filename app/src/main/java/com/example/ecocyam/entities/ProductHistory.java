@@ -1,7 +1,5 @@
 package com.example.ecocyam.entities;
 
-import java.util.Date;
-
 public class ProductHistory {
 
     /* default */ private int id;

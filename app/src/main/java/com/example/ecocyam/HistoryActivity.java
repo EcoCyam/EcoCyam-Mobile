@@ -14,10 +14,10 @@ import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
     //a list to store all the products
-    List<ProductHistory> productList;
+    /* default */ List<ProductHistory> productList;
 
     //the recyclerview
-    RecyclerView recyclerView;
+    /* default */ RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

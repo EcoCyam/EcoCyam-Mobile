@@ -17,14 +17,11 @@ import java.util.List;
 public class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHistoryAdapter.ProductViewHolder> {
 
 
-    //this context we will use to inflate the layout
-    private Context mCtx;
+    /* default */private Context mCtx;
+    /* default */private List<ProductHistory> productList;
 
-    //we are storing all the products in a list
-    private List<ProductHistory> productList;
-
-    //getting the context and product list with constructor
     public ProductHistoryAdapter(Context mCtx, List<ProductHistory> productList) {
+        super();
         this.mCtx = mCtx;
         this.productList = productList;
     }
@@ -59,10 +56,10 @@ public class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHistoryAd
     }
 
 
-    class ProductViewHolder extends RecyclerView.ViewHolder {
+    /* default */class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewTitleProductHistory, textViewProductHistoryMarque, textViewRatingProductHistory, textViewProductDateScanHistory;
-        ImageView imageViewProductHistory;
+        /* default */ TextView textViewTitleProductHistory, textViewProductHistoryMarque, textViewRatingProductHistory, textViewProductDateScanHistory;
+        /* default */ ImageView imageViewProductHistory;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
