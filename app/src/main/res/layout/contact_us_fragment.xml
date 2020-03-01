@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/subject_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLength="78"
+        android:textStyle="bold"
+        android:hint="@string/email_subject"/>
+
+    <EditText
+        android:id="@+id/message_email"
+        android:layout_width="match_parent"
+        android:maxLength="750"
+        android:layout_height="wrap_content"
+        android:hint="@string/email_message"
+        android:textSize="18sp"
+        android:lines="10"
+        android:background="@drawable/edit_text_border"
+        android:gravity="start|top"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/button_send_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/send_email"
+        android:background="@color/greenSaveAWorld"/>
+
+</LinearLayout>

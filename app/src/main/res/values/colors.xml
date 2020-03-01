@@ -6,4 +6,5 @@
     <color name="greenSaveAWorld">#074747</color>
     <color name="tabTextColorAboutUs">#fff</color>
     <color name="tabIndicatorColorAbousUs">#2d2d2d</color>
+    <color name="blackColor">#262626</color>
 </resources>

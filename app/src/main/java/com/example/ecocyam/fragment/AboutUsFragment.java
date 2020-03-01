@@ -12,14 +12,13 @@ import androidx.fragment.app.Fragment;
 import com.example.ecocyam.R;
 
 public class AboutUsFragment extends Fragment {
+
     /* default */View view;
-    public AboutUsFragment() {
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.about_us_fragment,container,false);
+        view = inflater.inflate(R.layout.about_us_us_fragment,container,false);
         return view;
     }
 }
