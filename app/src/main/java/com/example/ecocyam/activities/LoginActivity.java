@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.ecocyam.MainActivity;
 import com.example.ecocyam.R;
 import com.example.ecocyam.entities.User;
 import com.example.ecocyam.utility.AlertDialogGenerator;

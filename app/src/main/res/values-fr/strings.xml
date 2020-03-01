@@ -9,4 +9,10 @@
     <string name="login">Connexion</string>
     <string name="createAccount">Créer Compte</string>
     <string name="msgNewAccount">Bienvenue sur EcoCyam</string>
+    <string name="ecoCyam_info">Ecocyam vous permet de scanner vos produits afin de voir leurs notes écologiques.
+        Si le produit n est pas encore enregistrer, vous pouvez enregistrer ses caractéristiques. </string>
+    <string name="about_us">Nous sommes 4 étudiants à l université de Nanterre</string>
+    <string name="email_message">Contenu de votre message : dites nous tout ce que vous voulez !</string>
+    <string name="send_email">Envoyer</string>
+    <string name="email_subject">Objet</string>
 </resources>

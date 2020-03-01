@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TextLimitStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlNormal">@color/blackColor</item>
+        <item name="colorControlActivated">@color/blackColor</item>
+        <item name="colorControlHighlight">@color/blackColor</item>
+    </style>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.example.ecocyam;
+package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -11,6 +11,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.ecocyam.HistoryActivity;
+import com.example.ecocyam.R;
+import com.example.ecocyam.utility.ConnectionTo;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        ImageView logo = findViewById(R.id.imageViewLogo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectionTo.switchActivity(getApplicationContext(),AboutUsActivity.class);
             }
         });
 
@@ -84,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }
