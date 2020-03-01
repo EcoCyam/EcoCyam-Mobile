@@ -88,23 +88,18 @@
         app:cardCornerRadius="25dp"
         android:layout_marginTop="50dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="47dp"
-                android:layout_marginBottom="16dp"
                 android:text="@string/createAccount"
-                android:textColor="#fff"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </RelativeLayout>
+                android:textColor="#fff" />
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
