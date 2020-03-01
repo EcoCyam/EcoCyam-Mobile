@@ -11,6 +11,7 @@ public final class ConnectionTo {
 
     public static void switchActivity(Context context,Class to){
         Intent intent = new Intent(context, to);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         // intent.putExtra("id",id);
         context.startActivity(intent);
     }
