@@ -68,6 +68,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/imageViewMainHistory"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginBottom="8dp"

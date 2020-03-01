@@ -30,10 +30,18 @@ public class MainActivity extends AppCompatActivity {
         textViewScan.startAnimation(atgtwo);
         //---------Fin animation---------------------------
 
-        ImageView img = (ImageView) findViewById(R.id.imageViewScan);
-        img.setOnClickListener(new View.OnClickListener() {
+        ImageView imgScan = (ImageView) findViewById(R.id.imageViewScan);
+        imgScan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView imgHistory = (ImageView) findViewById(R.id.imageViewMainHistory);
+        imgHistory.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
                 startActivity(intent);
             }
         });
