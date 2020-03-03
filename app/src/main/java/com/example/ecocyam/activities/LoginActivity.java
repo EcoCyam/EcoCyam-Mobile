@@ -45,12 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         animationDrawable.setExitFadeDuration(4000);
 
         CardView cardViewConnect = findViewById(R.id.cardViewLogin);
-        cardViewConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConnectionTo.switchActivity(getApplicationContext(), MainActivity.class);
-            }
-        });
+        cardViewConnect.setOnClickListener(v -> ConnectionTo.switchActivity(getApplicationContext(), MainActivity.class));
 
 
         CardView cardViewNotRegister = findViewById(R.id.cardViewNotRegisterYet);

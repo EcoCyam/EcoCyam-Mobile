@@ -25,12 +25,9 @@ public class CreateAccountActivity extends AppCompatActivity {
         animationDrawable.start();
 
         CardView cardViewCreate = findViewById(R.id.cardViewLogin);
-        cardViewCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConnectionTo.switchActivity(getApplicationContext(), MainActivity.class);
-                finish();
-            }
+        cardViewCreate.setOnClickListener(v -> {
+            ConnectionTo.switchActivity(getApplicationContext(), MainActivity.class);
+            finish();
         });
     }
 

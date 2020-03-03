@@ -61,59 +61,45 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ImageView logo = findViewById(R.id.imageViewLogo);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConnectionTo.switchActivity(getApplicationContext(), AboutUsActivity.class);
-            }
-        });
+        logo.setOnClickListener(v -> ConnectionTo.switchActivity(getApplicationContext(), AboutUsActivity.class));
 
         ImageView account = findViewById(R.id.imageViewAccount);
-        account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showChangeLangageDialog();
-            }
-        });
+        account.setOnClickListener(v -> showChangeLangageDialog());
 
         ImageView imgHistory = (ImageView) findViewById(R.id.imageViewMainHistory);
-        imgHistory.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
-                startActivity(intent);
-            }
+        imgHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
+            startActivity(intent);
         });
 
 
         ImageView imgResearch = (ImageView) findViewById(R.id.imageViewMainRecherche);
-        imgResearch.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (!isSearchViewdeployed) {
+        imgResearch.setOnClickListener(v -> {
+            if (!isSearchViewdeployed) {
 
-                    LinearLayout linearLayoutSearch = (LinearLayout) findViewById(R.id.linearLayoutSearch);
-                    ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) linearLayoutSearch.getLayoutParams();
-                    params.setMargins(0, 450, 0, 0); //substitute parameters for left, top, right, bottom
-                    linearLayoutSearch.startAnimation(atgthree);
-                    imageViewScan.startAnimation(atgthree);
-                    textViewScan.startAnimation(atgthree);
-                    linearLayoutSearch.setLayoutParams(params);
+                LinearLayout linearLayoutSearch = (LinearLayout) findViewById(R.id.linearLayoutSearch);
+                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) linearLayoutSearch.getLayoutParams();
+                params.setMargins(0, 450, 0, 0); //substitute parameters for left, top, right, bottom
+                linearLayoutSearch.startAnimation(atgthree);
+                imageViewScan.startAnimation(atgthree);
+                textViewScan.startAnimation(atgthree);
+                linearLayoutSearch.setLayoutParams(params);
 
 
-                    isSearchViewdeployed = true;
-                } else {
-                    LinearLayout linearLayoutSearch = (LinearLayout) findViewById(R.id.linearLayoutSearch);
-                    ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) linearLayoutSearch.getLayoutParams();
-                    params.setMargins(0, 50, 0, 0); //substitute parameters for left, top, right, bottom
-                    linearLayoutSearch.startAnimation(atgfour);
+                isSearchViewdeployed = true;
+            } else {
+                LinearLayout linearLayoutSearch = (LinearLayout) findViewById(R.id.linearLayoutSearch);
+                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) linearLayoutSearch.getLayoutParams();
+                params.setMargins(0, 50, 0, 0); //substitute parameters for left, top, right, bottom
+                linearLayoutSearch.startAnimation(atgfour);
 
-                    imageViewScan.startAnimation(atgfour);
-                    textViewScan.startAnimation(atgfour);
-                    linearLayoutSearch.setLayoutParams(params);
+                imageViewScan.startAnimation(atgfour);
+                textViewScan.startAnimation(atgfour);
+                linearLayoutSearch.setLayoutParams(params);
 
-                    isSearchViewdeployed = false;
-                }
-
+                isSearchViewdeployed = false;
             }
+
         });
     }
 
