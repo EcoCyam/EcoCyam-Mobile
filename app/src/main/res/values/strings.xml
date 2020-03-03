@@ -14,4 +14,5 @@
     <string name="email_message">Body of your email : tell us whatever you want !</string>
     <string name="send_email">Send</string>
     <string name="email_subject">Subject</string>
+    <string name="imageView_account">Account</string>
 </resources>

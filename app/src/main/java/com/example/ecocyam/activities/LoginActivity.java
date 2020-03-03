@@ -26,6 +26,13 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     /* default */ DatabaseHelper myDB;
+    /* default */private AnimationDrawable animationDrawable;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        animationDrawable.start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +40,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
 
         ConstraintLayout constraintLayout = findViewById(R.id.gradient_id);
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
-        animationDrawable.start();
 
         CardView cardViewConnect = findViewById(R.id.cardViewLogin);
         cardViewConnect.setOnClickListener(new View.OnClickListener() {
