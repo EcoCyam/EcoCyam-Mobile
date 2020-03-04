@@ -34,7 +34,7 @@ public final class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_view_settings);
         showListSettings();
 
-        listViewSettings.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listViewSettings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 actionItemClicked(position);
@@ -42,12 +42,14 @@ public final class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    //rajouter quand on aura autre action
     public void actionItemClicked(int position) {
-        switch (position){
-            case 2 :
-              showChangeLangageDialog();
-              default:
-                  return;
+        switch (position) {
+            case 2:
+                showChangeLangageDialog();
+                break;
+            default:
+                break;
         }
     }
 
@@ -56,14 +58,14 @@ public final class SettingsActivity extends AppCompatActivity {
         settings.add("Change password");
         settings.add("Change email");
         settings.add("Change language");
-        return  settings;
+        return settings;
     }
 
     public void showListSettings() {
         //settings list
         listViewSettings = findViewById(R.id.listView_settings);
         List<String> itemSettings = fillSettingsList();
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,itemSettings);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, itemSettings);
         listViewSettings.setAdapter(arrayAdapter);
 
         //fin settings list
@@ -74,7 +76,7 @@ public final class SettingsActivity extends AppCompatActivity {
 
     public void showChangeLangageDialog() {
         //simplement modifier ici les nouvelles langues en faisant new langue
-        AllLanguage allLanguage =new FrenchLanguage(new AllLanguageImpl());
+        AllLanguage allLanguage = new FrenchLanguage(new AllLanguageImpl());
         Map<String, String> allSupportedLanguage = allLanguage.addSupportedLanguage();
 
 
@@ -112,14 +114,14 @@ public final class SettingsActivity extends AppCompatActivity {
         configuration.setLocale(locale);
 
         getBaseContext().createConfigurationContext(configuration);
-        SharedPreferences.Editor editor = getSharedPreferences("Settings",MODE_PRIVATE).edit();
-        editor.putString("My_lang",language);
+        SharedPreferences.Editor editor = getSharedPreferences("Settings", MODE_PRIVATE).edit();
+        editor.putString("My_lang", language);
         editor.apply();
     }
 
-    public void loadLocale(){
+    public void loadLocale() {
         SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
-        String language = prefs.getString("My_lang","");
+        String language = prefs.getString("My_lang", "");
         setLocale(language);
     }
 }

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.entities.User;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -15,11 +16,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ecocyam.db";
     private static final int VERSION = 2;
 
+    //Table user
     private static final String TABLE_NAME = "user_table";
     private static final String COL_EMAIL = "EMAIL";
     private static final String COL_FISTNAME = "FIRSTNAME";
     private static final String COL_LASTNAME = "LASTNAME";
     private static final String COL_PASSWORD = "PASSWORD";
+
+    //Table scanned_product
+    private static final String TABLE_NAME_product = "scanned_product_table";
+    private static final String COL_TITTLE = "TITTLE";
+    private static final String COL_BRAND = "BRAND";
+    private static final String COL_RATING = "RATING";
+    private static final String COL_DATESCAN = "DATE_SCAN";
+    private static final String COL_REFUSER = "REF_USER";
+
+    public static final String SELECT_ALL_STR = "SELECT * FROM ";
+
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -29,17 +42,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String query = "create table "+ TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, EMAIL TEXT, FIRSTNAME TEXT, LASTNAME TEXT, PASSWORD TEXT)";
+        String query = "create table "+ TABLE_NAME +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, EMAIL TEXT," +
+                " FIRSTNAME TEXT, LASTNAME TEXT, PASSWORD TEXT)";
+        db.execSQL(query);
+        //bien vérifier pour la fk
+        query = "create table "+ TABLE_NAME_product +" (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITTLE TEXT," +
+                " BRAND TEXT, RATING RATING, DATE_SCAN TEXT, REF_USER INTEGER, FOREIGN KEY(REF_USER) REFERENCES TABLE_NAME(ID) )";
         db.execSQL(query);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (newVersion>oldVersion)
+        //on Update supprime ancienne base => à améliorer avec num de version
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_product);
         onCreate(db);
     }
 
+
+    /* PARTI USER */
     public boolean createUser(User user){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -57,7 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getData(){
         SQLiteDatabase db=this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM "+TABLE_NAME,null);
+        return db.rawQuery(SELECT_ALL_STR +TABLE_NAME,null);
     }
 
     public boolean updateUser(User user){
@@ -82,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean isUserUnique(String email) {
         SQLiteDatabase db=this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME + " WHERE EMAIL=?",new String[] {email});
+        Cursor cursor = db.rawQuery(SELECT_ALL_STR +TABLE_NAME + " WHERE EMAIL=?",new String[] {email});
         return cursor.getCount() == 0;
         //user already exists
     }
@@ -91,8 +112,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean verifyConnectionInfo(String email, String password) {
         SQLiteDatabase db=this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM "+TABLE_NAME + " WHERE EMAIL=? AND PASSWORD=?",new String[] {email,password});
+        Cursor cursor = db.rawQuery(SELECT_ALL_STR +TABLE_NAME + " WHERE EMAIL=? AND PASSWORD=?",new String[] {email,password});
         return cursor.getCount() != 0;
         //user exist
+    }
+
+    /* FIN PARTIE USER */
+
+    /* PARTIE PRODUCT */
+    public boolean createProdcut(ScannedProduct scannedProduct){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COL_TITTLE,scannedProduct.getTittle());
+        contentValues.put(COL_BRAND,scannedProduct.getMarque());
+        contentValues.put(COL_RATING,scannedProduct.getRating());
+        contentValues.put(COL_DATESCAN,scannedProduct.getLocalDate().toString());
+        contentValues.put(COL_REFUSER,scannedProduct.getRefUser());
+
+        long result = db.insert(TABLE_NAME_product,null,contentValues);
+
+        return result != -1;
+
+    }
+
+    public Cursor getAllScannedProduct(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        return db.rawQuery(SELECT_ALL_STR +TABLE_NAME_product,null);
+    }
+
+    //supprime produits quand utilisateur supprimé
+    public int deleteProduct(String refId){
+        SQLiteDatabase db=this.getWritableDatabase();
+        return db.delete(TABLE_NAME_product,"ID = ?", new String[]{refId});
+
     }
 }

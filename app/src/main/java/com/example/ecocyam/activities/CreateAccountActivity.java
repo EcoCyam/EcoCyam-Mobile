@@ -6,7 +6,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.ecocyam.R;
 import com.example.ecocyam.utility.ConnectionTo;

@@ -1,30 +1,20 @@
 package com.example.ecocyam.activities;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
+
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.ecocyam.HistoryActivity;
 import com.example.ecocyam.R;
-import com.example.ecocyam.entities.AllLanguageImpl;
-import com.example.ecocyam.interfaces.AllLanguage;
-import com.example.ecocyam.language_decorator.FrenchLanguage;
 import com.example.ecocyam.utility.ConnectionTo;
 
 public class MainActivity extends AppCompatActivity {
