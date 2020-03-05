@@ -11,7 +11,8 @@ import androidx.annotation.Nullable;
 import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.entities.User;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
+    private static DatabaseHelperSingleton databaseHelperInstance;
 
     private static final String DATABASE_NAME = "ecocyam.db";
     private static final int VERSION = 2;
@@ -33,10 +34,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String SELECT_ALL_STR = "SELECT * FROM ";
 
+    //singleton
+    public static DatabaseHelperSingleton getInstance(Context context){
+        synchronized (DatabaseHelperSingleton.class) {
+            if (databaseHelperInstance == null) {
+                databaseHelperInstance = new DatabaseHelperSingleton(context.getApplicationContext());
+            }
+            return databaseHelperInstance;
+        }
+    }
 
-    public DatabaseHelper(@Nullable Context context) {
+
+    private DatabaseHelperSingleton(@Nullable Context context) {
         super(context, DATABASE_NAME, null, VERSION);
-
     }
 
     @Override
@@ -121,10 +131,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /* PARTIE PRODUCT */
     public boolean createProdcut(ScannedProduct scannedProduct){
+
         SQLiteDatabase db=this.getWritableDatabase();
+
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_TITTLE,scannedProduct.getTittle());
+        contentValues.put(COL_TITTLE,scannedProduct.getTitle());
         contentValues.put(COL_BRAND,scannedProduct.getMarque());
         contentValues.put(COL_RATING,scannedProduct.getRating());
         contentValues.put(COL_DATESCAN,scannedProduct.getLocalDate().toString());
@@ -142,9 +154,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //supprime produits quand utilisateur supprimé
-    public int deleteProduct(String refId){
+    public int deleteProductByRefId(String refId){
         SQLiteDatabase db=this.getWritableDatabase();
-        return db.delete(TABLE_NAME_product,"ID = ?", new String[]{refId});
+        return db.delete(TABLE_NAME_product,"REF_USER = ?", new String[]{refId});
 
     }
 }

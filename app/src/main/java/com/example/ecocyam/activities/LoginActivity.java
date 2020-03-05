@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.example.ecocyam.R;
 import com.example.ecocyam.entities.User;
 import com.example.ecocyam.utility.AlertDialogGenerator;
-import com.example.ecocyam.localdatabase.DatabaseHelper;
+import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
 import com.example.ecocyam.utility.ConnectionTo;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    /* default */ DatabaseHelper myDB;
+    /* default */ DatabaseHelperSingleton myDB;
     /* default */private AnimationDrawable animationDrawable;
 
     @Override
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        /* default */ myDB = new DatabaseHelper(this);
+        /* default */ myDB = DatabaseHelperSingleton.getInstance(this);
 
         //   openAlertDialogMoche();
       //  openAlertDialogLogin();
