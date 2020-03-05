@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.example.ecocyam.HistoryActivity;
 import com.example.ecocyam.R;
 import com.example.ecocyam.utility.ConnectionTo;
 
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         imageViewScan = findViewById(R.id.imageViewScan);
         textViewScan = findViewById(R.id.textViewScan);
         searchView = findViewById(R.id.searchViewMain);
+        searchView.setEnabled(false);
         imageViewLogo = findViewById(R.id.imageViewLogo);
         linearLayoutSearch = (LinearLayout) findViewById(R.id.linearLayoutSearch);
 
@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         textViewScan.startAnimation(atgtwo);
         //---------Fin animation---------------------------
 
+
+        // CLIC SUR SNANNER
         imageViewScan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        //CLIC SUR LOGO DE L'APPLICATION
         imageViewLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+        // CLIC SUR ICONE HISTORIQUE
         ImageView imgHistory = (ImageView) findViewById(R.id.imageViewMainHistory);
         imgHistory.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -69,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+        //CLIC SUR ICONE RECHERCHE
         ImageView imgResearch = (ImageView) findViewById(R.id.imageViewMainRecherche);
         imgResearch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -81,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
                     textViewScan.startAnimation(animationSearchBarDown);
                     linearLayoutSearch.setLayoutParams(params);
                     searchView.setIconified(false);
+                    searchView.setEnabled(true);
+                    imageViewSearchButton.setEnabled(true);
 
                     isSearchViewdeployed = true;
                 }
@@ -92,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
                     imageViewScan.startAnimation(animationSearchBarUp);
                     textViewScan.startAnimation(animationSearchBarUp);
                     linearLayoutSearch.setLayoutParams(params);
+                    imageViewSearchButton.setEnabled(false);
+                    searchView.setEnabled(false);
 
                     isSearchViewdeployed = false;
                 }
@@ -100,7 +113,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+        // CLIC SUR LA LOUPE DANS L'ONGLET RECHERCHE
         imageViewSearchButton = findViewById(R.id.imageViewMainResearchButton);
+        imageViewSearchButton.setEnabled(false);
         imageViewSearchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);

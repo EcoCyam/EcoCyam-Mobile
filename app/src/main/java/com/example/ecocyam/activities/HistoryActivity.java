@@ -1,4 +1,4 @@
-package com.example.ecocyam;
+package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.example.ecocyam.R;
 import com.example.ecocyam.entities.ProductHistory;
 import com.example.ecocyam.utility.ProductHistoryAdapter;
 
