@@ -8,7 +8,7 @@
     <string name="login">Login</string>
     <string name="createAccount">Create Account</string>
     <string name="msgNewAccount">Welcome in EcoCyam</string>
-   <string name="ecoCyam_info">Ecocyam allows you to scan product to see their ecological grade.
+    <string name="ecoCyam_info">Ecocyam allows you to scan product to see their ecological grade.
    If the product is not registered yet, you can add his features</string>
     <string name="about_us">We are 4 students at the University of Nanterre </string>
     <string name="email_message">Body of your email : tell us whatever you want !</string>

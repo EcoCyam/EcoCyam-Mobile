@@ -19,7 +19,7 @@ import com.example.ecocyam.utility.ConnectionTo;
 
 
 public class MainActivity extends AppCompatActivity {
-    /* default */ImageView imageViewScan, imageViewLogo;
+    /* default */ImageView imageViewScan, imageViewLogo, imageViewSearchButton;
     /* default */ public static TextView textViewScan; //a modifier plus tard tkt
     /* default */ Animation atg, atgtwo, animationSearchBarDown, animationSearchBarUp;
     /* default */ boolean isSearchViewdeployed = false;
@@ -96,6 +96,15 @@ public class MainActivity extends AppCompatActivity {
                     isSearchViewdeployed = false;
                 }
 
+            }
+        });
+
+
+        imageViewSearchButton = findViewById(R.id.imageViewMainResearchButton);
+        imageViewSearchButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);
+                startActivity(intent);
             }
         });
     }
