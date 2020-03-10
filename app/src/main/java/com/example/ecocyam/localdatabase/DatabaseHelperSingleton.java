@@ -110,21 +110,36 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
 
     }
 
-    public boolean isUserUnique(String email) {
+    public boolean isUserUnique(User user) {
         SQLiteDatabase db=this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery(SELECT_ALL_STR +TABLE_NAME + " WHERE EMAIL=?",new String[] {email});
-        return cursor.getCount() == 0;
+        try (Cursor cursor = db.rawQuery(SELECT_ALL_STR +TABLE_NAME + " WHERE EMAIL=?",new String[] {user.getEmail()})){
+            return cursor.getCount() == 0;
+        }
         //user already exists
     }
 
 
-    public boolean verifyConnectionInfo(String email, String password) {
+    public boolean verifyUserInfo(String email, String password) {
         SQLiteDatabase db=this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery(SELECT_ALL_STR +TABLE_NAME + " WHERE EMAIL=? AND PASSWORD=?",new String[] {email,password});
-        return cursor.getCount() != 0;
+        try (Cursor cursor = db.rawQuery(SELECT_ALL_STR +TABLE_NAME + " WHERE EMAIL=? AND PASSWORD=?",new String[] {email,password})){
+            return cursor.getCount() != 0;
+        }
         //user exist
+    }
+
+    //renvoie user associé à l'email qui est unique
+    public User getUserByEmail(String email) {
+        SQLiteDatabase db=this.getWritableDatabase();
+
+        try (Cursor cursor = db.rawQuery(SELECT_ALL_STR +TABLE_NAME + " WHERE EMAIL=?",new String[] {email})){
+            if (cursor.moveToNext()){
+                return new User(cursor.getInt(0),cursor.getString(1),
+                        cursor.getString(2),cursor.getString(3),cursor.getString(4));
+            }
+        }
+        return null;
     }
 
     /* FIN PARTIE USER */
@@ -159,4 +174,6 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
         return db.delete(TABLE_NAME_product,"REF_USER = ?", new String[]{refId});
 
     }
+
+
 }

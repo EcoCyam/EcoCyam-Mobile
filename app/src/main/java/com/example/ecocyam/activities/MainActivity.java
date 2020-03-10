@@ -3,9 +3,11 @@ package com.example.ecocyam.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -17,7 +19,7 @@ import com.example.ecocyam.HistoryActivity;
 import com.example.ecocyam.R;
 import com.example.ecocyam.utility.ConnectionTo;
 
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
     /* default */ ImageView imageViewScan;
     /* default */ public static TextView textViewScan; //a modifier plus tard tkt
     /* default */ Animation atg, atgtwo, atgthree, atgfour;
@@ -41,18 +43,19 @@ public class MainActivity extends AppCompatActivity {
         //---------Fin animation---------------------------
 
         ImageView imgScan = (ImageView) findViewById(R.id.imageViewScan);
-        imgScan.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
-                startActivity(intent);
-            }
+        imgScan.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
+            startActivity(intent);
         });
 
         ImageView logo = findViewById(R.id.imageViewLogo);
         logo.setOnClickListener(v -> ConnectionTo.switchActivity(getApplicationContext(), AboutUsActivity.class));
 
+        Intent currentIntent = getIntent();
+        String emailUser = currentIntent.getStringExtra("email");
         ImageView account = findViewById(R.id.imageViewAccount);
-        account.setOnClickListener(v -> ConnectionTo.switchActivity(getApplicationContext(),SettingsActivity.class));
+        account.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
+                SettingsActivity.class,emailUser));
 
         ImageView imgHistory = (ImageView) findViewById(R.id.imageViewMainHistory);
         imgHistory.setOnClickListener(v -> {
@@ -89,7 +92,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CLOSE_ALL");
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                finish();
+            }
+        };
+        registerReceiver(broadcastReceiver, intentFilter);
     }
-
-
 }

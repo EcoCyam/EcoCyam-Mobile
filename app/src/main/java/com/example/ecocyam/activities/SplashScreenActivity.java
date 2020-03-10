@@ -8,7 +8,7 @@ import android.os.Handler;
 
 import com.example.ecocyam.R;
 
-public class SplashScreenActivity extends AppCompatActivity {
+public final class SplashScreenActivity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 3000;
 

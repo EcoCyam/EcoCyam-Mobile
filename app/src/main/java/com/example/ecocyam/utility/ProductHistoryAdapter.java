@@ -14,7 +14,7 @@ import com.example.ecocyam.entities.ScannedProduct;
 
 import java.util.List;
 
-public class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHistoryAdapter.ProductViewHolder> {
+public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHistoryAdapter.ProductViewHolder> {
 
 
     /* default */private Context mCtx;

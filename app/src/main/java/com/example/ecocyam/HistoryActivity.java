@@ -13,7 +13,7 @@ import com.example.ecocyam.utility.ProductHistoryAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryActivity extends AppCompatActivity {
+public final class HistoryActivity extends AppCompatActivity {
     //db singleton
     /* default */private DatabaseHelperSingleton db = DatabaseHelperSingleton.getInstance(this);
 
