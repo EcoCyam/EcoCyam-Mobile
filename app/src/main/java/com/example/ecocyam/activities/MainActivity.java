@@ -18,12 +18,12 @@ import com.example.ecocyam.utility.ConnectionTo;
 
 
 public class MainActivity extends AppCompatActivity {
-    /* default */ImageView imageViewScan, imageViewLogo, imageViewSearchButton;
+    /* default */ ImageView imageViewScan, imageViewLogo, imageViewSearchButton;
     /* default */ public static TextView textViewScan; //a modifier plus tard tkt
     /* default */ Animation atg, atgtwo, animationSearchBarDown, animationSearchBarUp;
     /* default */ boolean isSearchViewdeployed = false;
     /* default */ SearchView searchView;
-    LinearLayout linearLayoutSearch;
+    /* default */ LinearLayout linearLayoutSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

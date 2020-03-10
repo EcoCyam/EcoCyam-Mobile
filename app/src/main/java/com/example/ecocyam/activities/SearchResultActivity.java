@@ -8,8 +8,6 @@ import android.os.Bundle;
 
 import com.example.ecocyam.R;
 import com.example.ecocyam.entities.Product;
-import com.example.ecocyam.entities.ProductHistory;
-import com.example.ecocyam.utility.ProductHistoryAdapter;
 import com.example.ecocyam.utility.ProductSearchResultAdapter;
 
 import java.util.ArrayList;
