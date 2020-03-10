@@ -3,7 +3,6 @@ package com.example.ecocyam.activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
 import android.graphics.drawable.AnimationDrawable;
@@ -12,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.ecocyam.R;
@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        ConstraintLayout constraintLayout = findViewById(R.id.gradient_id);
-        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        LinearLayout linearLayout = findViewById(R.id.gradient_id);
+        AnimationDrawable animationDrawable = (AnimationDrawable) linearLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();
