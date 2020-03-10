@@ -123,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        /* default */ int i = 0;
+        i = i + 1;
+        System.out.println(i);
     }
 
 
