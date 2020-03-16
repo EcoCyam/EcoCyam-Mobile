@@ -2,12 +2,10 @@ package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import android.content.DialogInterface;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.example.ecocyam.R;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;

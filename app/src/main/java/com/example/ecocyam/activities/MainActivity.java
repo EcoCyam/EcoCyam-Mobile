@@ -67,16 +67,12 @@ public final class MainActivity extends AppCompatActivity {
         imageViewAccount.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
                 SettingsActivity.class,emailUser));
 
-
-
         // CLIC SUR ICONE HISTORIQUE
         ImageView imgHistory = (ImageView) findViewById(R.id.imageViewMainHistory);
         imgHistory.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
             startActivity(intent);
         });
-
-
 
         //CLIC SUR ICONE RECHERCHE
         ImageView imgResearch = (ImageView) findViewById(R.id.imageViewMainRecherche);
@@ -113,8 +109,6 @@ public final class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         // CLIC SUR LA LOUPE DANS L'ONGLET RECHERCHE
         imageViewSearchButton = findViewById(R.id.imageViewMainResearchButton);
         imageViewSearchButton.setEnabled(false);
@@ -124,11 +118,6 @@ public final class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        /* default */ int i = 0;
-        i = i + 1;
-        System.out.println(i);
-    
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("CLOSE_ALL");
