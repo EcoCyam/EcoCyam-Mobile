@@ -10,17 +10,17 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecocyam.R;
-import com.example.ecocyam.entities.ProductHistory;
+import com.example.ecocyam.entities.ScannedProduct;
 
 import java.util.List;
 
-public class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHistoryAdapter.ProductViewHolder> {
+public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHistoryAdapter.ProductViewHolder> {
 
 
     /* default */private Context mCtx;
-    /* default */private List<ProductHistory> productList;
+    /* default */private List<ScannedProduct> productList;
 
-    public ProductHistoryAdapter(Context mCtx, List<ProductHistory> productList) {
+    public ProductHistoryAdapter(Context mCtx, List<ScannedProduct> productList) {
         super();
         this.mCtx = mCtx;
         this.productList = productList;
@@ -37,15 +37,15 @@ public class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHistoryAd
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         //getting the product of the specified position
-        ProductHistory product = productList.get(position);
+        ScannedProduct product = productList.get(position);
 
         //binding the data with the viewholder views
         holder.textViewTitleProductHistory.setText(product.getTitle());
         holder.textViewProductHistoryMarque.setText(product.getMarque());
         holder.textViewRatingProductHistory.setText(String.valueOf(product.getRating()));
-        holder.textViewProductDateScanHistory.setText(String.valueOf(product.getDateScan()));
+        holder.textViewProductDateScanHistory.setText(String.valueOf(product.getLocalDate()));
 
-        holder.imageViewProductHistory.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
+       // holder.imageViewProductHistory.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
 
     }
 

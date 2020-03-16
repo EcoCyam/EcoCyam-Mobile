@@ -5,7 +5,7 @@ import com.example.ecocyam.interfaces.AllLanguage;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class AllLanguageImpl implements AllLanguage { //default language
+public final class AllLanguageImpl implements AllLanguage { //default language
 
     @Override
     public Map<String, String> addSupportedLanguage() {
