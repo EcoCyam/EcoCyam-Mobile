@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -21,7 +22,7 @@ import com.example.ecocyam.utility.ConnectionTo;
 
 
 public final class MainActivity extends AppCompatActivity {
-    /* default */ ImageView imageViewScan;
+    /* default */ ImageView imageViewScan, imageViewLogo, imageViewAccount, imageViewSearchButton;
     /* default */ public static TextView textViewScan; //a modifier plus tard tkt
     /* default */ Animation atg, atgtwo, animationSearchBarDown, animationSearchBarUp;
     /* default */ boolean isSearchViewdeployed = false;
@@ -62,8 +63,8 @@ public final class MainActivity extends AppCompatActivity {
 
         Intent currentIntent = getIntent();
         String emailUser = currentIntent.getStringExtra("email");
-        ImageView account = findViewById(R.id.imageViewAccount);
-        account.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
+        ImageView imageViewAccount = findViewById(R.id.imageViewAccount);
+        imageViewAccount.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
                 SettingsActivity.class,emailUser));
 
 
@@ -128,9 +129,6 @@ public final class MainActivity extends AppCompatActivity {
         i = i + 1;
         System.out.println(i);
     
-
-
-        });
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("CLOSE_ALL");
