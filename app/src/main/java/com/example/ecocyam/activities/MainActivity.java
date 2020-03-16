@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //-------Animation à l'ouverture de la page--------
         imageViewScan = findViewById(R.id.imageViewScan);
         textViewScan = findViewById(R.id.textViewScan);
