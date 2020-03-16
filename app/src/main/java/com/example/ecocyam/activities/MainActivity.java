@@ -8,22 +8,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.example.ecocyam.HistoryActivity;
 import com.example.ecocyam.R;
 import com.example.ecocyam.utility.ConnectionTo;
 
+
 public final class MainActivity extends AppCompatActivity {
-    /* default */ ImageView imageViewScan;
+    /* default */ ImageView imageViewScan, imageViewLogo, imageViewAccount, imageViewSearchButton;
     /* default */ public static TextView textViewScan; //a modifier plus tard tkt
-    /* default */ Animation atg, atgtwo, atgthree, atgfour;
+    /* default */ Animation atg, atgtwo, animationSearchBarDown, animationSearchBarUp;
     /* default */ boolean isSearchViewdeployed = false;
+    /* default */ SearchView searchView;
+    /* default */ LinearLayout linearLayoutSearch;
 
 
     @Override
@@ -33,13 +37,20 @@ public final class MainActivity extends AppCompatActivity {
         //-------Animation à l'ouverture de la page--------
         imageViewScan = findViewById(R.id.imageViewScan);
         textViewScan = findViewById(R.id.textViewScan);
-        atg = AnimationUtils.loadAnimation(this, R.anim.atg);
-        atgtwo = AnimationUtils.loadAnimation(this, R.anim.atgtwo);
-        atgthree = AnimationUtils.loadAnimation(this, R.anim.atgthree);
-        atgfour = AnimationUtils.loadAnimation(this, R.anim.atgfour);
+        searchView = findViewById(R.id.searchViewMain);
+        searchView.setEnabled(false);
+        imageViewLogo = findViewById(R.id.imageViewLogo);
+        linearLayoutSearch = (LinearLayout) findViewById(R.id.linearLayoutSearch);
+
+        atg = AnimationUtils.loadAnimation(this,R.anim.atg);
+        atgtwo = AnimationUtils.loadAnimation(this,R.anim.atgtwo);
+        animationSearchBarDown = AnimationUtils.loadAnimation(this,R.anim.animation_searchbar_down);
+        animationSearchBarUp = AnimationUtils.loadAnimation(this,R.anim.animation_searchbar_up);
+
         imageViewScan.startAnimation(atg);
         textViewScan.startAnimation(atgtwo);
         //---------Fin animation---------------------------
+
 
         ImageView imgScan = (ImageView) findViewById(R.id.imageViewScan);
         imgScan.setOnClickListener(v -> {
@@ -52,44 +63,60 @@ public final class MainActivity extends AppCompatActivity {
 
         Intent currentIntent = getIntent();
         String emailUser = currentIntent.getStringExtra("email");
-        ImageView account = findViewById(R.id.imageViewAccount);
-        account.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
+        ImageView imageViewAccount = findViewById(R.id.imageViewAccount);
+        imageViewAccount.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
                 SettingsActivity.class,emailUser));
 
+        // CLIC SUR ICONE HISTORIQUE
         ImageView imgHistory = (ImageView) findViewById(R.id.imageViewMainHistory);
         imgHistory.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
             startActivity(intent);
         });
 
-
+        //CLIC SUR ICONE RECHERCHE
         ImageView imgResearch = (ImageView) findViewById(R.id.imageViewMainRecherche);
-        imgResearch.setOnClickListener(v -> {
-            if (!isSearchViewdeployed) {
-
-                LinearLayout linearLayoutSearch = (LinearLayout) findViewById(R.id.linearLayoutSearch);
+        imgResearch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) linearLayoutSearch.getLayoutParams();
-                params.setMargins(0, 450, 0, 0); //substitute parameters for left, top, right, bottom
-                linearLayoutSearch.startAnimation(atgthree);
-                imageViewScan.startAnimation(atgthree);
-                textViewScan.startAnimation(atgthree);
-                linearLayoutSearch.setLayoutParams(params);
+                if(!isSearchViewdeployed) {
 
+                    params.setMargins(0, 450, 0, 0); //substitute parameters for left, top, right, bottom
+                    linearLayoutSearch.startAnimation(animationSearchBarDown);
+                    imageViewScan.startAnimation(animationSearchBarDown);
+                    textViewScan.startAnimation(animationSearchBarDown);
+                    linearLayoutSearch.setLayoutParams(params);
+                    searchView.setIconified(false);
+                    searchView.setEnabled(true);
+                    imageViewSearchButton.setEnabled(true);
 
-                isSearchViewdeployed = true;
-            } else {
-                LinearLayout linearLayoutSearch = (LinearLayout) findViewById(R.id.linearLayoutSearch);
-                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) linearLayoutSearch.getLayoutParams();
-                params.setMargins(0, 50, 0, 0); //substitute parameters for left, top, right, bottom
-                linearLayoutSearch.startAnimation(atgfour);
+                    isSearchViewdeployed = true;
+                }
+                else{
 
-                imageViewScan.startAnimation(atgfour);
-                textViewScan.startAnimation(atgfour);
-                linearLayoutSearch.setLayoutParams(params);
+                    params.setMargins(0, 50, 0, 0); //substitute parameters for left, top, right, bottom
+                    linearLayoutSearch.startAnimation(animationSearchBarUp);
 
-                isSearchViewdeployed = false;
+                    imageViewScan.startAnimation(animationSearchBarUp);
+                    textViewScan.startAnimation(animationSearchBarUp);
+                    linearLayoutSearch.setLayoutParams(params);
+                    imageViewSearchButton.setEnabled(false);
+                    searchView.setEnabled(false);
+
+                    isSearchViewdeployed = false;
+                }
+
             }
+        });
 
+        // CLIC SUR LA LOUPE DANS L'ONGLET RECHERCHE
+        imageViewSearchButton = findViewById(R.id.imageViewMainResearchButton);
+        imageViewSearchButton.setEnabled(false);
+        imageViewSearchButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);
+                startActivity(intent);
+            }
         });
 
         IntentFilter intentFilter = new IntentFilter();

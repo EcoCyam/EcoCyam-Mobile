@@ -23,10 +23,12 @@ public final class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
+
         db = DatabaseHelperSingleton.getInstance(this);
 
         ConstraintLayout constraintLayout = findViewById(R.id.gradient_id);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
         animationDrawable.start();

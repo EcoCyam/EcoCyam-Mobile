@@ -27,8 +27,10 @@ public final class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
+
         ConstraintLayout constraintLayout = findViewById(R.id.gradient_id);
         animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
 
