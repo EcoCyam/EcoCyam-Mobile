@@ -3,7 +3,6 @@ package com.example.ecocyam.utility;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -22,12 +21,7 @@ public final class AlertDialogGenerator {
         builder.setTitle(title);
         builder.setMessage(message);
 
-        builder.setNegativeButton(negativeButton, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setNegativeButton(negativeButton, (dialog, which) -> dialog.dismiss());
 
         return builder;
     }

@@ -14,7 +14,7 @@ import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public final class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     /* default */ ZXingScannerView ScannerView;
     private static final int CAMERA_PERMISSION_CODE = 100;

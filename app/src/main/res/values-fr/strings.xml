@@ -15,4 +15,7 @@
     <string name="email_message">Contenu de votre message : dites nous tout ce que vous voulez !</string>
     <string name="send_email">Envoyer</string>
     <string name="email_subject">Objet</string>
+    <string name="imageView_account">Compte</string>
+    <string name="msgModifyAccount">Modifer vos informations</string>
+    <string name="modifyAccount">Sauvegarder changements</string>
 </resources>

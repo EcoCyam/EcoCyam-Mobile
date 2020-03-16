@@ -3,7 +3,6 @@ package com.example.ecocyam.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-
 import android.os.Bundle;
 
 import com.example.ecocyam.R;
@@ -13,7 +12,7 @@ import com.example.ecocyam.fragment.SendEmailFragment;
 import com.example.ecocyam.fragment.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
-public class AboutUsActivity extends AppCompatActivity {
+public final class AboutUsActivity extends AppCompatActivity {
 
     /* default */private TabLayout tabLayout;
     /* default */private ViewPager viewPager;

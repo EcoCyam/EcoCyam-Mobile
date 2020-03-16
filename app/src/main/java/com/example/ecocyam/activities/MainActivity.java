@@ -3,11 +3,14 @@ package com.example.ecocyam.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -17,19 +20,19 @@ import com.example.ecocyam.R;
 import com.example.ecocyam.utility.ConnectionTo;
 
 
-public class MainActivity extends AppCompatActivity {
-    /* default */ ImageView imageViewScan, imageViewLogo, imageViewSearchButton;
+public final class MainActivity extends AppCompatActivity {
+    /* default */ ImageView imageViewScan;
     /* default */ public static TextView textViewScan; //a modifier plus tard tkt
     /* default */ Animation atg, atgtwo, animationSearchBarDown, animationSearchBarUp;
     /* default */ boolean isSearchViewdeployed = false;
     /* default */ SearchView searchView;
     /* default */ LinearLayout linearLayoutSearch;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
-       setContentView(R.layout.activity_main);
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         //-------Animation à l'ouverture de la page--------
         imageViewScan = findViewById(R.id.imageViewScan);
         textViewScan = findViewById(R.id.textViewScan);
@@ -42,37 +45,34 @@ public class MainActivity extends AppCompatActivity {
         atgtwo = AnimationUtils.loadAnimation(this,R.anim.atgtwo);
         animationSearchBarDown = AnimationUtils.loadAnimation(this,R.anim.animation_searchbar_down);
         animationSearchBarUp = AnimationUtils.loadAnimation(this,R.anim.animation_searchbar_up);
+
         imageViewScan.startAnimation(atg);
         textViewScan.startAnimation(atgtwo);
         //---------Fin animation---------------------------
 
 
-        // CLIC SUR SNANNER
-        imageViewScan.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
-                startActivity(intent);
-            }
+        ImageView imgScan = (ImageView) findViewById(R.id.imageViewScan);
+        imgScan.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
+            startActivity(intent);
         });
 
+        ImageView logo = findViewById(R.id.imageViewLogo);
+        logo.setOnClickListener(v -> ConnectionTo.switchActivity(getApplicationContext(), AboutUsActivity.class));
 
-        //CLIC SUR LOGO DE L'APPLICATION
-        imageViewLogo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConnectionTo.switchActivity(getApplicationContext(),AboutUsActivity.class);
-            }
-        });
+        Intent currentIntent = getIntent();
+        String emailUser = currentIntent.getStringExtra("email");
+        ImageView account = findViewById(R.id.imageViewAccount);
+        account.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
+                SettingsActivity.class,emailUser));
 
 
 
         // CLIC SUR ICONE HISTORIQUE
         ImageView imgHistory = (ImageView) findViewById(R.id.imageViewMainHistory);
-        imgHistory.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
-                startActivity(intent);
-            }
+        imgHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
+            startActivity(intent);
         });
 
 
@@ -127,8 +127,19 @@ public class MainActivity extends AppCompatActivity {
         /* default */ int i = 0;
         i = i + 1;
         System.out.println(i);
+    
+
+
+        });
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CLOSE_ALL");
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                finish();
+            }
+        };
+        registerReceiver(broadcastReceiver, intentFilter);
     }
-
-
-
 }
