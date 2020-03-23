@@ -22,14 +22,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ProductFeaturesActivity extends AppCompatActivity {
-    ConstraintLayout expandableView;
-    Button arrowBtn;
-    CardView cardView;
     ListView list;
     ArrayList<String> itemsComputer;
-
-    String[] strArrayComputer = new String[] {"Durabilite","CO2","Consommation"};
-    String[] strArraySmartphone = new String[] {"Durabilite","CO2","Reparabilite"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,25 +41,6 @@ public class ProductFeaturesActivity extends AppCompatActivity {
 
         list.setAdapter(adp);
 
-        /*
-        arrowBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("entrerrrrrrr!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                if (cardView.getVisibility()==View.GONE){
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    cardView.setVisibility(View.VISIBLE);
-                    arrowBtn.setBackgroundResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
-                } else {
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    cardView.setVisibility(View.GONE);
-                    arrowBtn.setBackgroundResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
-                }
-            }
-        });
-
-
-         */
     }
 
 }
