@@ -13,9 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activities.SearchResultActivity"></activity>
-        <activity android:name=".activities.ModifyUserInformation"></activity>
+        <activity android:name=".activities.ProductFeaturesActivity"></activity>
+        <activity android:name=".activities.SearchResultActivity" />
+        <activity android:name=".activities.ModifyUserInformation" />
         <activity android:name=".activities.AboutUsActivity" />
         <activity android:name=".activities.CreateAccountActivity" />
         <activity android:name=".activities.LoginActivity" />

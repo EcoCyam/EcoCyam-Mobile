@@ -1,6 +1,7 @@
 package com.example.ecocyam.utility;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecocyam.R;
+import com.example.ecocyam.activities.HistoryActivity;
+import com.example.ecocyam.activities.ProductFeaturesActivity;
 import com.example.ecocyam.entities.Product;
 
 import java.util.List;
@@ -46,6 +49,15 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
 
         holder.imageViewProductSearchResult.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mCtx.getApplicationContext(), ProductFeaturesActivity.class);
+                mCtx.startActivity(intent);
+               // product.getId(); //aller chercher en base et passer les elements nécessaires à l'activity
+            }
+        });
+
     }
 
 
@@ -55,6 +67,7 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
     }
 
 
+
     /* default */class ProductViewHolder extends RecyclerView.ViewHolder {
 
         /* default */ TextView textViewTitleProductSearchResult, textViewProductSearchResultMarque, textViewRatingProductSearchResult;
@@ -62,11 +75,12 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-
             textViewTitleProductSearchResult = itemView.findViewById(R.id.textViewTitleProductSearchResult);
             textViewProductSearchResultMarque = itemView.findViewById(R.id.textViewProductSearchResultMarque);
             textViewRatingProductSearchResult = itemView.findViewById(R.id.textViewRatingProductSearchResult);
             imageViewProductSearchResult = itemView.findViewById(R.id.imageViewProductSearchResult);
         }
     }
+
+
 }
