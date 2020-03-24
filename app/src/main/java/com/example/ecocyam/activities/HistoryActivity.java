@@ -11,6 +11,7 @@ import com.example.ecocyam.R;
 
 import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
+import com.example.ecocyam.utility.ConnectionTo;
 import com.example.ecocyam.utility.ProductHistoryAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +45,17 @@ public final class HistoryActivity extends AppCompatActivity {
                 "05/03/2020",6.8f);
 
 
-        db.deleteProductByRefId(String.valueOf(1)); //en attendant on delete
-        db.createProdcut(product1);
-        db.createProdcut(product2);
-        db.createProdcut(product3);
+
+        db.deleteProductByRefId(String.valueOf(1)); //en attendant on delete à chaque fois les anciennes versions
+        db.createProductWithId(product1);
+        db.createProductWithId(product2);
+        db.createProductWithId(product3);
         //FIN DU DUR
 
+        //test à adapter selon le besoin
+        //manipulation des images avec SQlite database : practise
+        ConnectionTo.switchActivityWithStringExtra(this,SelectPictureProduct.class,"1");
+        //fin de manipulation
 
         //getting the recyclerview from xml
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);

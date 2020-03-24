@@ -2,11 +2,13 @@ package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.example.ecocyam.R;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
 import com.example.ecocyam.utility.ConnectionTo;
@@ -28,8 +30,8 @@ public final class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
 
 
-        ConstraintLayout constraintLayout = findViewById(R.id.gradient_id);
-        animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        LinearLayout linearLayout = findViewById(R.id.gradient_id);
+        animationDrawable = (AnimationDrawable) linearLayout.getBackground();
 
         animationDrawable.setEnterFadeDuration(2000);
         animationDrawable.setExitFadeDuration(4000);
@@ -58,17 +60,14 @@ public final class LoginActivity extends AppCompatActivity {
     }
 
     public void connectToApp(EditText email, EditText password) {
-        if (ConnectionTo.verifyEmptyFields(email,"Email can't be empty") ||
-                ConnectionTo.verifyEmptyFields(password,"Password can't be empty")){
+        if (ConnectionTo.verifyEmptyFields(email, "Email can't be empty") ||
+                ConnectionTo.verifyEmptyFields(password, "Password can't be empty")) {
             Toast.makeText(this, "No empty fields", Toast.LENGTH_LONG).show();
-        }
-
-        else {
-            if(myDB.verifyUserInfo(email.getText().toString(),password.getText().toString())){
-                ConnectionTo.switchActivityWithStringExtra(this,MainActivity.class,email.getText().toString());
+        } else {
+            if (myDB.verifyUserInfo(email.getText().toString(), password.getText().toString())) {
+                ConnectionTo.switchActivityWithStringExtra(this, MainActivity.class, email.getText().toString());
                 finish();
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Error wrong email or password", Toast.LENGTH_LONG).show();
             }
         }

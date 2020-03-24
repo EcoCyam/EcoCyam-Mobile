@@ -1,9 +1,12 @@
 package com.example.ecocyam.entities;
 
+import android.graphics.Bitmap;
+
 public final class ScannedProduct {
     /* default */private int id,refUser;
     /* default */private String title, marque,localDate;
     /* default */private float rating;
+    /* default */private Bitmap picture;
 
     //voir pour rajouter une image
     public ScannedProduct(int id, int refUser, String tittle, String marque, String localDate, float rating) {
@@ -21,6 +24,25 @@ public final class ScannedProduct {
         this.marque = marque;
         this.localDate = localDate;
         this.rating = rating;
+    }
+
+    public ScannedProduct(int refUser, String tittle, String marque, String localDate, float rating,Bitmap picture) {
+        this.refUser = refUser;
+        this.title = tittle;
+        this.marque = marque;
+        this.localDate = localDate;
+        this.rating = rating;
+        this.picture = picture;
+    }
+
+    public ScannedProduct(int id, String title, String marque, String localDate, float rating, int refUser,Bitmap picture) {
+        this.id = id;
+        this.refUser = refUser;
+        this.title = title;
+        this.marque = marque;
+        this.localDate = localDate;
+        this.rating = rating;
+        this.picture = picture;
     }
 
     public int getId() {
@@ -69,5 +91,13 @@ public final class ScannedProduct {
 
     public void setRating(float rating) {
         this.rating = rating;
+    }
+
+    public Bitmap getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Bitmap picture) {
+        this.picture = picture;
     }
 }

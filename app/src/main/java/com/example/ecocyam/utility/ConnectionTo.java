@@ -24,10 +24,10 @@ public final class ConnectionTo {
         context.startActivity(intent);
     }
 
-    public static void switchActivityWithStringExtra(Context context,Class to,String email){ //rajouter une map de put extra ?
+    public static void switchActivityWithStringExtra(Context context,Class to,String stringToPass){ //rajouter une map de put extra ?
         Intent intent = new Intent(context, to);
         intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-         intent.putExtra("email",email);
+         intent.putExtra("email",stringToPass);
         context.startActivity(intent);
     }
 
