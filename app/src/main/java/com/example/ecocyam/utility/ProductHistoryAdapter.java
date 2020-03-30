@@ -1,6 +1,7 @@
 package com.example.ecocyam.utility;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecocyam.R;
+import com.example.ecocyam.activities.ProductFeaturesActivity;
 import com.example.ecocyam.entities.ScannedProduct;
 
 import java.util.List;
@@ -46,6 +48,15 @@ public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHis
         holder.textViewProductDateScanHistory.setText(String.valueOf(product.getLocalDate()));
 
        // holder.imageViewProductHistory.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mCtx.getApplicationContext(), ProductFeaturesActivity.class);
+                mCtx.startActivity(intent);
+                // product.getId(); //aller chercher en base et passer les elements nécessaires à l'activity
+            }
+        });
 
     }
 
