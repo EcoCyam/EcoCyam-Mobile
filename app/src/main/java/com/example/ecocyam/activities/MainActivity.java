@@ -52,14 +52,12 @@ public final class MainActivity extends AppCompatActivity {
         //---------Fin animation---------------------------
 
 
-        ImageView imgScan = (ImageView) findViewById(R.id.imageViewScan);
-        imgScan.setOnClickListener(v -> {
+        imageViewScan.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
             startActivity(intent);
         });
 
-        ImageView logo = findViewById(R.id.imageViewLogo);
-        logo.setOnClickListener(v -> ConnectionTo.switchActivity(getApplicationContext(), AboutUsActivity.class));
+        imageViewLogo.setOnClickListener(v -> ConnectionTo.switchActivity(getApplicationContext(), AboutUsActivity.class));
 
         Intent currentIntent = getIntent();
         String emailUser = currentIntent.getStringExtra("email");

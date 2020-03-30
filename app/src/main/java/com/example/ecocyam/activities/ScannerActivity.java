@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -31,8 +32,10 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
     @Override
     public void handleResult(Result result) {
 
-        MainActivity.textViewScan.setText(result.getText());
+        //MainActivity.textViewScan.setText(result.getText());
         onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);
+        startActivity(intent);
     }
 
     @Override
