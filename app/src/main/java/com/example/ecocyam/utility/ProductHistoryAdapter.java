@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecocyam.R;
+import com.example.ecocyam.activities.ProductFeaturesActivity;
 import com.example.ecocyam.entities.ScannedProduct;
 
 import java.util.List;
@@ -47,6 +48,14 @@ public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHis
 
        // holder.imageViewProductHistory.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectionTo.switchActivity(getmCtx(),ProductFeaturesActivity.class);
+                // product.getId(); //aller chercher en base et passer les elements nécessaires à l'activity
+            }
+        });
+
     }
 
 
@@ -70,5 +79,9 @@ public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHis
             textViewProductDateScanHistory = itemView.findViewById(R.id.textViewProductDateScanHistory);
             imageViewProductHistory = itemView.findViewById(R.id.imageViewProductHistory);
         }
+    }
+
+    public Context getmCtx() {
+        return mCtx;
     }
 }

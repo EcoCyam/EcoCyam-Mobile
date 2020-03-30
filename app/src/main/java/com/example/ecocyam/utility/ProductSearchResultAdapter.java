@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecocyam.R;
+import com.example.ecocyam.activities.ProductFeaturesActivity;
 import com.example.ecocyam.entities.Product;
 
 import java.util.List;
@@ -46,6 +47,14 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
 
         holder.imageViewProductSearchResult.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConnectionTo.switchActivity(getmCtx(),ProductFeaturesActivity.class);
+               // product.getId(); //aller chercher en base et passer les elements nécessaires à l'activity
+            }
+        });
+
     }
 
 
@@ -55,6 +64,7 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
     }
 
 
+
     /* default */class ProductViewHolder extends RecyclerView.ViewHolder {
 
         /* default */ TextView textViewTitleProductSearchResult, textViewProductSearchResultMarque, textViewRatingProductSearchResult;
@@ -62,11 +72,15 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-
             textViewTitleProductSearchResult = itemView.findViewById(R.id.textViewTitleProductSearchResult);
             textViewProductSearchResultMarque = itemView.findViewById(R.id.textViewProductSearchResultMarque);
             textViewRatingProductSearchResult = itemView.findViewById(R.id.textViewRatingProductSearchResult);
             imageViewProductSearchResult = itemView.findViewById(R.id.imageViewProductSearchResult);
         }
+    }
+
+
+    public Context getmCtx() {
+        return mCtx;
     }
 }
