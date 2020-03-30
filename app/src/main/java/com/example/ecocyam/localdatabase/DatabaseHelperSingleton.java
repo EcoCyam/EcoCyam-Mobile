@@ -9,12 +9,9 @@ import android.graphics.Bitmap;
 
 import androidx.annotation.Nullable;
 
-import com.example.ecocyam.entities.Product;
 import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.entities.User;
 import com.example.ecocyam.utility.PictureFormatting;
-
-import java.sql.Blob;
 
 public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
     private static DatabaseHelperSingleton databaseHelperInstance;
@@ -209,7 +206,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
 
         contentValues.put(COL_PICTURE, image);
 
-        int test = db.update(TABLE_NAME_product, contentValues, "ID = ?", new String[]{String.valueOf(idProduct)});
+        db.update(TABLE_NAME_product, contentValues, "ID = ?", new String[]{String.valueOf(idProduct)});
         return true;
     }
 
@@ -235,8 +232,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
         try (Cursor cursor = db.rawQuery(SELECT_ALL_STR + TABLE_NAME_product + " WHERE ID=?", new String[]{String.valueOf(idProduct)})) {
             if (cursor.moveToNext()) {
                 byte[] blob = cursor.getBlob(5);
-                Bitmap picture = PictureFormatting.getBitmap(blob);
-                return picture;
+                return PictureFormatting.getBitmap(blob);
             }
             return null;
         }

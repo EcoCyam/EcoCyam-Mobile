@@ -7,6 +7,8 @@ import java.io.ByteArrayOutputStream;
 
 public final class PictureFormatting {
 
+    private PictureFormatting(){}
+
     public static byte[] getByteArray(Bitmap bmp,String format){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
@@ -20,9 +22,7 @@ public final class PictureFormatting {
             default :
                 return null;
         }
-        byte[] byteArray = stream.toByteArray();
-        bmp.recycle();
-        return byteArray;
+        return stream.toByteArray();
     }
 
     public static Bitmap getBitmap(byte[] byteArray){
