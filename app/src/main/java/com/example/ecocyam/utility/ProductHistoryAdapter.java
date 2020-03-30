@@ -52,8 +52,7 @@ public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHis
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mCtx.getApplicationContext(), ProductFeaturesActivity.class);
-                mCtx.startActivity(intent);
+                ConnectionTo.switchActivity(getmCtx(),ProductFeaturesActivity.class);
                 // product.getId(); //aller chercher en base et passer les elements nécessaires à l'activity
             }
         });
@@ -81,5 +80,9 @@ public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHis
             textViewProductDateScanHistory = itemView.findViewById(R.id.textViewProductDateScanHistory);
             imageViewProductHistory = itemView.findViewById(R.id.imageViewProductHistory);
         }
+    }
+
+    public Context getmCtx() {
+        return mCtx;
     }
 }

@@ -1,7 +1,6 @@
 package com.example.ecocyam.utility;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecocyam.R;
-import com.example.ecocyam.activities.HistoryActivity;
 import com.example.ecocyam.activities.ProductFeaturesActivity;
 import com.example.ecocyam.entities.Product;
 
@@ -52,8 +50,7 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mCtx.getApplicationContext(), ProductFeaturesActivity.class);
-                mCtx.startActivity(intent);
+                ConnectionTo.switchActivity(getmCtx(),ProductFeaturesActivity.class);
                // product.getId(); //aller chercher en base et passer les elements nécessaires à l'activity
             }
         });
@@ -83,4 +80,7 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
     }
 
 
+    public Context getmCtx() {
+        return mCtx;
+    }
 }

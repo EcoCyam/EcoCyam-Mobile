@@ -18,9 +18,9 @@ import java.util.List;
 
 public class FeaturesListAdapter extends ArrayAdapter<String> {
 
-    List<String> items;
-    Context context;
-    int resource;
+    /* default */List<String> items;
+    /* default */Context context;
+    /* default */int resource;
 
     public FeaturesListAdapter(Context context, int resource, List<String> items) {
         super(context, resource, items);
@@ -42,7 +42,7 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
 
         textViewTitleFeatureItem.setText(items.get(position));
 
-        final String name = items.get(position);
+        // String name = items.get(position);
 
         buttonArrow.setOnClickListener(new View.OnClickListener() {
             @Override

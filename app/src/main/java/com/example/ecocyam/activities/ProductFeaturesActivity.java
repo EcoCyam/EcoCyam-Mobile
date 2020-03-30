@@ -1,29 +1,15 @@
 package com.example.ecocyam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.transition.AutoTransition;
-import androidx.transition.TransitionManager;
-
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-
 import com.example.ecocyam.R;
 import com.example.ecocyam.utility.FeaturesListAdapter;
-
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ProductFeaturesActivity extends AppCompatActivity {
-    ListView list;
-    ArrayList<String> itemsComputer;
+    /* default */ ListView list;
+    /* default */ ArrayList<String> itemsComputer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
