@@ -9,14 +9,24 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.example.ecocyam.R;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
 import com.example.ecocyam.utility.ConnectionTo;
+import com.example.ecocyam.utility.CustomRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public final class LoginActivity extends AppCompatActivity {
 
     /* default */ DatabaseHelperSingleton myDB;
     /* default */private AnimationDrawable animationDrawable;
+    /* default */private String URL = "https://ecocyam-web.cfapps.io/api/users/userExist";
 
     @Override
     protected void onResume() {
@@ -68,8 +78,39 @@ public final class LoginActivity extends AppCompatActivity {
                 ConnectionTo.switchActivityWithStringExtra(this, MainActivity.class, email.getText().toString());
                 finish();
             } else {
-                Toast.makeText(this, "Error wrong email or password", Toast.LENGTH_LONG).show();
+                loginRemoteDB(email.getText().toString(), password.getText().toString());
             }
         }
+    }
+
+    public void loginRemoteDB(String email, String password){
+        System.out.println("!!!!!!!!!!!!!!!!");
+
+        JSONObject requestJsonObject = new JSONObject();
+        try {
+
+            requestJsonObject.put("email", email);
+            requestJsonObject.put("password", password);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        CustomRequest jsonObjReq = new CustomRequest(Request.Method.POST, URL, requestJsonObject, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                System.out.println(response.toString() + " success");
+                ConnectionTo.switchActivityWithStringExtra(LoginActivity.this.getApplicationContext(), MainActivity.class, email);
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        System.out.println("Error: " + error.getMessage());
+                        Toast.makeText(LoginActivity.this.getApplicationContext(), "Error wrong email or password", Toast.LENGTH_LONG).show();
+                    }
+                });
+        Volley.newRequestQueue(LoginActivity.this).add(jsonObjReq);
+
     }
 }
