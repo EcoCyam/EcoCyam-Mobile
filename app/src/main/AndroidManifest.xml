@@ -5,7 +5,8 @@
     <uses-permission
         android:name="android.permission.CAMERA"
         android:required="true" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,9 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activities.SelectPictureProduct"></activity>
-        <activity android:name=".activities.ProductFeaturesActivity"></activity>
+        <activity android:name=".activities.SelectPictureProduct" />
+        <activity android:name=".activities.ProductFeaturesActivity" />
         <activity android:name=".activities.SearchResultActivity" />
         <activity android:name=".activities.ModifyUserInformation" />
         <activity android:name=".activities.AboutUsActivity" />

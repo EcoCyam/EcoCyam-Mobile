@@ -9,14 +9,27 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.ecocyam.R;
 import com.example.ecocyam.entities.User;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
 import com.example.ecocyam.utility.ConnectionTo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.logging.Logger;
+
 public final class CreateAccountActivity extends AppCompatActivity {
 
     /* default */private DatabaseHelperSingleton db;
+    /* default */private String URL = "https://ecocyam-web.cfapps.io/api/users";
+    /* default */static final Logger log = Logger.getLogger(CreateAccountActivity.class.getName());
+    /* default */private User newUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,39 +53,64 @@ public final class CreateAccountActivity extends AppCompatActivity {
             EditText lastName = findViewById(R.id.editTextLastName);
             EditText password = findViewById(R.id.editTextPassword);
 
-            createAccount(email,firstName,lastName,password);
+            createAccount(email, firstName, lastName, password);
         });
     }
 
-    public void createAccount(EditText email, EditText firstName, EditText lastName, EditText password){
+    public void createAccount(EditText email, EditText firstName, EditText lastName, EditText password) {
 
-        if (ConnectionTo.verifyEmptyFields(email,"Email cannot be empty") ||
-                ConnectionTo.verifyEmptyFields(firstName,"First Name cannot be empty") ||
-                ConnectionTo.verifyEmptyFields(lastName,"Last name cannot be empty") ||
-                ConnectionTo.verifyEmptyFields(password,"Password cannot be empty")){
+        if (ConnectionTo.verifyEmptyFields(email, "Email cannot be empty") ||
+                ConnectionTo.verifyEmptyFields(firstName, "First Name cannot be empty") ||
+                ConnectionTo.verifyEmptyFields(lastName, "Last name cannot be empty") ||
+                ConnectionTo.verifyEmptyFields(password, "Password cannot be empty")) {
             Toast.makeText(this, "No empty fields", Toast.LENGTH_LONG).show();
-        }
-
-        else {
+        } else {
 
             if (ConnectionTo.validateFormatWithRegex(email.getText().toString())) {
 
-                User newUser = new User(email.getText().toString(), firstName.getText().toString(),
+                newUser = new User(email.getText().toString(), firstName.getText().toString(),
                         lastName.getText().toString(), password.getText().toString());
-                if (db.isUserUnique(newUser)) {
-                    if (db.createUser(newUser)) {
-                        ConnectionTo.switchActivityWithStringExtra(this,MainActivity.class,email.getText().toString());
-                        finish();
-                    }
-                } else {
-                    Toast.makeText(this, "Erreur connection", Toast.LENGTH_LONG).show();
+
+                JSONObject requestJsonObject = new JSONObject();
+                try {
+                    requestJsonObject.put("firstName", newUser.getFirstName());
+                    requestJsonObject.put("lastName", newUser.getLastName());
+                    requestJsonObject.put("email", newUser.getEmail());
+                    requestJsonObject.put("password", newUser.getPassword());
+
+                } catch (JSONException e) {
+                    log.fine(e.getMessage());
                 }
-            }
-            else {
+
+                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL, requestJsonObject, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        log.fine(response.toString() + " connection success");
+                        getDb().createUser(getNewUser());
+                        ConnectionTo.switchActivityWithStringExtra(CreateAccountActivity.this.getApplicationContext(), MainActivity.class, getNewUser().getEmail());
+                    }
+                },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                log.fine("Error: " + error.getMessage());
+                                Toast.makeText(CreateAccountActivity.this.getApplicationContext(), "Error email already exist", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                Volley.newRequestQueue(this).add(jsonObjReq);
+
+            } else {
                 email.setError("Incorrect email format");
             }
         }
 
     }
 
+    public User getNewUser() {
+        return newUser;
+    }
+
+    public DatabaseHelperSingleton getDb() {
+        return db;
+    }
 }

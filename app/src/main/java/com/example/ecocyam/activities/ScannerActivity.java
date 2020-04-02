@@ -34,7 +34,7 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
 
         //MainActivity.textViewScan.setText(result.getText());
         onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ProductFeaturesActivity.class);
         startActivity(intent);
     }
 
