@@ -45,7 +45,7 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
         holder.textViewProductSearchResultMarque.setText(product.getMarque());
         holder.textViewRatingProductSearchResult.setText(String.valueOf(product.getRating()));
 
-        holder.imageViewProductSearchResult.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
+//        holder.imageViewProductSearchResult.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

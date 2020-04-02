@@ -89,7 +89,6 @@ public final class MainActivity extends AppCompatActivity {
                     imageViewSearchButton.setEnabled(true);
 
                     isSearchViewdeployed = true;
-                    System.out.println("sensei");
                 }
                 else{
 
@@ -113,8 +112,10 @@ public final class MainActivity extends AppCompatActivity {
         imageViewSearchButton.setEnabled(false);
         imageViewSearchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SearchResultActivity.class);
-                startActivity(intent);
+                SearchView searchView = findViewById(R.id.searchViewMain);
+
+                ConnectionTo.switchActivityWithStringExtra(getApplicationContext(), SearchResultActivity.class,
+                        searchView.getQuery().toString());
             }
         });
 
