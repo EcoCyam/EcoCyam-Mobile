@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.ecocyam.R;
+import com.example.ecocyam.entities.User;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
 import com.example.ecocyam.utility.ConnectionTo;
 import com.example.ecocyam.utility.CustomRequest;
@@ -101,6 +102,20 @@ public final class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 log.fine(response.toString() + "connection success");
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonobject = response.getJSONObject(i);
+                        String firstName = jsonobject.getString("firstName");
+                        String email = jsonobject.getString("email");
+                        String password = jsonobject.getString("password");
+                        String lastName = jsonobject.getString("lastName");
+                        User user = new User(email,firstName,lastName,password);
+                        getMyDB().createUser(user);
+                        log.fine(email);
+                    } catch (JSONException e) {
+                        log.info(e.getMessage());
+                    }
+                }
                 ConnectionTo.switchActivityWithStringExtra(LoginActivity.this.getApplicationContext(), MainActivity.class, email);
             }
         },
@@ -113,5 +128,9 @@ public final class LoginActivity extends AppCompatActivity {
                 });
         Volley.newRequestQueue(this).add(jsonObjReq);
 
+    }
+
+    public DatabaseHelperSingleton getMyDB() {
+        return myDB;
     }
 }
