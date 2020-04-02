@@ -5,7 +5,6 @@ import androidx.cardview.widget.CardView;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -23,10 +22,14 @@ import com.example.ecocyam.utility.ConnectionTo;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.logging.Logger;
+
 public final class CreateAccountActivity extends AppCompatActivity {
 
     /* default */private DatabaseHelperSingleton db;
-    String URL = "https://ecocyam-web.cfapps.io/api/users";
+    /* default */private String URL = "https://ecocyam-web.cfapps.io/api/users";
+    /* default */static final Logger log = Logger.getLogger(CreateAccountActivity.class.getName());
+    /* default */private User newUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +68,9 @@ public final class CreateAccountActivity extends AppCompatActivity {
 
             if (ConnectionTo.validateFormatWithRegex(email.getText().toString())) {
 
-                User newUser = new User(email.getText().toString(), firstName.getText().toString(),
+                newUser = new User(email.getText().toString(), firstName.getText().toString(),
                         lastName.getText().toString(), password.getText().toString());
 
-                System.out.println("!!!!!!!!!!!!!!!!");
                 JSONObject requestJsonObject = new JSONObject();
                 try {
                     requestJsonObject.put("firstName", newUser.getFirstName());
@@ -77,25 +79,25 @@ public final class CreateAccountActivity extends AppCompatActivity {
                     requestJsonObject.put("password", newUser.getPassword());
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    log.fine(e.getMessage());
                 }
 
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL, requestJsonObject, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println(response.toString() + " success");
-                        db.createUser(newUser);
-                        ConnectionTo.switchActivityWithStringExtra(CreateAccountActivity.this.getApplicationContext(), MainActivity.class, newUser.getEmail());
+                        log.fine(response.toString() + " connection success");
+                        getDb().createUser(getNewUser());
+                        ConnectionTo.switchActivityWithStringExtra(CreateAccountActivity.this.getApplicationContext(), MainActivity.class, getNewUser().getEmail());
                     }
                 },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                System.out.println("Error: " + error.getMessage());
+                                log.fine("Error: " + error.getMessage());
                                 Toast.makeText(CreateAccountActivity.this.getApplicationContext(), "Error email already exist", Toast.LENGTH_LONG).show();
                             }
                         });
-                Volley.newRequestQueue(CreateAccountActivity.this).add(jsonObjReq);
+                Volley.newRequestQueue(this).add(jsonObjReq);
 
             } else {
                 email.setError("Incorrect email format");
@@ -104,4 +106,11 @@ public final class CreateAccountActivity extends AppCompatActivity {
 
     }
 
+    public User getNewUser() {
+        return newUser;
+    }
+
+    public DatabaseHelperSingleton getDb() {
+        return db;
+    }
 }

@@ -22,11 +22,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.logging.Logger;
+
 public final class LoginActivity extends AppCompatActivity {
 
     /* default */ DatabaseHelperSingleton myDB;
     /* default */private AnimationDrawable animationDrawable;
     /* default */private String URL = "https://ecocyam-web.cfapps.io/api/users/userExist";
+    /* default */static final Logger log = Logger.getLogger(LoginActivity.class.getName());
 
     @Override
     protected void onResume() {
@@ -84,8 +87,6 @@ public final class LoginActivity extends AppCompatActivity {
     }
 
     public void loginRemoteDB(String email, String password){
-        System.out.println("!!!!!!!!!!!!!!!!");
-
         JSONObject requestJsonObject = new JSONObject();
         try {
 
@@ -93,24 +94,24 @@ public final class LoginActivity extends AppCompatActivity {
             requestJsonObject.put("password", password);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            log.fine(e.getMessage());
         }
 
         CustomRequest jsonObjReq = new CustomRequest(Request.Method.POST, URL, requestJsonObject, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                System.out.println(response.toString() + " success");
+                log.fine(response.toString() + "connection success");
                 ConnectionTo.switchActivityWithStringExtra(LoginActivity.this.getApplicationContext(), MainActivity.class, email);
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("Error: " + error.getMessage());
+                       log.fine("Error: " + error.getMessage());
                         Toast.makeText(LoginActivity.this.getApplicationContext(), "Error wrong email or password", Toast.LENGTH_LONG).show();
                     }
                 });
-        Volley.newRequestQueue(LoginActivity.this).add(jsonObjReq);
+        Volley.newRequestQueue(this).add(jsonObjReq);
 
     }
 }

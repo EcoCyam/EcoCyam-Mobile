@@ -15,8 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.RegisterRemoteActivity"></activity>
-        <activity android:name=".activities.LoginRemoteActivity" />
         <activity android:name=".activities.SelectPictureProduct" />
         <activity android:name=".activities.ProductFeaturesActivity" />
         <activity android:name=".activities.SearchResultActivity" />
