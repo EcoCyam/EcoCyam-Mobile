@@ -89,6 +89,7 @@ public final class MainActivity extends AppCompatActivity {
                     imageViewSearchButton.setEnabled(true);
 
                     isSearchViewdeployed = true;
+                    System.out.println("sensei");
                 }
                 else{
 
