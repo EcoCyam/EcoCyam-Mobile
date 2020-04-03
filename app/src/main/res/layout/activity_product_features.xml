@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".activities.ProductFeaturesActivity"
+    android:gravity="center_horizontal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#EDF7F1">
+
+        <ImageView
+            android:id="@+id/imageViewProductPF"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/icon_computer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/textViewProductNamePF"
+            android:layout_width="223dp"
+            android:layout_height="79dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="DELL XPS 13"
+            android:textSize="25sp"
+            app:layout_constraintStart_toEndOf="@+id/imageViewProductPF"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="80dp"
+            app:layout_constraintStart_toStartOf="@+id/imageViewProductPF"
+            app:layout_constraintTop_toTopOf="@+id/textViewProductNamePF">
+
+
+            <TextView
+                android:id="@+id/textViewProductRatingPF"
+                android:layout_width="149dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/color_circle_rating"
+                android:gravity="center_horizontal"
+                android:text="78/100"
+                android:textColor="@color/colorPrimary"
+                android:textSize="25sp">
+
+            </TextView>
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ListView
+        android:id="@+id/listViewPF"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" />
+
+
+</LinearLayout>

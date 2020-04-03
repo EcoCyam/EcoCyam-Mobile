@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EcoCyam</string>
+    <string name="email">Email</string>
+    <string name="first_name">Prénom</string>
+    <string name="last_name">Nom</string>
+    <string name="password">Mot de passe</string>
+    <string name="register_here">Register here</string>
+    <string name="login">Connexion</string>
+    <string name="createAccount">Créer Compte</string>
+    <string name="msgNewAccount">Bienvenue sur EcoCyam</string>
+    <string name="ecoCyam_info">Ecocyam vous permet de scanner vos produits afin de voir leurs notes écologiques.
+        Si le produit n est pas encore enregistré, vous pouvez enregistrer ses caractéristiques. </string>
+    <string name="about_us">Nous sommes 4 étudiants à Université de Paris Nanterre</string>
+    <string name="email_message">Contenu de votre message : dites nous tout ce que vous voulez !</string>
+    <string name="send_email">Envoyer</string>
+    <string name="email_subject">Objet</string>
+    <string name="imageView_account">Compte</string>
+    <string name="msgModifyAccount">Modifer vos informations</string>
+    <string name="modifyAccount">Sauvegarder changements</string>
+</resources>
