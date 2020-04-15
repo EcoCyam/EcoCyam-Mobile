@@ -5,7 +5,6 @@ import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.ecocyam.R;
