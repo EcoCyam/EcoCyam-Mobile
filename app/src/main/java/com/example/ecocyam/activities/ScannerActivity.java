@@ -115,7 +115,7 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
     }
 
     public void searchItemByApi(String query, final VolleyCallBack callBack) {
-
+        log.info("code !!!!!!!!!!! "+query);
         JSONObject requestJsonObject = new JSONObject();
         try {
 
@@ -150,7 +150,7 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         log.fine("Error: " + error.getMessage());
-                        ConnectionTo.switchActivity(ScannerActivity.this.getApplicationContext(),MainActivity.class);
+                        ConnectionTo.switchActivity(ScannerActivity.this.getApplicationContext(),AddProductFormActivity.class);
                         Toast.makeText(ScannerActivity.this.getApplicationContext(), "no product found, add this one", Toast.LENGTH_LONG).show();
                         finish();
                     }

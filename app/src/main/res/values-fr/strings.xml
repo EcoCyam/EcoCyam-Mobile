@@ -18,4 +18,7 @@
     <string name="imageView_account">Compte</string>
     <string name="msgModifyAccount">Modifer vos informations</string>
     <string name="modifyAccount">Sauvegarder changements</string>
+    <string name="ref_du_produit">Référence complète du produit</string>
+    <string name="demander_ajout_du_produit">Demander ajout du produit</string>
+    <string name="code_barre_ajout">Code barre du produit (si possible)</string>
 </resources>
