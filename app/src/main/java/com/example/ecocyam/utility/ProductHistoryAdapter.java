@@ -31,7 +31,7 @@ public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHis
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //inflating and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.history_products_item, null);
+        View view = inflater.inflate(R.layout.history_products_item, parent,false);
         return new ProductViewHolder(view);
     }
 

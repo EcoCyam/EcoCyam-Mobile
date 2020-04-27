@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.example.ecocyam.R;
 import com.example.ecocyam.entities.Product;
 import com.example.ecocyam.utility.FeaturesListAdapter;
@@ -25,9 +27,17 @@ public class ProductFeaturesActivity extends AppCompatActivity {
         //Switch CASE computer, etc..
 
         list = (ListView) findViewById(R.id.listViewPF);
+        TextView textViewProductName = (TextView) findViewById(R.id.textViewProductNamePF);
+        TextView textViewProductRating = (TextView) findViewById(R.id.textViewProductRatingPF);
+        TextView textViewProductMarque = (TextView) findViewById(R.id.textViewProductMarquePF);
+
+        textViewProductName.setText(product.getTitle());
+        textViewProductRating.setText(String.valueOf(product.getRating()));
+        textViewProductMarque.setText(product.getMarque());
+
         itemsComputer = new ArrayList<String>();
-        itemsComputer.add(product.getTitle());
-        itemsComputer.add(product.getMarque());
+        itemsComputer.add("Durabilite");
+        itemsComputer.add("Fiabilite");
         itemsComputer.add("Consommation");
         FeaturesListAdapter adp = new FeaturesListAdapter(this, R.layout.features_item, itemsComputer);
 
