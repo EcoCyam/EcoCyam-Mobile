@@ -53,6 +53,7 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
         searchItemByApi(result.getText(), new VolleyCallBack() {
             @Override
             public void onSuccess() {
+
                 ConnectionTo.switchActivityWithObejctExtra(ScannerActivity.this.getApplicationContext()
                         ,ProductFeaturesActivity.class,getScannedProduct());
             }

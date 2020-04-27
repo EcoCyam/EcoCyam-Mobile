@@ -21,6 +21,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
 
     //Table user
     private static final String TABLE_NAME = "user_table";
+    private static final String COL_ID = "ID";
     private static final String COL_EMAIL = "EMAIL";
     private static final String COL_FISTNAME = "FIRSTNAME";
     private static final String COL_LASTNAME = "LASTNAME";
@@ -56,7 +57,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String query = "create table " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, EMAIL TEXT," +
+        String query = "create table " + TABLE_NAME + " (ID INTEGER PRIMARY KEY, EMAIL TEXT," +
                 " FIRSTNAME TEXT, LASTNAME TEXT, PASSWORD TEXT)";
         db.execSQL(query);
         //bien vérifier pour la fk
@@ -81,10 +82,11 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
 
 
     /* PARTI USER */
-    public boolean createUser(User user) {
+    public boolean createUserWithId(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put(COL_ID,user.getId());
         contentValues.put(COL_EMAIL, user.getEmail());
         contentValues.put(COL_FISTNAME, user.getFirstName());
         contentValues.put(COL_LASTNAME, user.getLastName());
@@ -188,16 +190,15 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
         db.insert(TABLE_NAME_product, null, contentValues);
     }
 
-    public Cursor getAllScannedProduct() {
+    public Cursor getAllScannedProduct(int refUser) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery(SELECT_ALL_STR + TABLE_NAME_product, null);
+        return db.rawQuery(SELECT_ALL_STR + TABLE_NAME_product + " WHERE REF_USER=?", new String[]{String.valueOf(refUser)});
     }
 
     //supprime produits quand utilisateur supprimé
     public int deleteProductByRefId(String refId) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME_product, "REF_USER = ?", new String[]{refId});
-
     }
 
     public boolean addPictureToProduct(int idProduct,byte[] image){

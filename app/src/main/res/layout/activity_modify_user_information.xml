@@ -77,12 +77,26 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewSaveWorld"
         app:layout_constraintVertical_bias="0.44" />
 
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="197dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/roundedittext"
+        android:drawableStart="@drawable/ic_lock"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLastName" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewSave"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="560dp"
+        android:layout_marginTop="590dp"
         android:layout_marginEnd="1dp"
         app:cardBackgroundColor="@color/colorPrimaryDark"
         app:cardCornerRadius="25dp"

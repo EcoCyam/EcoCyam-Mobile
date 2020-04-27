@@ -68,8 +68,7 @@ public final class MainActivity extends AppCompatActivity {
         // CLIC SUR ICONE HISTORIQUE
         ImageView imgHistory = (ImageView) findViewById(R.id.imageViewMainHistory);
         imgHistory.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
-            startActivity(intent);
+            ConnectionTo.switchActivityWithStringExtra(this,HistoryActivity.class,emailUser);
         });
 
         //CLIC SUR ICONE RECHERCHE
