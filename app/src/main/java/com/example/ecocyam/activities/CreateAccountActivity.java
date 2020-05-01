@@ -86,8 +86,15 @@ public final class CreateAccountActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         log.fine(response.toString() + " connection success");
-                        getDb().createUser(getNewUser());
-                        ConnectionTo.switchActivityWithStringExtra(CreateAccountActivity.this.getApplicationContext(), MainActivity.class, getNewUser().getEmail());
+                        try {
+                            int id = response.getInt("id");
+                            User finalUser = getNewUser();
+                            finalUser.setId(id);
+                            getDb().createUserWithId(finalUser);
+                            ConnectionTo.switchActivityWithStringExtra(CreateAccountActivity.this.getApplicationContext(), MainActivity.class, finalUser.getEmail());
+                        } catch (JSONException e) {
+                            log.info("error getting response");
+                        }
                     }
                 },
                         new Response.ErrorListener() {

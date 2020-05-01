@@ -115,7 +115,7 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
     }
 
     public void searchItemByApi(String query, final VolleyCallBack callBack) {
-        log.info("code !!!!!!!!!!! "+query);
+
         JSONObject requestJsonObject = new JSONObject();
         try {
 

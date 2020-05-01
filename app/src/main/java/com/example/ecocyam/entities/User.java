@@ -55,4 +55,8 @@ public final class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
