@@ -105,12 +105,13 @@ public final class LoginActivity extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonobject = response.getJSONObject(i);
+                        int id = jsonobject.getInt("id");
                         String firstName = jsonobject.getString("firstName");
                         String email = jsonobject.getString("email");
                         String password = jsonobject.getString("password");
                         String lastName = jsonobject.getString("lastName");
-                        User user = new User(email,firstName,lastName,password);
-                        getMyDB().createUser(user);
+                        User user = new User(id,email,firstName,lastName,password);
+                        getMyDB().createUserWithId(user);
                         log.fine(email);
                     } catch (JSONException e) {
                         log.info(e.getMessage());

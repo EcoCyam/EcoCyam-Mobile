@@ -22,6 +22,9 @@ public class SendEmailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        view = inflater.inflate(R.layout.contact_us_fragment,container,false);
+
+       String emailUser = getArguments().getString("email");
+
         final EditText subjectEmail = view.findViewById(R.id.subject_email);
         final EditText bodyEmail = view.findViewById(R.id.message_email);
         Button buttonSend = view.findViewById(R.id.button_send_email);

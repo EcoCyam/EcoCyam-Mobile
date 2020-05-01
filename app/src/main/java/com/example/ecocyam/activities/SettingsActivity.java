@@ -16,10 +16,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.ecocyam.R;
 import com.example.ecocyam.entities.AllLanguageImpl;
 import com.example.ecocyam.entities.User;
 import com.example.ecocyam.interfaces.AllLanguage;
+import com.example.ecocyam.interfaces.VolleyCallBack;
 import com.example.ecocyam.language_decorator.FrenchLanguage;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
 import com.example.ecocyam.utility.AlertDialogGenerator;
@@ -29,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public final class SettingsActivity extends AppCompatActivity {
     /* default */private ListView listViewSettings;
@@ -36,6 +41,8 @@ public final class SettingsActivity extends AppCompatActivity {
     /* default */private TextView displayEmail;
     /* default */private User actualUser;
     /* default */private Context context;
+    /* default */private String URL = "https://ecocyam-web.cfapps.io/api/users";
+    /* default */static final Logger log = Logger.getLogger(SettingsActivity.class.getName());
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +57,7 @@ public final class SettingsActivity extends AppCompatActivity {
         String email = intent.getStringExtra("email");
         actualUser = db.getUserByEmail(email);
 
-        //Affichage info user
+        //Affichage info useractualUser = db.getUserByEmail(email);
         displayEmail = findViewById(R.id.textView_actual_email);
         TextView displayfName = findViewById(R.id.textView_actual_fname);
         TextView displaylName = findViewById(R.id.textView_actual_lname);
@@ -87,14 +94,28 @@ public final class SettingsActivity extends AppCompatActivity {
         AlertDialog.Builder builder = AlertDialogGenerator.createAlertDialog("Delete Account",
                 "Delete your account ?", "Cancel", this);
         builder.setPositiveButton("Delete account", (dialog, which) -> {
+            db.deleteProductByRefId(String.valueOf(id));
             if (db.deleteUser(String.valueOf(id)) > 0) {
-                Intent intent = new Intent("CLOSE_ALL");
-                context.sendBroadcast(intent);
-                ConnectionTo.switchActivity(context, LoginActivity.class);
+                deleteUserByApi(id,new VolleyCallBack(){
+                    @Override
+                    public void onSuccess(){
+                        Intent intent = new Intent("CLOSE_ALL");
+                        getContext().sendBroadcast(intent);
+                        ConnectionTo.switchActivity(getContext(), LoginActivity.class);
+                    }
+                });
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void deleteUserByApi(int id, VolleyCallBack callBack) {
+
+        String URL_with_id = URL.concat("/").concat(String.valueOf(id));
+        StringRequest request = new StringRequest(Request.Method.DELETE, URL_with_id,
+                response -> callBack.onSuccess(), error -> log.info("Delete error"));
+        Volley.newRequestQueue(this).add(request);
     }
 
     public void logOutUser() {
@@ -180,5 +201,9 @@ public final class SettingsActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("Settings", Activity.MODE_PRIVATE);
         String language = prefs.getString("My_lang", "");
         setLocale(language);
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

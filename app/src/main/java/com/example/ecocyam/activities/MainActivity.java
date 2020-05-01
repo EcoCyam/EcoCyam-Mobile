@@ -51,16 +51,18 @@ public final class MainActivity extends AppCompatActivity {
         textViewScan.startAnimation(atgtwo);
         //---------Fin animation---------------------------
 
+        Intent currentIntent = getIntent();
+        String emailUser = currentIntent.getStringExtra("email");
 
         imageViewScan.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
             startActivity(intent);
         });
 
-        imageViewLogo.setOnClickListener(v -> ConnectionTo.switchActivity(getApplicationContext(), AboutUsActivity.class));
+        imageViewLogo.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
+                AboutUsActivity.class,emailUser));
 
-        Intent currentIntent = getIntent();
-        String emailUser = currentIntent.getStringExtra("email");
+
         ImageView imageViewAccount = findViewById(R.id.imageViewAccount);
         imageViewAccount.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
                 SettingsActivity.class,emailUser));
@@ -68,8 +70,7 @@ public final class MainActivity extends AppCompatActivity {
         // CLIC SUR ICONE HISTORIQUE
         ImageView imgHistory = (ImageView) findViewById(R.id.imageViewMainHistory);
         imgHistory.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), HistoryActivity.class);
-            startActivity(intent);
+            ConnectionTo.switchActivityWithStringExtra(this,HistoryActivity.class,emailUser);
         });
 
         //CLIC SUR ICONE RECHERCHE

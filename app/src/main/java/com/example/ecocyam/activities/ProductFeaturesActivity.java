@@ -36,6 +36,7 @@ public class ProductFeaturesActivity extends AppCompatActivity {
         textViewProductMarque.setText(product.getMarque());
 
         itemsComputer = new ArrayList<String>();
+
         itemsComputer.add("Durabilite");
         itemsComputer.add("Fiabilite");
         itemsComputer.add("Consommation");
