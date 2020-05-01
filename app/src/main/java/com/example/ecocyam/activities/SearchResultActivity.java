@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -18,6 +19,7 @@ import com.example.ecocyam.interfaces.VolleyCallBack;
 import com.example.ecocyam.utility.ConnectionTo;
 import com.example.ecocyam.utility.CustomRequest;
 import com.example.ecocyam.utility.ProductSearchResultAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,6 +64,14 @@ public class SearchResultActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
 
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ConnectionTo.switchActivity(SearchResultActivity.this.getApplicationContext(),AddProductFormActivity.class);
             }
         });
 
