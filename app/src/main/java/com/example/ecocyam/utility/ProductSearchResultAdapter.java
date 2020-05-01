@@ -31,7 +31,7 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //inflating and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.searchresult_products_item, null);
+        View view = inflater.inflate(R.layout.searchresult_products_item,parent,false);
         return new ProductViewHolder(view);
     }
 
@@ -50,7 +50,7 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectionTo.switchActivity(getmCtx(),ProductFeaturesActivity.class);
+                ConnectionTo.switchActivityWithObejctExtra(getmCtx(),ProductFeaturesActivity.class, product);
                // product.getId(); //aller chercher en base et passer les elements nécessaires à l'activity
             }
         });

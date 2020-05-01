@@ -26,13 +26,26 @@
         </ImageView>
 
         <TextView
-            android:id="@+id/textViewProductNamePF"
-            android:layout_width="223dp"
-            android:layout_height="79dp"
+        android:id="@+id/textViewProductNamePF"
+        android:layout_width="234dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="Modèle"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/imageViewProductPF"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+        <TextView
+            android:id="@+id/textViewProductMarquePF"
+            android:layout_width="238dp"
+            android:layout_height="26dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:text="DELL XPS 13"
-            android:textSize="25sp"
+            android:layout_marginTop="53dp"
+            android:text="Marque"
+            android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/imageViewProductPF"
             app:layout_constraintTop_toTopOf="parent">
 
