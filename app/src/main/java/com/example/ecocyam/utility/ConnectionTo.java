@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.EditText;
 
-import com.example.ecocyam.entities.Product;
+import com.example.ecocyam.entities.ScannedProduct;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,10 +32,10 @@ public final class ConnectionTo {
         context.startActivity(intent);
     }
 
-    public static void switchActivityWithObejctExtra(Context context, Class to, Product product){
+    public static void switchActivityWithObejctExtra(Context context, Class to, ScannedProduct product){
         Intent intent = new Intent(context, to);
         intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("product",product);
+        intent.putExtra("product", product);
         context.startActivity(intent);
     }
 

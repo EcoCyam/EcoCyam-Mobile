@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -14,8 +15,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.example.ecocyam.entities.Product;
+import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.interfaces.VolleyCallBack;
+import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
 import com.example.ecocyam.utility.ConnectionTo;
 import com.example.ecocyam.utility.CustomRequest;
 import com.google.zxing.Result;
@@ -34,7 +36,9 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
     private static final int CAMERA_PERMISSION_CODE = 100;
     /* default */private String URL = "https://ecocyam-web.cfapps.io/api/items/search";
     /* default */static final Logger log = Logger.getLogger(LoginActivity.class.getName());
-    /* default */private Product scannedProduct;
+    /* default */private ScannedProduct scannedProduct;
+    /* default */private int refUser;
+    /* default */private DatabaseHelperSingleton db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,10 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
         checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
         ScannerView = new ZXingScannerView(this);
         setContentView(ScannerView);
+        db = DatabaseHelperSingleton.getInstance(this);
+        Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
+        refUser = db.getUserByEmail(email).getId();
     }
 
     @Override
@@ -50,7 +58,7 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
 
         //MainActivity.textViewScan.setText(result.getText());
         //onBackPressed();
-        searchItemByApi(result.getText(), new VolleyCallBack() {
+        searchItemByApi(db,result.getText(), new VolleyCallBack() {
             @Override
             public void onSuccess() {
                 ConnectionTo.switchActivityWithObejctExtra(ScannerActivity.this.getApplicationContext()
@@ -114,7 +122,7 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
         }
     }
 
-    public void searchItemByApi(String query, final VolleyCallBack callBack) {
+    public void searchItemByApi(DatabaseHelperSingleton db, String query, final VolleyCallBack callBack) {
 
         JSONObject requestJsonObject = new JSONObject();
         try {
@@ -133,17 +141,18 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonobject = response.getJSONObject(i);
-                        int itemId = Integer.parseInt(jsonobject.getString("itemId"));
                         String title = jsonobject.getString("name");
-                        //  double rating = Double.parseDouble(jsonobject.getString("overallScore"));
-                        Product product = new Product(itemId,title,"aRenseigner",0.0d,0);
+                        double rating = Double.parseDouble(jsonobject.getString("overallScore"));
+                        ScannedProduct product = new ScannedProduct(title,(float)rating,getRefUser(),null);
                         log.info(product.getTitle());
                         ScannerActivity.this.setScannedProduct(product);
+                        callBack.onSuccess();
+                        db.createProductForHistory(product);
                     } catch (JSONException e) {
                         log.info(e.getMessage());
                     }
                 }
-                callBack.onSuccess();
+
             }
         },
                 new Response.ErrorListener() {
@@ -158,11 +167,16 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
         Volley.newRequestQueue(this).add(jsonObjReq);
     }
 
-    public Product getScannedProduct(){
+    public ScannedProduct getScannedProduct(){
         return this.scannedProduct;
     }
 
-    public void setScannedProduct(Product product){
+    public void setScannedProduct(ScannedProduct product){
         this.scannedProduct = product;
     }
+
+    public int getRefUser(){
+        return this.refUser;
+    }
+
 }

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecocyam.R;
 import com.example.ecocyam.activities.ProductFeaturesActivity;
-import com.example.ecocyam.entities.Product;
+import com.example.ecocyam.entities.ScannedProduct;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
 
 
     /* default */private Context mCtx;
-    /* default */private List<Product> productList;
+    /* default */private List<ScannedProduct> productList;
 
-    public ProductSearchResultAdapter(Context mCtx, List<Product> productList) {
+    public ProductSearchResultAdapter(Context mCtx, List<ScannedProduct> productList) {
         super();
         this.mCtx = mCtx;
         this.productList = productList;
@@ -38,7 +38,7 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         //getting the product of the specified position
-        Product product = productList.get(position);
+        ScannedProduct product = productList.get(position);
 
         //binding the data with the viewholder views
         holder.textViewTitleProductSearchResult.setText(product.getTitle());

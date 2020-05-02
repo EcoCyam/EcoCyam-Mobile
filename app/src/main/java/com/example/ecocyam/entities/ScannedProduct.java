@@ -2,7 +2,9 @@ package com.example.ecocyam.entities;
 
 import android.graphics.Bitmap;
 
-public final class ScannedProduct {
+import java.io.Serializable;
+
+public final class ScannedProduct implements Serializable {
     /* default */private int id,refUser;
     /* default */private String title, marque,localDate;
     /* default */private float rating;
@@ -41,6 +43,19 @@ public final class ScannedProduct {
         this.title = title;
         this.marque = marque;
         this.localDate = localDate;
+        this.rating = rating;
+        this.picture = picture;
+    }
+
+    public ScannedProduct(String title, float rating, int refUser,Bitmap picture) {
+        this.refUser = refUser;
+        this.title = title;
+        this.rating = rating;
+        this.picture = picture;
+    }
+
+    public ScannedProduct(String title, float rating,Bitmap picture) {
+        this.title = title;
         this.rating = rating;
         this.picture = picture;
     }

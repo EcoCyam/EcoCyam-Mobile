@@ -29,7 +29,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
 
     //Table scanned_product
     private static final String TABLE_NAME_product = "scanned_product_table";
-    private static final String COL_ID_PRODUCT = "ID";
+    //private static final String COL_ID_PRODUCT = "ID";
     private static final String COL_TITTLE = "TITTLE";
     private static final String COL_BRAND = "BRAND";
     private static final String COL_RATING = "RATING";
@@ -38,6 +38,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
     private static final String COL_REFUSER = "REF_USER";
 
     public static final String SELECT_ALL_STR = "SELECT * FROM ";
+    public static final String SEARCH_ID = "ID = ?";
 
     //singleton
     public static DatabaseHelperSingleton getInstance(Context context) {
@@ -77,7 +78,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
             default:
                 break;
         } */
-     //ici exemple de upgrade : attention toute modif entraine la perte de donnée donc table temporaire pour réecrire data
+        //ici exemple de upgrade : attention toute modif entraine la perte de donnée donc table temporaire pour réecrire data
     }
 
 
@@ -86,7 +87,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_ID,user.getId());
+        contentValues.put(COL_ID, user.getId());
         contentValues.put(COL_EMAIL, user.getEmail());
         contentValues.put(COL_FISTNAME, user.getFirstName());
         contentValues.put(COL_LASTNAME, user.getLastName());
@@ -112,13 +113,13 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
         contentValues.put(COL_LASTNAME, user.getLastName());
         contentValues.put(COL_PASSWORD, user.getPassword());
 
-        db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{String.valueOf(user.getId())});
+        db.update(TABLE_NAME, contentValues, SEARCH_ID, new String[]{String.valueOf(user.getId())});
         return true;
     }
 
     public int deleteUser(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, "ID = ?", new String[]{id});
+        return db.delete(TABLE_NAME, SEARCH_ID, new String[]{id});
 
     }
 
@@ -175,19 +176,46 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
 
     }
 
-    public void createProductWithId(ScannedProduct scannedProduct) {
+    public void createProductForHistory(ScannedProduct scannedProduct) {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        verifyHistory(scannedProduct);
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(COL_ID_PRODUCT, scannedProduct.getId());
+        //contentValues.put(COL_ID_PRODUCT, scannedProduct.getId());
         contentValues.put(COL_TITTLE, scannedProduct.getTitle());
-        contentValues.put(COL_BRAND, scannedProduct.getMarque());
         contentValues.put(COL_RATING, scannedProduct.getRating());
-        contentValues.put(COL_DATESCAN, scannedProduct.getLocalDate().toString());
         contentValues.put(COL_REFUSER, scannedProduct.getRefUser());
 
         db.insert(TABLE_NAME_product, null, contentValues);
+
+    }
+
+    //if product already in history then delete it else if history is full then delete first one
+    public void verifyHistory(ScannedProduct scannedProduct) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try (Cursor cursor = db.rawQuery(SELECT_ALL_STR + TABLE_NAME_product + " WHERE REF_USER=?",
+                new String[]{String.valueOf(scannedProduct.getRefUser())})) {
+            if (cursor.getCount()>0) {
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(1).equals(scannedProduct.getTitle())) {
+                        deleteProductById(cursor.getInt(0));
+                        return;
+                    }
+                }
+                if (cursor.getCount() == 15) {
+                    cursor.moveToFirst();
+                    deleteProductById(cursor.getInt(0));
+                }
+            }
+        }
+    }
+
+    public void deleteProductById(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME_product, SEARCH_ID, new String[]{String.valueOf(id)});
     }
 
     public Cursor getAllScannedProduct(int refUser) {
@@ -201,13 +229,13 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
         return db.delete(TABLE_NAME_product, "REF_USER = ?", new String[]{refId});
     }
 
-    public boolean addPictureToProduct(int idProduct,byte[] image){
+    public boolean addPictureToProduct(int idProduct, byte[] image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COL_PICTURE, image);
 
-        db.update(TABLE_NAME_product, contentValues, "ID = ?", new String[]{String.valueOf(idProduct)});
+        db.update(TABLE_NAME_product, contentValues, SEARCH_ID, new String[]{String.valueOf(idProduct)});
         return true;
     }
 
@@ -221,7 +249,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
                 Bitmap picture = PictureFormatting.getBitmap(blob);
                 return new ScannedProduct(cursor.getInt(0), cursor.getString(1),
                         cursor.getString(2), cursor.getString(3), cursor.getFloat(4),
-                        cursor.getInt(5),picture);
+                        cursor.getInt(5), picture);
             }
         }
         return null;

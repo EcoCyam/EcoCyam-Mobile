@@ -8,7 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.ecocyam.R;
-import com.example.ecocyam.entities.Product;
+import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.utility.FeaturesListAdapter;
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class ProductFeaturesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_features);
 
         Intent intent = getIntent();
-        Product product = (Product) intent.getSerializableExtra("product");
+        ScannedProduct product = (ScannedProduct) intent.getSerializableExtra("product");
 
         //Switch CASE computer, etc..
 
