@@ -148,6 +148,7 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
                         ScannerActivity.this.setScannedProduct(product);
                         callBack.onSuccess();
                         db.createProductForHistory(product);
+                        //finsih method
                     } catch (JSONException e) {
                         log.info(e.getMessage());
                     }

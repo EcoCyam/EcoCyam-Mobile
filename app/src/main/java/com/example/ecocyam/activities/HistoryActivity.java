@@ -69,8 +69,8 @@ public final class HistoryActivity extends AppCompatActivity {
         Cursor cursor = db.getAllScannedProduct(actualUser.getId());
 
         while (cursor.moveToNext()){
-            ScannedProduct newProduct = new ScannedProduct(cursor.getInt(0),cursor.getInt(1),cursor.getString(2),
-            cursor.getString(3),cursor.getString(4),cursor.getFloat(5));
+            ScannedProduct newProduct = new ScannedProduct(cursor.getString(1),(float)cursor.getDouble(3),
+            cursor.getInt(6),null);
             productList.add(newProduct);
         }
         //pour avoir les plus gros id devant donc les plus récents
