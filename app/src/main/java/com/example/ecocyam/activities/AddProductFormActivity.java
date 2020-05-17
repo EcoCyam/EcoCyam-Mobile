@@ -9,12 +9,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ecocyam.R;
 import com.example.ecocyam.entities.User;
+import com.example.ecocyam.interfaces.VolleyCallBack;
 import com.example.ecocyam.utility.ConnectionTo;
 import com.example.ecocyam.utility.CustomRequest;
 
@@ -35,7 +38,7 @@ public class AddProductFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_product_form);
 
         Spinner spin = (Spinner) findViewById(R.id.spinnerCategorieProduitAdd);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.item_array,android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.item_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(adapter);
 
@@ -49,12 +52,17 @@ public class AddProductFormActivity extends AppCompatActivity {
 
         cardViewCreate.setOnClickListener(v -> {
             addProductRemoteDB(editTextAddProductName.getText().toString(), editTextProductBar.getText().toString(), spin.getSelectedItem().toString(), editTextEcologyRating.getText().toString(),
-                    editTextDuabilityRating.getText().toString(), editTextUserRating.getText().toString());
+                    editTextDuabilityRating.getText().toString(), editTextUserRating.getText().toString(), new VolleyCallBack() {
+                        @Override
+                        public void onSuccess() {
+                            ConnectionTo.switchActivity(AddProductFormActivity.this.getApplicationContext(), MainActivity.class);
+                        }
+                    });
 
         });
     }
 
-    public void addProductRemoteDB(String productName, String productBarCode, String productCategory, String productEcologyRating,String productDurabilityRating, String productUserRating){
+    public void addProductRemoteDB(String productName, String productBarCode, String productCategory, String productEcologyRating, String productDurabilityRating, String productUserRating, final VolleyCallBack volleyCallBack) {
         JSONObject requestJsonObject = new JSONObject();
         try {
             requestJsonObject.put("name", productName);
@@ -64,17 +72,17 @@ public class AddProductFormActivity extends AppCompatActivity {
             requestJsonObject.put("note1", productEcologyRating);
             requestJsonObject.put("note2", productDurabilityRating);
             requestJsonObject.put("note3", productUserRating);
-
         } catch (JSONException e) {
             log.fine(e.getMessage());
         }
 
-        CustomRequest jsonObjReq = new CustomRequest(Request.Method.POST, URL, requestJsonObject, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL, requestJsonObject, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
+            public void onResponse(JSONObject response) {
                 log.info(response.toString() + "add success");
                 Toast.makeText(AddProductFormActivity.this.getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
-                ConnectionTo.switchActivity(AddProductFormActivity.this.getApplicationContext(), MainActivity.class);
+                volleyCallBack.onSuccess();
+                //ConnectionTo.switchActivity(AddProductFormActivity.this.getApplicationContext(), MainActivity.class);
             }
         },
                 new Response.ErrorListener() {
@@ -84,7 +92,11 @@ public class AddProductFormActivity extends AppCompatActivity {
                         Toast.makeText(AddProductFormActivity.this.getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                     }
                 });
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Volley.newRequestQueue(this).add(jsonObjReq);
-
+        String toto = "toto";
     }
 }
