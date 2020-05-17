@@ -14,7 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.ecocyam.R;
-import com.example.ecocyam.entities.Product;
+import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.interfaces.VolleyCallBack;
 import com.example.ecocyam.utility.ConnectionTo;
 import com.example.ecocyam.utility.CustomRequest;
@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 public class SearchResultActivity extends AppCompatActivity {
     //a list to store all the products
-    /* default */ List<Product> productList;
+    /* default */ List<ScannedProduct> productList;
     /* default */ProductSearchResultAdapter adapter;
     /* default */private String URL = "https://ecocyam-web.cfapps.io/api/items/search";
     /* default */static final Logger log = Logger.getLogger(SearchResultActivity.class.getName());
@@ -128,10 +128,10 @@ public class SearchResultActivity extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonobject = response.getJSONObject(i);
-                        int itemId = Integer.parseInt(jsonobject.getString("itemId"));
+                        //int itemId = Integer.parseInt(jsonobject.getString("itemId"));
                         String title = jsonobject.getString("name");
-                      //  double rating = Double.parseDouble(jsonobject.getString("overallScore"));
-                        Product product = new Product(itemId,title,"Apple",0.0d,0);
+                        double rating = Double.parseDouble(jsonobject.getString("overallScore"));
+                        ScannedProduct product = new ScannedProduct(title,(float)rating,null);
                         log.info(product.getTitle());
                         productList.add(product);
                         log.info("size en remplissage" + productList.size());
@@ -146,7 +146,7 @@ public class SearchResultActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         log.fine("Error: " + error.getMessage());
-                        ConnectionTo.switchActivity(SearchResultActivity.this.getApplicationContext(),MainActivity.class);
+                        ConnectionTo.switchActivity(SearchResultActivity.this.getApplicationContext(),AddProductFormActivity.class);
                         Toast.makeText(SearchResultActivity.this.getApplicationContext(), "no product found", Toast.LENGTH_LONG).show();
                         finish();
                     }
