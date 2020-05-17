@@ -16,12 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ecocyam.R;
-import com.example.ecocyam.entities.User;
-import com.example.ecocyam.interfaces.VolleyCallBack;
 import com.example.ecocyam.utility.ConnectionTo;
-import com.example.ecocyam.utility.CustomRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +27,12 @@ public class AddProductFormActivity extends AppCompatActivity {
 
     /* default */private String URL = "https://ecocyam-web.cfapps.io/api/items";
     /* default */static final Logger log = Logger.getLogger(AddProductFormActivity.class.getName());
+
+    /* default */EditText editTextAddProductName;
+    /* default */EditText editTextProductBar;
+    /* default */EditText editTextEcologyRating;
+    /* default */EditText editTextDuabilityRating;
+    /* default */EditText editTextUserRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,34 +46,27 @@ public class AddProductFormActivity extends AppCompatActivity {
 
         CardView cardViewCreate = findViewById(R.id.cardViewAddProduct);
 
-        EditText editTextAddProductName = findViewById(R.id.editTextAddProductName);
-        EditText editTextProductBar = findViewById(R.id.editTextProductBar);
-        EditText editTextEcologyRating = findViewById(R.id.editTextEcologyRating);
-        EditText editTextDuabilityRating = findViewById(R.id.editTextDuabilityRating);
-        EditText editTextUserRating = findViewById(R.id.editTextUserRating);
+        editTextAddProductName = findViewById(R.id.editTextAddProductName);
+        editTextProductBar = findViewById(R.id.editTextProductBar);
+        editTextEcologyRating = findViewById(R.id.editTextEcologyRating);
+        editTextDuabilityRating = findViewById(R.id.editTextDuabilityRating);
+        editTextUserRating = findViewById(R.id.editTextUserRating);
 
         cardViewCreate.setOnClickListener(v -> {
-            addProductRemoteDB(editTextAddProductName.getText().toString(), editTextProductBar.getText().toString(), spin.getSelectedItem().toString(), editTextEcologyRating.getText().toString(),
-                    editTextDuabilityRating.getText().toString(), editTextUserRating.getText().toString(), new VolleyCallBack() {
-                        @Override
-                        public void onSuccess() {
-                            ConnectionTo.switchActivity(AddProductFormActivity.this.getApplicationContext(), MainActivity.class);
-                        }
-                    });
-
+            addProductRemoteDB();
         });
     }
 
-    public void addProductRemoteDB(String productName, String productBarCode, String productCategory, String productEcologyRating, String productDurabilityRating, String productUserRating, final VolleyCallBack volleyCallBack) {
+    public void addProductRemoteDB() {
         JSONObject requestJsonObject = new JSONObject();
         try {
-            requestJsonObject.put("name", productName);
-            requestJsonObject.put("barcode", productBarCode);
+            requestJsonObject.put("name", editTextAddProductName.getText().toString());
+            requestJsonObject.put("barcode", editTextProductBar.getText().toString());
             //requestJsonObject.put("image", image);
             requestJsonObject.put("categoryId", 8);
-            requestJsonObject.put("note1", productEcologyRating);
-            requestJsonObject.put("note2", productDurabilityRating);
-            requestJsonObject.put("note3", productUserRating);
+            requestJsonObject.put("note1", editTextEcologyRating.getText().toString());
+            requestJsonObject.put("note2", editTextDuabilityRating.getText().toString());
+            requestJsonObject.put("note3", editTextUserRating.getText().toString());
         } catch (JSONException e) {
             log.fine(e.getMessage());
         }
@@ -81,8 +76,7 @@ public class AddProductFormActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 log.info(response.toString() + "add success");
                 Toast.makeText(AddProductFormActivity.this.getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
-                volleyCallBack.onSuccess();
-                //ConnectionTo.switchActivity(AddProductFormActivity.this.getApplicationContext(), MainActivity.class);
+                ConnectionTo.switchActivity(AddProductFormActivity.this.getApplicationContext(), MainActivity.class);
             }
         },
                 new Response.ErrorListener() {
@@ -97,6 +91,5 @@ public class AddProductFormActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         Volley.newRequestQueue(this).add(jsonObjReq);
-        String toto = "toto";
     }
 }
