@@ -55,7 +55,7 @@ public final class MainActivity extends AppCompatActivity {
         String emailUser = currentIntent.getStringExtra("email");
 
         imageViewScan.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
+            Intent intent = new Intent(getApplicationContext(), AddProductFormActivity.class); //Scanner activity à remettre !!!!!!!!!!!!!!!!!
             startActivity(intent);
         });
 
