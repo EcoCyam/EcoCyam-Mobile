@@ -3,6 +3,7 @@ package com.example.ecocyam.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.ecocyam.R;
@@ -28,9 +29,20 @@ public final class AboutUsActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPagerAboutUs);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),1);
         //ajouts fragments
+        Intent intent = getIntent();
+        String emailUser = intent.getStringExtra("email");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("email",emailUser);
+
+        SendEmailFragment sendEmailFragment = new SendEmailFragment();
+        sendEmailFragment.setArguments(bundle);
+
         adapter.addFragment(new AboutApplicationFragment(),"About EcoCYam");
         adapter.addFragment(new AboutUsFragment(),"About us");
-        adapter.addFragment(new SendEmailFragment(),"Contact us");
+       // adapter.addFragment(new SendEmailFragment(),"Contact us");
+        adapter.addFragment(sendEmailFragment,"Contact us");
+
         //adapter setup
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);

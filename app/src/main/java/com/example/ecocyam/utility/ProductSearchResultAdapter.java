@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecocyam.R;
 import com.example.ecocyam.activities.ProductFeaturesActivity;
-import com.example.ecocyam.entities.Product;
+import com.example.ecocyam.entities.ScannedProduct;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
 
 
     /* default */private Context mCtx;
-    /* default */private List<Product> productList;
+    /* default */private List<ScannedProduct> productList;
 
-    public ProductSearchResultAdapter(Context mCtx, List<Product> productList) {
+    public ProductSearchResultAdapter(Context mCtx, List<ScannedProduct> productList) {
         super();
         this.mCtx = mCtx;
         this.productList = productList;
@@ -31,14 +31,14 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //inflating and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.searchresult_products_item, null);
+        View view = inflater.inflate(R.layout.searchresult_products_item,parent,false);
         return new ProductViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         //getting the product of the specified position
-        Product product = productList.get(position);
+        ScannedProduct product = productList.get(position);
 
         //binding the data with the viewholder views
         holder.textViewTitleProductSearchResult.setText(product.getTitle());
@@ -50,7 +50,7 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectionTo.switchActivity(getmCtx(),ProductFeaturesActivity.class);
+                ConnectionTo.switchActivityWithObejctExtra(getmCtx(),ProductFeaturesActivity.class, product);
                // product.getId(); //aller chercher en base et passer les elements nécessaires à l'activity
             }
         });

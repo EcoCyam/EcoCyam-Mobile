@@ -1,6 +1,8 @@
 package com.example.ecocyam.entities;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
 
     /* default */ private int id;
     /* default */ private String title;

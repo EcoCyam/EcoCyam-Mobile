@@ -4,16 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
 import com.example.ecocyam.R;
 
 import com.example.ecocyam.entities.ScannedProduct;
+import com.example.ecocyam.entities.User;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
-import com.example.ecocyam.utility.ConnectionTo;
 import com.example.ecocyam.utility.ProductHistoryAdapter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class HistoryActivity extends AppCompatActivity {
@@ -31,30 +33,29 @@ public final class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        Intent intent = getIntent();
+        String email = intent.getStringExtra("email");
+        User actualUser = db.getUserByEmail(email);
+
         //EN DUR POUR LE TEST
-        ScannedProduct product1 = new ScannedProduct(1,1,"Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)",
-                                            "APPLE",
-                "05/03/2020",8.1f);
+        ScannedProduct product1 = new ScannedProduct("Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra))",
+                8.0f, actualUser.getId(),null);
 
-        ScannedProduct product2 = new ScannedProduct(2,1,"Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
-                "DELL",
-                "05/03/2020",4.3f);
+        ScannedProduct product2 = new ScannedProduct("Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
+                9.8f, actualUser.getId(),null);
 
-        ScannedProduct product3 = new ScannedProduct(3,1,"Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
-                "MICROSOFT",
-                "05/03/2020",6.8f);
+        ScannedProduct product3 = new ScannedProduct("Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
+                10.9f, actualUser.getId(),null);
 
-
-
-        db.deleteProductByRefId(String.valueOf(1)); //en attendant on delete à chaque fois les anciennes versions
-        db.createProductWithId(product1);
-        db.createProductWithId(product2);
-        db.createProductWithId(product3);
+        //db.deleteProductByRefId(String.valueOf(actualUser.getId())); //en attendant on delete à chaque fois les anciennes versions
+        db.createProductForHistory(product1);
+        db.createProductForHistory(product2);
+        db.createProductForHistory(product3);
         //FIN DU DUR
 
         //test à adapter selon le besoin
         //manipulation des images avec SQlite database : practise
-        ConnectionTo.switchActivityWithStringExtra(this,SelectPictureProduct.class,"1");
+       // ConnectionTo.switchActivityWithStringExtra(this,SelectPictureProduct.class,"1");
         //fin de manipulation
 
         //getting the recyclerview from xml
@@ -65,44 +66,15 @@ public final class HistoryActivity extends AppCompatActivity {
         //initializing the productlist
         productList = new ArrayList<>();
 
-        Cursor cursor = db.getAllScannedProduct();
+        Cursor cursor = db.getAllScannedProduct(actualUser.getId());
 
         while (cursor.moveToNext()){
-            ScannedProduct newProduct = new ScannedProduct(cursor.getInt(0),cursor.getInt(1),cursor.getString(2),
-            cursor.getString(3),cursor.getString(4),cursor.getFloat(5));
+            ScannedProduct newProduct = new ScannedProduct(cursor.getString(1),(float)cursor.getDouble(3),
+            cursor.getInt(6),null);
             productList.add(newProduct);
         }
-/*
-        //adding some items to our list
-        productList.add(
-                new ProductHistory(
-                        1,
-                        "Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)",
-                        "APPLE",
-                        8.1,
-                        "21/12/2019",
-                        R.drawable.icon_phone));
-
-        productList.add(
-                new ProductHistory(
-                        1,
-                        "Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
-                        "DELL",
-                        4.3,
-                        "01/02/2020",
-                        R.drawable.icon_electrique));
-
-        productList.add(
-                new ProductHistory(
-                        1,
-                        "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
-                        "MICROSOFT",
-                        6.8,
-                        "22/01/2020",
-                        R.drawable.icon_computer));
-
- */
-
+        //pour avoir les plus gros id devant donc les plus récents
+        Collections.reverse(productList);
         //creating recyclerview adapter
         ProductHistoryAdapter adapter = new ProductHistoryAdapter(this, productList);
 

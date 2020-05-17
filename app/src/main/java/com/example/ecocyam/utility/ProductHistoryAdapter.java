@@ -31,7 +31,7 @@ public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHis
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //inflating and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.history_products_item, null);
+        View view = inflater.inflate(R.layout.history_products_item, parent,false);
         return new ProductViewHolder(view);
     }
 
@@ -42,16 +42,16 @@ public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHis
 
         //binding the data with the viewholder views
         holder.textViewTitleProductHistory.setText(product.getTitle());
-        holder.textViewProductHistoryMarque.setText(product.getMarque());
+        //holder.textViewProductHistoryMarque.setText(product.getMarque());
         holder.textViewRatingProductHistory.setText(String.valueOf(product.getRating()));
-        holder.textViewProductDateScanHistory.setText(String.valueOf(product.getLocalDate()));
+       // holder.textViewProductDateScanHistory.setText(String.valueOf(product.getLocalDate()));
 
-       // holder.imageViewProductHistory.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
+        holder.imageViewProductHistory.setImageBitmap(product.getPicture());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConnectionTo.switchActivity(getmCtx(),ProductFeaturesActivity.class);
+                ConnectionTo.switchActivityWithObejctExtra(getmCtx(),ProductFeaturesActivity.class,product);
                 // product.getId(); //aller chercher en base et passer les elements nécessaires à l'activity
             }
         });
