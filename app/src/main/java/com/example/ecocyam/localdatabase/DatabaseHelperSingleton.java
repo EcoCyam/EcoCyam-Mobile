@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import java.util.Base64;
 
 import androidx.annotation.Nullable;
 
@@ -187,7 +188,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
         contentValues.put(COL_TITTLE, scannedProduct.getTitle());
         contentValues.put(COL_RATING, scannedProduct.getRating());
         contentValues.put(COL_REFUSER, scannedProduct.getRefUser());
-        byte[] image = PictureFormatting.getByteArray(scannedProduct.getPicture(),"png");
+        byte[] image = Base64.getDecoder().decode(scannedProduct.getSerializeImage());
         contentValues.put(COL_PICTURE, image);
 
         db.insert(TABLE_NAME_product, null, contentValues);

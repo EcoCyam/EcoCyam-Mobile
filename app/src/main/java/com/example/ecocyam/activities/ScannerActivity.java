@@ -145,7 +145,8 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
                         JSONObject jsonobject = response.getJSONObject(i);
                         String title = jsonobject.getString("name");
                         double rating = Double.parseDouble(jsonobject.getString("overallScore"));
-                        ScannedProduct product = new ScannedProduct(title,(float)rating,getRefUser(), PictureFormatting.getBitmap(Base64.getDecoder().decode(jsonobject.getString("image"))));
+                        ScannedProduct product = new ScannedProduct(title,(float)rating,getRefUser(), null);
+                        product.setSerializeImage(jsonobject.getString("image"));
                         log.info(product.getTitle());
                         ScannerActivity.this.setScannedProduct(product);
                         callBack.onSuccess();
