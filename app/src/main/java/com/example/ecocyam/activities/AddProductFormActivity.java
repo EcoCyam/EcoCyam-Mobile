@@ -101,7 +101,7 @@ public class AddProductFormActivity extends AppCompatActivity {
             log.fine(e.getMessage());
         }
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL2, requestJsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL, requestJsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 log.info(response.toString() + "add success");

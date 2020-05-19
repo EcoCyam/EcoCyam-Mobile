@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public final class ScannedProduct implements Serializable {
     /* default */private int id,refUser;
-    /* default */private String title, marque,localDate;
+    /* default */private String title, marque,localDate, serializeImage;
     /* default */private float rating;
     /* default */private Bitmap picture;
 
@@ -114,5 +114,13 @@ public final class ScannedProduct implements Serializable {
 
     public void setPicture(Bitmap picture) {
         this.picture = picture;
+    }
+
+    public String getSerializeImage() {
+        return serializeImage;
+    }
+
+    public void setSerializeImage(String serializeImage) {
+        this.serializeImage = serializeImage;
     }
 }

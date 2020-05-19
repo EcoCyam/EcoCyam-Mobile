@@ -13,6 +13,7 @@ import com.example.ecocyam.R;
 import com.example.ecocyam.activities.ProductFeaturesActivity;
 import com.example.ecocyam.entities.ScannedProduct;
 
+import java.util.Base64;
 import java.util.List;
 
 public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSearchResultAdapter.ProductViewHolder> {
@@ -45,7 +46,8 @@ public class ProductSearchResultAdapter extends RecyclerView.Adapter<ProductSear
         holder.textViewProductSearchResultMarque.setText(product.getMarque());
         holder.textViewRatingProductSearchResult.setText(String.valueOf(product.getRating()));
 
-//        holder.imageViewProductSearchResult.setImageDrawable(mCtx.getResources().getDrawable(product.getImage()));
+        byte[] productImageBin = Base64.getDecoder().decode(product.getSerializeImage());
+        holder.imageViewProductSearchResult.setImageBitmap(PictureFormatting.getBitmap(productImageBin));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

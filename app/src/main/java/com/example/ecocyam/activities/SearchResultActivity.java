@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.interfaces.VolleyCallBack;
 import com.example.ecocyam.utility.ConnectionTo;
 import com.example.ecocyam.utility.CustomRequest;
+import com.example.ecocyam.utility.PictureFormatting;
 import com.example.ecocyam.utility.ProductSearchResultAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -74,39 +78,6 @@ public class SearchResultActivity extends AppCompatActivity {
                 ConnectionTo.switchActivity(SearchResultActivity.this.getApplicationContext(),AddProductFormActivity.class);
             }
         });
-
-
-/*
-        //initializing the productlist
-
-
-
-        //adding some items to our list
-        productList.add(
-                new Product(
-                        1,
-                        "Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)",
-                        "APPLE",
-                        8.1,
-                        R.drawable.icon_phone));
-
-        productList.add(
-                new Product(
-                        1,
-                        "Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
-                        "DELL",
-                        4.3,
-                        R.drawable.icon_electrique));
-
-        productList.add(
-                new Product(
-                        1,
-                        "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
-                        "MICROSOFT",
-                        6.8,
-                        R.drawable.icon_computer));
-*/
-
     }
 
     public void searchItemByApi(String query, final VolleyCallBack callBack) {
@@ -131,7 +102,11 @@ public class SearchResultActivity extends AppCompatActivity {
                         //int itemId = Integer.parseInt(jsonobject.getString("itemId"));
                         String title = jsonobject.getString("name");
                         double rating = Double.parseDouble(jsonobject.getString("overallScore"));
+                        //byte[] productImageBin = Base64.getDecoder().decode(jsonobject.getString("image"));
+                        //final Bitmap productImage = PictureFormatting.getBitmap(productImageBin);
+
                         ScannedProduct product = new ScannedProduct(title,(float)rating,null);
+                        product.setSerializeImage(jsonobject.getString("image"));
                         log.info(product.getTitle());
                         productList.add(product);
                         log.info("size en remplissage" + productList.size());
