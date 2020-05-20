@@ -11,6 +11,8 @@ public final class EvaluationScore {
         this.durablityScore = durablityScore;
     }
 
+    public EvaluationScore(){}
+
     public double getEcoScore() {
         return ecoScore;
     }
