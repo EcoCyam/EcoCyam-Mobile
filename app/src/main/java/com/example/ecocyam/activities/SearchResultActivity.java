@@ -99,7 +99,7 @@ public class SearchResultActivity extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonobject = response.getJSONObject(i);
-                        //int itemId = Integer.parseInt(jsonobject.getString("itemId"));
+                        int itemId = jsonobject.getInt("itemId");
                         String title = jsonobject.getString("name");
                         double rating = Double.parseDouble(jsonobject.getString("overallScore"));
                         //byte[] productImageBin = Base64.getDecoder().decode(jsonobject.getString("image"));
@@ -107,6 +107,7 @@ public class SearchResultActivity extends AppCompatActivity {
 
                         ScannedProduct product = new ScannedProduct(title,(float)rating,null);
                         product.setSerializeImage(jsonobject.getString("image"));
+                        product.setRefProductMariaDb(itemId);
                         log.info(product.getTitle());
                         productList.add(product);
                         log.info("size en remplissage" + productList.size());

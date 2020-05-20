@@ -5,9 +5,10 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 
 public final class ScannedProduct implements Serializable {
-    /* default */private int id,refUser;
+    /* default */private int id,refUser,refProductMariaDb;
     /* default */private String title, marque,localDate, serializeImage;
     /* default */private float rating;
+    /* default */private EvaluationScore evaluationScore;
     /* default */private Bitmap picture;
 
     //voir pour rajouter une image
@@ -114,6 +115,14 @@ public final class ScannedProduct implements Serializable {
 
     public void setPicture(Bitmap picture) {
         this.picture = picture;
+    }
+
+    public int getRefProductMariaDb() {
+        return refProductMariaDb;
+    }
+
+    public void setRefProductMariaDb(int refProductMariaDb) {
+        this.refProductMariaDb = refProductMariaDb;
     }
 
     public String getSerializeImage() {

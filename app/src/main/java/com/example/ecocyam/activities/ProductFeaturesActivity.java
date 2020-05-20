@@ -39,6 +39,7 @@ public class ProductFeaturesActivity extends AppCompatActivity {
         textViewProductName.setText(product.getTitle());
         textViewProductRating.setText(String.valueOf(product.getRating()));
         textViewProductMarque.setText(product.getMarque());
+
         if(product.getSerializeImage() != null){
             imageViewProductPF.setImageBitmap(PictureFormatting.getBitmap(Base64.getDecoder().decode(product.getSerializeImage())));
         }
@@ -47,8 +48,8 @@ public class ProductFeaturesActivity extends AppCompatActivity {
 
         itemsComputer.add("Durabilite");
         itemsComputer.add("Fiabilite");
-        itemsComputer.add("Consommation");
-        FeaturesListAdapter adp = new FeaturesListAdapter(this, R.layout.features_item, itemsComputer);
+        itemsComputer.add("Note utilisateurs");
+        FeaturesListAdapter adp = new FeaturesListAdapter(this, R.layout.features_item, itemsComputer,product);
 
         list.setAdapter(adp);
 

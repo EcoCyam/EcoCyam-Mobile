@@ -69,7 +69,6 @@
             android:layout_toRightOf="@id/imageViewProductHistory"
             android:drawableEnd="@drawable/color_circle_rating"
             android:drawablePadding="15dp"
-            android:text="352g/CO2"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
