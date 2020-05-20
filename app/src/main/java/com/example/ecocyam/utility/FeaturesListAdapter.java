@@ -30,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -41,6 +42,7 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
     /* default */ScannedProduct product;
     /* default */private String URL = "https://ecocyam-web.cfapps.io/api/evaluations/item";
     /* default */static final Logger log = Logger.getLogger(FeaturesListAdapter.class.getName());
+    /* default */ HashMap<Integer, Double> scores = new HashMap<Integer, Double>();
 
     public FeaturesListAdapter(Context context, int resource, List<String> items, ScannedProduct product) {
         super(context, resource, items);
@@ -64,15 +66,12 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
         EvaluationScore score = getScore(refProductMariaDb, new VolleyCallBack() {
             @Override
             public void onSuccess() {
-                System.out.println("yes");
+                textViewTitleFeatureItem.setText(items.get(position));
+                textViewRatingResultFeatureItem.setText(String.valueOf(scores.get(position+1)));
             }
         });
 
-
-        textViewRatingResultFeatureItem.setText(String.valueOf(product.getRefProductMariaDb()));
         CardView cardView  = view.findViewById(R.id.cardviewFI);
-
-        textViewTitleFeatureItem.setText(items.get(position));
 
         // String name = items.get(position);
 
@@ -94,7 +93,6 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
     }
 
     public EvaluationScore getScore(int refProductMariaDb, final VolleyCallBack callBack) {
-
         String URL_with_id = URL.concat("/").concat(String.valueOf(refProductMariaDb));
 
         CustomRequest jsonObjReq = new CustomRequest(Request.Method.GET, URL_with_id, new Response.Listener<JSONArray>() {
@@ -104,17 +102,7 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                        JSONObject jsonobject = response.getJSONObject(i);
-                    /*    int itemId = jsonobject.getInt("itemId");
-                        String title = jsonobject.getString("name");
-                        double rating = Double.parseDouble(jsonobject.getString("overallScore"));
-                        //byte[] productImageBin = Base64.getDecoder().decode(jsonobject.getString("image"));
-                        //final Bitmap productImage = PictureFormatting.getBitmap(productImageBin);
-
-                        ScannedProduct product = new ScannedProduct(title,(float)rating,null);
-                        product.setSerializeImage(jsonobject.getString("image"));
-                        product.setRefProductMariaDb(itemId);
-                        log.info(product.getTitle());
-                        productList.add(product);*/
+                        scores.put(jsonobject.getJSONObject("criteria").getInt("criteriaId"), jsonobject.getDouble("score"));
                         log.info("good" + jsonobject);
                     } catch (JSONException e) {
                         log.info(e.getMessage());

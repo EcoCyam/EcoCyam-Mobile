@@ -46,8 +46,8 @@ public class ProductFeaturesActivity extends AppCompatActivity {
 
         itemsComputer = new ArrayList<String>();
 
-        itemsComputer.add("Durabilite");
-        itemsComputer.add("Fiabilite");
+        itemsComputer.add("Ecologique");
+        itemsComputer.add("Durabilité");
         itemsComputer.add("Note utilisateurs");
         FeaturesListAdapter adp = new FeaturesListAdapter(this, R.layout.features_item, itemsComputer,product);
 
