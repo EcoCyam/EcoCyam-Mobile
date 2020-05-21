@@ -30,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
@@ -41,6 +42,7 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
     /* default */int resource;
     /* default */ScannedProduct product;
     /* default */private String URL = "https://ecocyam-web.cfapps.io/api/evaluations/item";
+    /* default */private String URL2 = "http://10.0.2.2:8080/api/evaluations/item";
     /* default */static final Logger log = Logger.getLogger(FeaturesListAdapter.class.getName());
     /* default */ HashMap<Integer, Double> scores = new HashMap<Integer, Double>();
 
@@ -67,7 +69,8 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
             @Override
             public void onSuccess() {
                 textViewTitleFeatureItem.setText(items.get(position));
-                textViewRatingResultFeatureItem.setText(String.valueOf(scores.get(position+1)));
+                DecimalFormat df = new DecimalFormat("####.#");
+                textViewRatingResultFeatureItem.setText(String.valueOf(df.format(scores.get(position+1))));
             }
         });
 
@@ -93,7 +96,7 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
     }
 
     public EvaluationScore getScore(int refProductMariaDb, final VolleyCallBack callBack) {
-        String URL_with_id = URL.concat("/").concat(String.valueOf(refProductMariaDb));
+        String URL_with_id = URL2.concat("/").concat(String.valueOf(refProductMariaDb));
 
         CustomRequest jsonObjReq = new CustomRequest(Request.Method.GET, URL_with_id, new Response.Listener<JSONArray>() {
             @Override

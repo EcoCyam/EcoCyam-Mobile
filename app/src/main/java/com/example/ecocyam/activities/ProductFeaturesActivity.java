@@ -30,6 +30,7 @@ import com.example.ecocyam.utility.PictureFormatting;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.logging.Logger;
@@ -38,6 +39,7 @@ public class ProductFeaturesActivity extends AppCompatActivity {
     /* default */ ListView list;
     /* default */ ArrayList<String> itemsComputer;
     /* default */private String URL = "https://ecocyam-web.cfapps.io/api/evaluations/";
+    /* default */private String URL2 = "http://10.0.2.2:8080/api/evaluations";
     /* default */static final Logger log = Logger.getLogger(ProductFeaturesActivity.class.getName());
 
     @Override
@@ -57,7 +59,8 @@ public class ProductFeaturesActivity extends AppCompatActivity {
         ImageView imageViewProductPF = findViewById(R.id.imageViewProductPF);
 
         textViewProductName.setText(product.getTitle());
-        textViewProductRating.setText(String.valueOf(product.getRating()));
+        DecimalFormat df = new DecimalFormat("####.##");
+        textViewProductRating.setText(String.valueOf(df.format(product.getRating())));
         textViewProductMarque.setText(product.getMarque());
 
         if(product.getSerializeImage() != null){
@@ -94,7 +97,7 @@ public class ProductFeaturesActivity extends AppCompatActivity {
                         log.fine(e.getMessage());
                     }
 
-                    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL, requestJsonObject, new Response.Listener<JSONObject>() {
+                    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL2, requestJsonObject, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             log.fine(response.toString() + " connection success");
