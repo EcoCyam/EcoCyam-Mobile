@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,10 +25,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.ecocyam.R;
 import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.entities.User;
+import com.example.ecocyam.interfaces.VolleyCallBack;
 import com.example.ecocyam.utility.ConnectionTo;
+import com.example.ecocyam.utility.CustomRequest;
 import com.example.ecocyam.utility.FeaturesListAdapter;
 import com.example.ecocyam.utility.PictureFormatting;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,8 +44,8 @@ public class ProductFeaturesActivity extends AppCompatActivity {
     /* default */ ListView list;
     /* default */ ArrayList<String> itemsComputer;
     /* default */private String URL = "https://ecocyam-web.cfapps.io/api/evaluations/";
-    /* default */private String URL2 = "http://10.0.2.2:8080/api/evaluations";
     /* default */static final Logger log = Logger.getLogger(ProductFeaturesActivity.class.getName());
+    /* default */ScannedProduct product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +53,7 @@ public class ProductFeaturesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_features);
 
         Intent intent = getIntent();
-        ScannedProduct product = (ScannedProduct) intent.getSerializableExtra("product");
-
-        //Switch CASE computer, etc..
+        product = (ScannedProduct) intent.getSerializableExtra("product");
 
         list = (ListView) findViewById(R.id.listViewPF);
         TextView textViewProductName = (TextView) findViewById(R.id.textViewProductNamePF);
@@ -60,7 +63,18 @@ public class ProductFeaturesActivity extends AppCompatActivity {
 
         textViewProductName.setText(product.getTitle());
         DecimalFormat df = new DecimalFormat("####.##");
-        textViewProductRating.setText(String.valueOf(df.format(product.getRating())));
+        textViewProductRating.setText(String.valueOf(df.format(product.getRating())) + "/5");
+        log.info("SCANNED PRODUCT OVERALLSCORE ::: " + String.valueOf(df.format(product.getRating())));
+        Drawable imgRating = null;
+        if(product.getRating() > 4){
+            imgRating = this.getApplicationContext().getResources().getDrawable(R.drawable.color_circle_rating_good);
+        } else if(product.getRating() < 2.9){
+            imgRating = this.getApplicationContext().getResources().getDrawable(R.drawable.color_circle_rating_bad);
+        }else{
+            imgRating = this.getApplicationContext().getResources().getDrawable(R.drawable.color_circle_rating_neutral);
+        }
+        textViewProductRating.setCompoundDrawablesRelativeWithIntrinsicBounds(imgRating,null,null,null);
+
         textViewProductMarque.setText(product.getMarque());
 
         if(product.getSerializeImage() != null){
@@ -97,11 +111,11 @@ public class ProductFeaturesActivity extends AppCompatActivity {
                         log.fine(e.getMessage());
                     }
 
-                    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL2, requestJsonObject, new Response.Listener<JSONObject>() {
+                    JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL, requestJsonObject, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             log.fine(response.toString() + " connection success");
-                            dialog.dismiss();
+                            refreshData(dialog);
                         }
                     },
                             new Response.ErrorListener() {
@@ -126,6 +140,51 @@ public class ProductFeaturesActivity extends AppCompatActivity {
 
         list.setAdapter(adp);
 
+    }
+
+    private void refreshData(DialogInterface dialog){
+        this.resetProduct(new VolleyCallBack() {
+            @Override
+            public void onSuccess() {
+                dialog.dismiss();
+                Toast.makeText(ProductFeaturesActivity.this.getApplicationContext(), "Votre avis a été envoyé avec succès", Toast.LENGTH_LONG).show();
+                finish();
+                getIntent().removeExtra("product");
+                ConnectionTo.switchActivityWithObejctExtra(getApplicationContext(),ProductFeaturesActivity.class, product);
+            }
+        });
+        //this.recreate();
+    }
+
+    private void resetProduct(final VolleyCallBack callBack){
+        String URL3 = "https://ecocyam-web.cfapps.io/api/items";
+        String URL_with_id = URL3.concat("/").concat(String.valueOf(product.getRefProductMariaDb()));
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(URL_with_id, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    int itemId = response.getInt("itemId");
+                    String title = response.getString("name");
+                    double rating = Double.parseDouble(response.getString("overallScore"));
+                    log.info("SCANNED PRODUCT OVERALLSCORE ACTUEL ::: " + String.valueOf(rating));
+
+                    product = new ScannedProduct(title,(float)rating,null);
+                    product.setSerializeImage(response.getString("image"));
+                    product.setRefProductMariaDb(itemId);
+                } catch (JSONException e) {
+                    log.info("error getting response");
+                }
+                callBack.onSuccess();
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        log.fine("Error: " + error.getMessage());
+                    }
+                });
+        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(0,0,0));
+        Volley.newRequestQueue(getApplicationContext()).add(jsonObjReq);
     }
 
 }

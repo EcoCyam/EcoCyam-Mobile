@@ -74,20 +74,20 @@ public final class LoginActivity extends AppCompatActivity {
     }
 
     public void connectToApp(EditText email, EditText password) {
-//        ConnectionTo.switchActivityWithStringExtra(this, MainActivity.class, "yo@gmail.com");
-//        finish();
+        ConnectionTo.switchActivityWithStringExtra(this, MainActivity.class, "yo@gmail.com");
+        finish();
 
-        if (ConnectionTo.verifyEmptyFields(email, "Email can't be empty") ||
-                ConnectionTo.verifyEmptyFields(password, "Password can't be empty")) {
-            Toast.makeText(this, "No empty fields", Toast.LENGTH_LONG).show();
-        } else {
-            if (myDB.verifyUserInfo(email.getText().toString(), password.getText().toString())) {
-                ConnectionTo.switchActivityWithStringExtra(this, MainActivity.class, email.getText().toString());
-                finish();
-            } else {
-                loginRemoteDB(email.getText().toString(), password.getText().toString());
-            }
-        }
+//        if (ConnectionTo.verifyEmptyFields(email, "Email can't be empty") ||
+//                ConnectionTo.verifyEmptyFields(password, "Password can't be empty")) {
+//            Toast.makeText(this, "No empty fields", Toast.LENGTH_LONG).show();
+//        } else {
+//            if (myDB.verifyUserInfo(email.getText().toString(), password.getText().toString())) {
+//                ConnectionTo.switchActivityWithStringExtra(this, MainActivity.class, email.getText().toString());
+//                finish();
+//            } else {
+//                loginRemoteDB(email.getText().toString(), password.getText().toString());
+//            }
+//        }
     }
 
     public void loginRemoteDB(String email, String password){

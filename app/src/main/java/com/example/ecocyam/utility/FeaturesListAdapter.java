@@ -1,11 +1,13 @@
 package com.example.ecocyam.utility;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +44,6 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
     /* default */int resource;
     /* default */ScannedProduct product;
     /* default */private String URL = "https://ecocyam-web.cfapps.io/api/evaluations/item";
-    /* default */private String URL2 = "http://10.0.2.2:8080/api/evaluations/item";
     /* default */static final Logger log = Logger.getLogger(FeaturesListAdapter.class.getName());
     /* default */ HashMap<Integer, Double> scores = new HashMap<Integer, Double>();
 
@@ -61,42 +62,50 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
 
         View view = layoutInflater.inflate(resource, null, false);
 
-        Button buttonArrow = (Button) view.findViewById(R.id.buttonArrow);
+        //Button buttonArrow = (Button) view.findViewById(R.id.buttonArrow);
         TextView textViewTitleFeatureItem = (TextView) view.findViewById(R.id.textViewTitleFeatureItem);
         TextView textViewRatingResultFeatureItem = view.findViewById(R.id.textViewRatingResultFeatureItem);
+        TextView textViewTextResultFeatureItem = view.findViewById(R.id.textViewTextResultFeatureItem);
+        ImageView imageViewProductHistory = view.findViewById(R.id.imageViewProductHistory);
+        TextView toto = view.findViewById(R.id.toto);
         int refProductMariaDb = product.getRefProductMariaDb();
+        if(position == 0){
+            imageViewProductHistory.setImageResource(R.drawable.ecology_rating);
+        }else if (position == 1){
+            imageViewProductHistory.setImageResource(R.drawable.durability_rating);
+        }else {
+            imageViewProductHistory.setImageResource(R.drawable.user_rating);
+        }
         EvaluationScore score = getScore(refProductMariaDb, new VolleyCallBack() {
             @Override
             public void onSuccess() {
                 textViewTitleFeatureItem.setText(items.get(position));
                 DecimalFormat df = new DecimalFormat("####.#");
-                textViewRatingResultFeatureItem.setText(String.valueOf(df.format(scores.get(position+1))));
+                toto.setText(String.valueOf(df.format(scores.get(position+1))));
+
+                Drawable imgRating = null;
+                if(scores.get(position+1) >= 4.0){
+                    imgRating = getContext().getResources().getDrawable(R.drawable.color_circle_rating_good);
+                    textViewTextResultFeatureItem.setText("Bon");
+                } else if(scores.get(position+1) <= 2.9){
+                    imgRating = getContext().getResources().getDrawable(R.drawable.color_circle_rating_bad);
+                    textViewTextResultFeatureItem.setText("Mauvais");
+                }else{
+                    imgRating = getContext().getResources().getDrawable(R.drawable.color_circle_rating_neutral);
+                    textViewTextResultFeatureItem.setText("Moyen");
+                }
+                textViewRatingResultFeatureItem.setCompoundDrawablesRelativeWithIntrinsicBounds(imgRating,null,null,null);
+
+
             }
         });
 
         CardView cardView  = view.findViewById(R.id.cardviewFI);
-
-        // String name = items.get(position);
-
-        buttonArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (cardView.getVisibility()==View.GONE){
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    cardView.setVisibility(View.VISIBLE);
-                    buttonArrow.setBackgroundResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
-                } else {
-                    TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
-                    cardView.setVisibility(View.GONE);
-                    buttonArrow.setBackgroundResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
-                }
-            }
-        });
         return view;
     }
 
     public EvaluationScore getScore(int refProductMariaDb, final VolleyCallBack callBack) {
-        String URL_with_id = URL2.concat("/").concat(String.valueOf(refProductMariaDb));
+        String URL_with_id = URL.concat("/").concat(String.valueOf(refProductMariaDb));
 
         CustomRequest jsonObjReq = new CustomRequest(Request.Method.GET, URL_with_id, new Response.Listener<JSONArray>() {
             @Override
@@ -106,7 +115,6 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
                     try {
                        JSONObject jsonobject = response.getJSONObject(i);
                         scores.put(jsonobject.getJSONObject("criteria").getInt("criteriaId"), jsonobject.getDouble("score"));
-                        log.info("good" + jsonobject);
                     } catch (JSONException e) {
                         log.info(e.getMessage());
                     }
