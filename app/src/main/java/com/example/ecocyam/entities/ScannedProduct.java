@@ -8,7 +8,6 @@ public final class ScannedProduct implements Serializable {
     /* default */private int id,refUser,refProductMariaDb;
     /* default */private String title, marque,localDate, serializeImage;
     /* default */private float rating;
-    /* default */private EvaluationScore evaluationScore;
     /* default */private Bitmap picture;
 
     //voir pour rajouter une image

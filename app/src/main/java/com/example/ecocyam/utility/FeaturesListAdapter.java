@@ -6,14 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.cardview.widget.CardView;
-import androidx.transition.AutoTransition;
-import androidx.transition.TransitionManager;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -21,10 +15,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.ecocyam.R;
-import com.example.ecocyam.activities.AddProductFormActivity;
-import com.example.ecocyam.activities.SearchResultActivity;
-import com.example.ecocyam.entities.EvaluationScore;
-import com.example.ecocyam.entities.Product;
 import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.interfaces.VolleyCallBack;
 
@@ -62,12 +52,11 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
 
         View view = layoutInflater.inflate(resource, null, false);
 
-        //Button buttonArrow = (Button) view.findViewById(R.id.buttonArrow);
         TextView textViewTitleFeatureItem = (TextView) view.findViewById(R.id.textViewTitleFeatureItem);
         TextView textViewRatingResultFeatureItem = view.findViewById(R.id.textViewRatingResultFeatureItem);
         TextView textViewTextResultFeatureItem = view.findViewById(R.id.textViewTextResultFeatureItem);
         ImageView imageViewProductHistory = view.findViewById(R.id.imageViewProductHistory);
-        TextView toto = view.findViewById(R.id.toto);
+        TextView productRating = view.findViewById(R.id.ProductRating);
         int refProductMariaDb = product.getRefProductMariaDb();
         if(position == 0){
             imageViewProductHistory.setImageResource(R.drawable.ecology_rating);
@@ -76,12 +65,12 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
         }else {
             imageViewProductHistory.setImageResource(R.drawable.user_rating);
         }
-        EvaluationScore score = getScore(refProductMariaDb, new VolleyCallBack() {
+        getScore(refProductMariaDb, new VolleyCallBack() {
             @Override
             public void onSuccess() {
                 textViewTitleFeatureItem.setText(items.get(position));
                 DecimalFormat df = new DecimalFormat("####.#");
-                toto.setText(String.valueOf(df.format(scores.get(position+1))));
+                productRating.setText(String.valueOf(df.format(scores.get(position+1))));
 
                 Drawable imgRating = null;
                 if(scores.get(position+1) >= 4.0){
@@ -99,12 +88,10 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
 
             }
         });
-
-        CardView cardView  = view.findViewById(R.id.cardviewFI);
         return view;
     }
 
-    public EvaluationScore getScore(int refProductMariaDb, final VolleyCallBack callBack) {
+    public void getScore(int refProductMariaDb, final VolleyCallBack callBack) {
         String URL_with_id = URL.concat("/").concat(String.valueOf(refProductMariaDb));
 
         CustomRequest jsonObjReq = new CustomRequest(Request.Method.GET, URL_with_id, new Response.Listener<JSONArray>() {
@@ -131,7 +118,5 @@ public class FeaturesListAdapter extends ArrayAdapter<String> {
                 });
         jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(0,0,0));
         Volley.newRequestQueue(context).add(jsonObjReq);
-        log.info("nice");
-        return null;
     }
 }

@@ -9,11 +9,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,7 +31,6 @@ import org.json.JSONObject;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Base64;
-import java.util.EventListener;
 import java.util.logging.Logger;
 
 public class AddProductFormActivity extends AppCompatActivity {

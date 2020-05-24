@@ -5,8 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -20,7 +18,6 @@ import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.interfaces.VolleyCallBack;
 import com.example.ecocyam.utility.ConnectionTo;
 import com.example.ecocyam.utility.CustomRequest;
-import com.example.ecocyam.utility.PictureFormatting;
 import com.example.ecocyam.utility.ProductSearchResultAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -29,7 +26,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
 

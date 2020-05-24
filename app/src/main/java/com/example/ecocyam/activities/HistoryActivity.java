@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.example.ecocyam.R;
@@ -14,7 +13,6 @@ import com.example.ecocyam.R;
 import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.entities.User;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
-import com.example.ecocyam.utility.PictureFormatting;
 import com.example.ecocyam.utility.ProductHistoryAdapter;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -39,31 +37,6 @@ public final class HistoryActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String email = intent.getStringExtra("email");
         User actualUser = db.getUserByEmail(email);
-
-        //EN DUR POUR LE TEST
-        /*
-        ScannedProduct product1 = new ScannedProduct("Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra))",
-                8.0f, actualUser.getId(),null);
-
-        ScannedProduct product2 = new ScannedProduct("Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
-                9.8f, actualUser.getId(),null);
-
-        ScannedProduct product3 = new ScannedProduct("Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
-                10.9f, actualUser.getId(),null);
-*/
-        //db.deleteProductByRefId(String.valueOf(actualUser.getId())); //en attendant on delete à chaque fois les anciennes versions
-        /*
-        db.createProductForHistory(product1);
-        db.createProductForHistory(product2);
-        db.createProductForHistory(product3);
-
-         */
-        //FIN DU DUR
-
-        //test à adapter selon le besoin
-        //manipulation des images avec SQlite database : practise
-       // ConnectionTo.switchActivityWithStringExtra(this,SelectPictureProduct.class,"1");
-        //fin de manipulation
 
         //getting the recyclerview from xml
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);

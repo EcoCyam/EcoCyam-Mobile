@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,14 +23,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ecocyam.R;
 import com.example.ecocyam.entities.ScannedProduct;
-import com.example.ecocyam.entities.User;
 import com.example.ecocyam.interfaces.VolleyCallBack;
 import com.example.ecocyam.utility.ConnectionTo;
-import com.example.ecocyam.utility.CustomRequest;
 import com.example.ecocyam.utility.FeaturesListAdapter;
 import com.example.ecocyam.utility.PictureFormatting;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,7 +39,7 @@ import java.util.logging.Logger;
 public class ProductFeaturesActivity extends AppCompatActivity {
     /* default */ ListView list;
     /* default */ ArrayList<String> itemsComputer;
-    /* default */private String URL = "https://ecocyam-web.cfapps.io/api/evaluations/";
+    /* default */String URL = "https://ecocyam-web.cfapps.io/api/evaluations/";
     /* default */static final Logger log = Logger.getLogger(ProductFeaturesActivity.class.getName());
     /* default */ScannedProduct product;
 
@@ -63,8 +59,7 @@ public class ProductFeaturesActivity extends AppCompatActivity {
 
         textViewProductName.setText(product.getTitle());
         DecimalFormat df = new DecimalFormat("####.##");
-        textViewProductRating.setText(String.valueOf(df.format(product.getRating())) + "/5");
-        log.info("SCANNED PRODUCT OVERALLSCORE ::: " + String.valueOf(df.format(product.getRating())));
+        textViewProductRating.setText(df.format(product.getRating()) + "/5");
         Drawable imgRating = null;
         if(product.getRating() > 4){
             imgRating = this.getApplicationContext().getResources().getDrawable(R.drawable.color_circle_rating_good);
@@ -83,7 +78,7 @@ public class ProductFeaturesActivity extends AppCompatActivity {
 
         Button buttonAddComment = findViewById(R.id.button_add_comment);
         buttonAddComment.setOnClickListener(v -> {
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(ProductFeaturesActivity.this);
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
             LayoutInflater inflater = this.getLayoutInflater();
             View addCommentLayout = inflater.inflate(R.layout.activity_send_customer_comment, null);
             TextView scoreUser = (TextView) addCommentLayout.findViewById(R.id.custommer_score);
@@ -142,7 +137,7 @@ public class ProductFeaturesActivity extends AppCompatActivity {
 
     }
 
-    private void refreshData(DialogInterface dialog){
+    public void refreshData(DialogInterface dialog){
         this.resetProduct(new VolleyCallBack() {
             @Override
             public void onSuccess() {
@@ -153,7 +148,6 @@ public class ProductFeaturesActivity extends AppCompatActivity {
                 ConnectionTo.switchActivityWithObejctExtra(getApplicationContext(),ProductFeaturesActivity.class, product);
             }
         });
-        //this.recreate();
     }
 
     private void resetProduct(final VolleyCallBack callBack){
@@ -166,7 +160,6 @@ public class ProductFeaturesActivity extends AppCompatActivity {
                     int itemId = response.getInt("itemId");
                     String title = response.getString("name");
                     double rating = Double.parseDouble(response.getString("overallScore"));
-                    log.info("SCANNED PRODUCT OVERALLSCORE ACTUEL ::: " + String.valueOf(rating));
 
                     product = new ScannedProduct(title,(float)rating,null);
                     product.setSerializeImage(response.getString("image"));
