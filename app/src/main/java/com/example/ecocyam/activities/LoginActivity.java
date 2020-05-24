@@ -66,11 +66,6 @@ public final class LoginActivity extends AppCompatActivity {
             finish();
         });
 
-
-        //   openAlertDialogMoche();
-        //  openAlertDialogLogin();
-        //  selectUser();
-
     }
 
     public void connectToApp(EditText email, EditText password) {
