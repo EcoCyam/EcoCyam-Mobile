@@ -53,6 +53,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:text="4.7"
+                android:textColor="#fff"
                 android:textStyle="bold" />
 
 

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.example.ecocyam.R;
@@ -13,8 +14,10 @@ import com.example.ecocyam.R;
 import com.example.ecocyam.entities.ScannedProduct;
 import com.example.ecocyam.entities.User;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
+import com.example.ecocyam.utility.PictureFormatting;
 import com.example.ecocyam.utility.ProductHistoryAdapter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,6 +41,7 @@ public final class HistoryActivity extends AppCompatActivity {
         User actualUser = db.getUserByEmail(email);
 
         //EN DUR POUR LE TEST
+        /*
         ScannedProduct product1 = new ScannedProduct("Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra))",
                 8.0f, actualUser.getId(),null);
 
@@ -46,11 +50,14 @@ public final class HistoryActivity extends AppCompatActivity {
 
         ScannedProduct product3 = new ScannedProduct("Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
                 10.9f, actualUser.getId(),null);
-
+*/
         //db.deleteProductByRefId(String.valueOf(actualUser.getId())); //en attendant on delete à chaque fois les anciennes versions
+        /*
         db.createProductForHistory(product1);
         db.createProductForHistory(product2);
         db.createProductForHistory(product3);
+
+         */
         //FIN DU DUR
 
         //test à adapter selon le besoin
@@ -69,8 +76,13 @@ public final class HistoryActivity extends AppCompatActivity {
         Cursor cursor = db.getAllScannedProduct(actualUser.getId());
 
         while (cursor.moveToNext()){
+
             ScannedProduct newProduct = new ScannedProduct(cursor.getString(1),(float)cursor.getDouble(3),
-            cursor.getInt(6),null);
+            cursor.getInt(6), null);
+
+            if(cursor.getBlob(5)!= null)
+                newProduct.setSerializeImage(Base64.getEncoder().encodeToString(cursor.getBlob(5)));
+
             productList.add(newProduct);
         }
         //pour avoir les plus gros id devant donc les plus récents

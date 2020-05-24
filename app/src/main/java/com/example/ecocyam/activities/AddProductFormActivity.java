@@ -39,7 +39,6 @@ import java.util.logging.Logger;
 public class AddProductFormActivity extends AppCompatActivity {
 
     /* default */private String URL = "https://ecocyam-web.cfapps.io/api/items";
-    /* default */private String URL2 = "http://10.0.2.2:8080/api/items";
     /* default */static final Logger log = Logger.getLogger(AddProductFormActivity.class.getName());
     /* default */private static final int GALLERY_REQUEST = 2;
 
@@ -101,7 +100,7 @@ public class AddProductFormActivity extends AppCompatActivity {
             log.fine(e.getMessage());
         }
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL2, requestJsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST, URL, requestJsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 log.info(response.toString() + "add success");

@@ -20,12 +20,14 @@ import com.example.ecocyam.interfaces.VolleyCallBack;
 import com.example.ecocyam.localdatabase.DatabaseHelperSingleton;
 import com.example.ecocyam.utility.ConnectionTo;
 import com.example.ecocyam.utility.CustomRequest;
+import com.example.ecocyam.utility.PictureFormatting;
 import com.google.zxing.Result;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Base64;
 import java.util.logging.Logger;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -141,9 +143,12 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonobject = response.getJSONObject(i);
+                        int idProductDb = jsonobject.getInt("itemId");
                         String title = jsonobject.getString("name");
                         double rating = Double.parseDouble(jsonobject.getString("overallScore"));
-                        ScannedProduct product = new ScannedProduct(title,(float)rating,getRefUser(),null);
+                        ScannedProduct product = new ScannedProduct(title,(float)rating,getRefUser(), null);
+                        product.setRefProductMariaDb(idProductDb);
+                        product.setSerializeImage(jsonobject.getString("image"));
                         log.info(product.getTitle());
                         ScannerActivity.this.setScannedProduct(product);
                         callBack.onSuccess();
