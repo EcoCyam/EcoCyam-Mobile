@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:gravity="center">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="78"
+        android:theme="@style/TextLimitStyle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/custommer_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:maxLength="78"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:hint="Votre note"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="750"
+        android:theme="@style/TextLimitStyle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/custommer_coment"
+            android:layout_width="match_parent"
+            android:maxLength="750"
+            android:layout_height="wrap_content"
+            android:hint="Laissez votre commentaire ici"
+            android:textSize="18sp"
+            android:lines="10"
+            android:background="@drawable/edit_text_border"
+            android:gravity="start|top"
+            android:textStyle="bold"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

@@ -54,10 +54,8 @@ public final class MainActivity extends AppCompatActivity {
         Intent currentIntent = getIntent();
         String emailUser = currentIntent.getStringExtra("email");
 
-        imageViewScan.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), ScannerActivity.class);
-            startActivity(intent);
-        });
+        imageViewScan.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
+                ScannerActivity.class,emailUser));
 
         imageViewLogo.setOnClickListener(v -> ConnectionTo.switchActivityWithStringExtra(getApplicationContext(),
                 AboutUsActivity.class,emailUser));

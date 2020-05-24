@@ -20,4 +20,7 @@
     <string name="ref_du_produit">Référence complète du produit</string>
     <string name="demander_ajout_du_produit">Demander ajout du produit</string>
     <string name="code_barre_ajout">Code barre du produit (si possible)</string>
+    <string name="note_ecologique">Note ecologique</string>
+    <string name="note_de_durabilit">Note de durabilité</string>
+    <string name="note_utilisateur">Note utilisateur</string>
 </resources>

@@ -13,6 +13,7 @@ import com.example.ecocyam.R;
 import com.example.ecocyam.activities.ProductFeaturesActivity;
 import com.example.ecocyam.entities.ScannedProduct;
 
+import java.util.Base64;
 import java.util.List;
 
 public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHistoryAdapter.ProductViewHolder> {
@@ -46,7 +47,8 @@ public final class ProductHistoryAdapter extends RecyclerView.Adapter<ProductHis
         holder.textViewRatingProductHistory.setText(String.valueOf(product.getRating()));
        // holder.textViewProductDateScanHistory.setText(String.valueOf(product.getLocalDate()));
 
-        holder.imageViewProductHistory.setImageBitmap(product.getPicture());
+        if(product.getSerializeImage()!=null)
+            holder.imageViewProductHistory.setImageBitmap(PictureFormatting.getBitmap(Base64.getDecoder().decode(product.getSerializeImage())));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

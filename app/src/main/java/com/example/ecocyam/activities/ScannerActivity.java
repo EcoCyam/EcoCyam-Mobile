@@ -141,9 +141,12 @@ public final class ScannerActivity extends AppCompatActivity implements ZXingSca
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonobject = response.getJSONObject(i);
+                        int idProductDb = jsonobject.getInt("itemId");
                         String title = jsonobject.getString("name");
                         double rating = Double.parseDouble(jsonobject.getString("overallScore"));
-                        ScannedProduct product = new ScannedProduct(title,(float)rating,getRefUser(),null);
+                        ScannedProduct product = new ScannedProduct(title,(float)rating,getRefUser(), null);
+                        product.setRefProductMariaDb(idProductDb);
+                        product.setSerializeImage(jsonobject.getString("image"));
                         log.info(product.getTitle());
                         ScannerActivity.this.setScannedProduct(product);
                         callBack.onSuccess();

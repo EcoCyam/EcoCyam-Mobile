@@ -74,39 +74,6 @@ public class SearchResultActivity extends AppCompatActivity {
                 ConnectionTo.switchActivity(SearchResultActivity.this.getApplicationContext(),AddProductFormActivity.class);
             }
         });
-
-
-/*
-        //initializing the productlist
-
-
-
-        //adding some items to our list
-        productList.add(
-                new Product(
-                        1,
-                        "Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)",
-                        "APPLE",
-                        8.1,
-                        R.drawable.icon_phone));
-
-        productList.add(
-                new Product(
-                        1,
-                        "Dell Inspiron 7000 Core i5 7th Gen - (8 GB/1 TB HDD/Windows 10 Home)",
-                        "DELL",
-                        4.3,
-                        R.drawable.icon_electrique));
-
-        productList.add(
-                new Product(
-                        1,
-                        "Microsoft Surface Pro 4 Core m3 6th Gen - (4 GB/128 GB SSD/Windows 10)",
-                        "MICROSOFT",
-                        6.8,
-                        R.drawable.icon_computer));
-*/
-
     }
 
     public void searchItemByApi(String query, final VolleyCallBack callBack) {
@@ -128,10 +95,15 @@ public class SearchResultActivity extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         JSONObject jsonobject = response.getJSONObject(i);
-                        //int itemId = Integer.parseInt(jsonobject.getString("itemId"));
+                        int itemId = jsonobject.getInt("itemId");
                         String title = jsonobject.getString("name");
                         double rating = Double.parseDouble(jsonobject.getString("overallScore"));
+                        //byte[] productImageBin = Base64.getDecoder().decode(jsonobject.getString("image"));
+                        //final Bitmap productImage = PictureFormatting.getBitmap(productImageBin);
+
                         ScannedProduct product = new ScannedProduct(title,(float)rating,null);
+                        product.setSerializeImage(jsonobject.getString("image"));
+                        product.setRefProductMariaDb(itemId);
                         log.info(product.getTitle());
                         productList.add(product);
                         log.info("size en remplissage" + productList.size());

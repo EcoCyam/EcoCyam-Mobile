@@ -35,13 +35,54 @@
         android:layout_marginTop="30dp"/>
 
     <EditText
-        android:id="@+id/editTextFirstName"
+        android:id="@+id/editTextProductBar"
         android:layout_width="305dp"
         android:layout_height="40dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/roundedittext"
         android:ems="10"
         android:hint="@string/code_barre_ajout"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_ImageProduct"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/roundedittext"
+        android:layout_width="305dp"
+        android:layout_height="40dp"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:text="Choisir une image du produit" />
+
+    <EditText
+        android:id="@+id/editTextEcologyRating"
+        android:layout_width="305dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/roundedittext"
+        android:ems="10"
+        android:hint="@string/note_ecologique"
+        android:inputType="number"
+        android:textSize="16sp" />
+    <EditText
+        android:id="@+id/editTextDuabilityRating"
+        android:layout_width="305dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/roundedittext"
+        android:ems="10"
+        android:hint="@string/note_de_durabilit"
+        android:inputType="number"
+        android:textSize="16sp" />
+    <EditText
+        android:id="@+id/editTextUserRating"
+        android:layout_width="305dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/roundedittext"
+        android:inputType="number"
+        android:ems="10"
+        android:hint="@string/note_utilisateur"
         android:textSize="16sp" />
 
 
