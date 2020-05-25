@@ -61,9 +61,9 @@ public class ProductFeaturesActivity extends AppCompatActivity {
         DecimalFormat df = new DecimalFormat("####.##");
         textViewProductRating.setText(df.format(product.getRating()) + "/5");
         Drawable imgRating = null;
-        if(product.getRating() > 4){
+        if(product.getRating() >= 4){
             imgRating = this.getApplicationContext().getResources().getDrawable(R.drawable.color_circle_rating_good);
-        } else if(product.getRating() < 2.9){
+        } else if(product.getRating() <= 2.9){
             imgRating = this.getApplicationContext().getResources().getDrawable(R.drawable.color_circle_rating_bad);
         }else{
             imgRating = this.getApplicationContext().getResources().getDrawable(R.drawable.color_circle_rating_neutral);

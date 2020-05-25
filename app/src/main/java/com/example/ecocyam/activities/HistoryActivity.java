@@ -52,7 +52,7 @@ public final class HistoryActivity extends AppCompatActivity {
 
             ScannedProduct newProduct = new ScannedProduct(cursor.getString(1),(float)cursor.getDouble(3),
             cursor.getInt(6), null);
-
+            newProduct.setRefProductMariaDb(cursor.getInt(7));
             if(cursor.getBlob(5)!= null)
                 newProduct.setSerializeImage(Base64.getEncoder().encodeToString(cursor.getBlob(5)));
 

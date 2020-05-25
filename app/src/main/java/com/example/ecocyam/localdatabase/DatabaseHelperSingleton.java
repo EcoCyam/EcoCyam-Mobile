@@ -37,6 +37,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
     private static final String COL_DATESCAN = "DATE_SCAN";
     private static final String COL_PICTURE = "PICTURE";
     private static final String COL_REFUSER = "REF_USER";
+    private static final String COL_REFMARIADB = "REF_MARIADB";
 
     public static final String SELECT_ALL_STR = "SELECT * FROM ";
     public static final String SEARCH_ID = "ID = ?";
@@ -64,7 +65,8 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
         db.execSQL(query);
         //bien vérifier pour la fk
         query = "create table " + TABLE_NAME_product + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITTLE TEXT," +
-                " BRAND TEXT, RATING RATING, DATE_SCAN TEXT, PICTURE BLOB, REF_USER INTEGER, FOREIGN KEY(REF_USER) REFERENCES TABLE_NAME(ID) )";
+                " BRAND TEXT, RATING RATING, DATE_SCAN TEXT, PICTURE BLOB, REF_USER INTEGER, REF_MARIADB INTEGER," +
+                " FOREIGN KEY(REF_USER) REFERENCES TABLE_NAME(ID) )";
         db.execSQL(query);
     }
 
@@ -188,6 +190,7 @@ public final class DatabaseHelperSingleton extends SQLiteOpenHelper {
         contentValues.put(COL_TITTLE, scannedProduct.getTitle());
         contentValues.put(COL_RATING, scannedProduct.getRating());
         contentValues.put(COL_REFUSER, scannedProduct.getRefUser());
+        contentValues.put(COL_REFMARIADB, scannedProduct.getRefProductMariaDb());
         byte[] image = Base64.getDecoder().decode(scannedProduct.getSerializeImage());
         contentValues.put(COL_PICTURE, image);
 
